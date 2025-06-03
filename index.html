@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>pixelbuilder2.com </title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body, html {
+    height: 100%;
+    font-family: 'Orbitron', sans-serif;
+    background: #000014;
+    color: #00ffff;
+    overflow-x: hidden;
+  }
+  .container {
+    max-width: 720px;
+    margin: 50px auto;
+    padding: 25px 30px;
+    text-align: center;
+    background: rgba(0,255,255,0.05);
+    border-radius: 20px;
+    box-shadow: 0 0 30px #0ff inset;
+  }
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    border-right: 5px solid #0ff;
+    white-space: nowrap;
+    overflow: hidden;
+    width: fit-content;
+    animation: typing 4s steps(30,end) forwards, blink 1s infinite;
+    margin-left: auto; margin-right: auto;
+  }
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  @keyframes blink {
+    0%,100% { border-color: transparent; }
+    50% { border-color: #0ff; }
+  }
+  nav {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  nav button {
+    background: linear-gradient(45deg, #0ff, #a0f);
+    border: none;
+    color: black;
+    padding: 14px 30px;
+    border-radius: 35px;
+    font-weight: 700;
+    box-shadow: 0 0 20px #0ff;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.2rem;
+    min-width: 100px;
+  }
+  nav button:hover,
+  nav button.active {
+    background: linear-gradient(45deg, #a0f, #0ff);
+    box-shadow: 0 0 35px #fff, 0 0 50px #0ff;
+    transform: scale(1.1);
+    color: #000;
+  }
+  section {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.7s ease, opacity 0.7s ease, padding 0.7s ease;
+    background: rgba(0, 255, 255, 0.1);
+    padding: 0 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #0ff inset;
+    margin-bottom: 40px;
+  }
+  section.active {
+    max-height: 700px;
+    opacity: 1;
+    padding: 30px;
+  }
+  section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 18px;
+    text-shadow: 0 0 10px #0ff;
+  }
+  section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  /* Responsive */
+  @media (max-width:800px){
+    .container {
+      max-width: 95%;
+      margin: 40px auto;
+      padding: 20px 25px;
+    }
+    h1 {
+      font-size: 2.2rem;
+    }
+    nav button {
+      padding: 12px 25px;
+      font-size: 1rem;
+      min-width: 85px;
+    }
+    section {
+      padding: 0 20px;
+    }
+    section.active {
+      max-height: 600px;
+      padding: 25px 20px;
+    }
+    section h2 {
+      font-size: 1.6rem;
+    }
+    section p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width:400px){
+    h1 {
+      font-size: 1.8rem;
+      border-right: 3px solid #0ff;
+    }
+    nav button {
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      min-width: 70px;
+    }
+    section.active {
+      max-height: 550px;
+      padding: 20px 15px;
+    }
+    section h2 {
+      font-size: 1.4rem;
+    }
+    section p {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>pixelbuilder2 - soulayman </h1>
+    <nav>
+      <button data-target="home" class="active">Home</button>
+      <button data-target="projects">Projects</button>
+      <button data-target="about">About</button>
+      <button data-target="contact">Contact</button>
+      <button data-target="portal">Portal</button>
+      <button data-target="cart name">cart-name</button>
+    </nav>
+
+    <section id="home" class="active">
+      <h2>Home</h2>
+      <p>Welcome to pixelbuilder2 — where the future of digital creation unfolds. Dive into a world where innovation meets imagination, and every pixel is crafted to build extraordinary realities. Your journey to endless possibilities starts here.</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <p>I may be young, but I create with passion and vision.
+Through PixelBuilder2, I bring bold ideas to life with small but powerful digital projects.
+
+🛠️ Here’s what I currently offer:
+
+I build websites for rising creators, dreamers, and future leaders who need a space to shine online.
+
+I develop small experimental games — playful, creative, and designed to explore the future of fun.
+
+Every project I work on is a step toward my dream:
+to become a master programmer capable of creating anything I imagine.
+
+This is just the beginning.</p>
+    </section>
+
+    <section id="about">
+      <h2>About Us</h2>
+      <p>
+I am the creator behind PixelBuilder2 — a futuristic vision of code, design, and imagination.
+
+My passion is building worlds with lines of code, where every pixel is crafted with intention, and every interface tells a story.
+
+I specialize in web development, game concepts, and immersive digital experiences that blend reality with innovation.
+
+With every project, I strive to go beyond the ordinary — to invent, to inspire, and to leave a digital fingerprint that echoes from the future.
+
+This is not just a site. It's a portal to creativity. Welcome to my universe  </p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Get in touch with us through our various channels. We're here to assist.</p>
+      <p>email: pixelbuilder2@gmail.com</p>
+      <p>instagram: pixelbuilder2</p>
+      <p>whatssap: +212 65114-9570</p>
+      <p>facebook: pixelbuilder2</p>
+    </section>
+
+    <section id="portal">
+      <h2>Portal</h2>
+      <p>"Step through the shimmering gateway of pixelbuilder2 — a vortex where digital dreams and cosmic codes collide. Enter a realm beyond reality, where imagination is your only limit and every pixel unlocks a new universe waiting to be created.".</p>
+    </section>
+       <section id="cart name">
+      <h2>cart-name</h2>
+      <p>My name is Soulayman Bagueri. I am 13 years old, and I’m doing my best to understand what programming really is.
+I live in Tinghir and currently study in the second year of middle school.
+Honestly, my dream is to become an amazing programmer — someone who can do anything with code.</p>
+  </div>
+
+<script>
+  const buttons = document.querySelectorAll('nav button');
+  const sections = document.querySelectorAll('section');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(btn => btn.classList.remove('active'));
+      sections.forEach(sec => sec.classList.remove('active'));
+
+      button.classList.add('active');
+      const target = button.getAttribute('data-target');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
