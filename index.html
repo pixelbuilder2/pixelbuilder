@@ -1,219 +1,332 @@
+
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡pixelBuilder2</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pixelbuilder2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    /* الخطوط والألوان */
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(circle at 20% 20%, #0ff, #002);
-      color: #fff;
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0d324d, #7f5a83, #2c3e50);
+      color: #eee;
+      min-height: 100vh;
       overflow-x: hidden;
-      direction: rtl;
-      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-      animation: backgroundMove 60s infinite linear;
     }
-
-    @keyframes backgroundMove {
-      from { background-position: 0 0; }
-      to { background-position: 1000px 1000px; }
-    }
-
     header {
-      background: linear-gradient(90deg, #ff0040, #0000ff, #00ff90);
-      background-size: 300% 300%;
-      animation: gradientShift 10s ease infinite;
-      padding: 3rem 1rem;
-      text-align: center;
-      font-size: 3rem;
-      box-shadow: 0 0 100px #0ff;
-      text-shadow: 0 0 20px #fff;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    nav {
+      background: rgba(0, 255, 247, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
       position: sticky;
       top: 0;
-      background: rgba(0, 0, 0, 0.9);
+      z-index: 10;
+      box-shadow: 0 0 10px #00fff7aa;
+    }
+    .logo {
       display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      padding: 1rem;
-      z-index: 999;
-    }
-
-    nav a {
+      align-items: center;
+      font-weight: 900;
+      font-size: 2rem;
       color: #00fff7;
-      padding: 0.7rem 1.3rem;
-      text-decoration: none;
-      border: 2px dashed #0ff;
-      border-radius: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      box-shadow: 0 0 20px #00fff799;
-      transition: all 0.3s ease;
+      gap: 10px;
+      user-select: none;
     }
-
-    nav a:hover {
-      background-color: #00fff7;
-      color: #000;
-      transform: scale(1.1);
+    nav {
+      display: flex;
+      gap: 20px;
     }
-
-    main {
-      max-width: 1400px;
-      margin: auto;
-      padding: 4rem 1rem;
-      display: grid;
-      gap: 5rem;
-    }
-
-    section {
-      background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,255,255,0.1));
-      border: 1px solid #00fff766;
-      border-radius: 30px;
-      padding: 3rem;
-      box-shadow: 0 0 40px #00fff733, inset 0 0 20px #0ff;
-      backdrop-filter: blur(8px);
-    }
-
-    section h2 {
-      font-size: 2.5rem;
-      color: #0ff;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 10px #fff;
-    }
-
-    button {
-      background: linear-gradient(45deg, #ff0040, #00ffff);
-      color: white;
-      border: none;
-      padding: 1.2rem 2.2rem;
-      border-radius: 30px;
-      margin: 0.5rem;
+    nav button {
+      background: transparent;
+      border: 2px solid #00fff7;
+      border-radius: 8px;
+      padding: 10px 18px;
+      color: #00fff7;
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    nav button[aria-selected="true"],
+    nav button:hover {
+      background: #00fff7;
+      color: #002a2a;
+      box-shadow: 0 0 12px #00fff7;
+      border-color: #00fff7;
+    }
+    main {
+      padding: 40px 60px;
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      box-shadow: 0 0 20px #00fff7aa;
+      min-height: 400px;
+    }
+    main section {
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+      outline: none;
+    }
+    main section.active {
+      display: block;
+    }
+    main h1 {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      position: relative;
+      display: inline-block;
+      border-right: 2px solid #00fff7;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+    }
+    main p {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-top: 10px;
+      color: #b2ffff;
+    }
+    /* نموذج الاتصال */
+    form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      color: #00fff7;
+    }
+    form label {
+      font-weight: 700;
       font-size: 1.1rem;
-      box-shadow: 0 0 20px #0ff;
-      transition: all 0.3s;
     }
-
-    button:hover {
-      transform: scale(1.1);
-      background: #00ffff;
-      color: #000;
+    form input,
+    form textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #00fff7;
+      background: rgba(0, 255, 247, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
     }
-
-    .element {
-      background-color: rgba(0,255,255,0.08);
-      padding: 1rem;
-      border: 1px dashed #0ff;
-      margin: 1rem 0;
-      border-radius: 20px;
-      box-shadow: 0 0 10px #00fff7;
+    form input:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: #00ffe7;
+      background: rgba(0, 255, 247, 0.2);
+      box-shadow: 0 0 8px #00fff7;
     }
-
-    input[type="color"] {
-      width: 60px;
-      height: 40px;
+    form button {
+      width: 120px;
+      align-self: flex-start;
+      padding: 12px 20px;
       border: none;
       border-radius: 10px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
+      background: #00fff7;
+      color: #002a2a;
+      font-weight: 700;
       font-size: 1rem;
-      background: #000000dd;
-      color: #0ff;
-      box-shadow: 0 -5px 15px #00fff744;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
-
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
+    form button:hover {
+      background: #00c9b9;
+      box-shadow: 0 0 15px #00fff7;
+    }
+    /* تأثيرات */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes typing {
+      from {width: 0;}
+      to {width: 100%;}
+    }
+    @keyframes blink-caret {
+      50% { border-color: transparent;}
+    }
+    /* فقاعات الماء الخلفية */
+    .bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .bubbles span {
+      position: absolute;
+      bottom: -150px;
+      background: rgba(0, 255, 247, 0.15);
+      border-radius: 50%;
+      animation: rise 15s linear infinite;
+      opacity: 0.6;
+    }
+    .bubbles span:nth-child(1) {
+      width: 25px; height: 25px; left: 10%;
+      animation-delay: 0s;
+      animation-duration: 18s;
+    }
+    .bubbles span:nth-child(2) {
+      width: 40px; height: 40px; left: 25%;
+      animation-delay: 3s;
+      animation-duration: 20s;
+    }
+    .bubbles span:nth-child(3) {
+      width: 15px; height: 15px; left: 40%;
+      animation-delay: 7s;
+      animation-duration: 16s;
+    }
+    .bubbles span:nth-child(4) {
+      width: 30px; height: 30px; left: 55%;
+      animation-delay: 2s;
+      animation-duration: 22s;
+    }
+    .bubbles span:nth-child(5) {
+      width: 50px; height: 50px; left: 70%;
+      animation-delay: 5s;
+      animation-duration: 19s;
+    }
+    .bubbles span:nth-child(6) {
+      width: 20px; height: 20px; left: 85%;
+      animation-delay: 4s;
+      animation-duration: 21s;
+    }
+    .bubbles span:nth-child(7) {
+      width: 35px; height: 35px; left: 90%;
+      animation-delay: 1s;
+      animation-duration: 17s;
+    }
+    @keyframes rise {
+      0% {
+        bottom: -150px;
+        opacity: 0.6;
+        transform: translateX(0) scale(1);
       }
-
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        bottom: 110vh;
+        opacity: 0;
+        transform: translateX(100px) scale(1.2);
+      }
+    }
+    /* Responsive */
+    @media (max-width: 720px) {
       header {
-        font-size: 2rem;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+      }
+      nav {
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      nav button {
+        font-size: 16px;
+        padding: 10px 18px;
+      }
+      main {
+        margin: 35px 15px 60px;
+        padding: 25px 20px;
+        max-width: 95%;
+      }
+      main h1 {
+        font-size: 2.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>pixelbuilder2</header>
-  <nav>
-    <a href="#tools">🛠 أدوات متقدمة</a>
-    <a href="#style">🎨 تخصيص الفضاء</a>
-    <a href="#preview">📱 تجربة خيالية</a>
-    <a href="#export">🚀 إطلاق التطبيق</a>
+
+<div class="bubbles" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<header>
+  <div class="logo" aria-label="شعار pixelbuilder2">
+    <!-- اللوغو حرف P -->
+    <svg viewBox="0 0 64 64" fill="none" stroke="#00fff7" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="40" height="40">
+      <path d="M20 12v40h16a12 12 0 0 0 0-24H20z" stroke-width="4" stroke-linejoin="round" />
+      <circle cx="36" cy="32" r="8" stroke-width="4" />
+    </svg>
+    pixelbuilder2
+  </div>
+  <nav role="navigation" aria-label="قائمة التنقل الرئيسية">
+    <button aria-selected="true" data-target="home" tabindex="0">الرئيسية</button>
+    <button data-target="contact">اتصل بنا</button>
+    <button data-target="definition">تعريف الموقع</button>
+    <button data-target="features">المميزات</button>
+    <button data-target="skills">تطوير المهارات</button>
+    <button data-target="about">من نحن</button>
+    <button data-target="help">المساعدة</button>
   </nav>
-  <main>
-    <section id="tools">
-      <h2>🛠 أدوات متقدمة</h2>
-      <button onclick="addElement('وحدة طاقة')">وحدة طاقة</button>
-      <button onclick="addElement('مكون ليزري')">مكون ليزري</button>
-      <button onclick="addElement('عنصر كوكبي')">عنصر كوكبي</button>
-      <div id="elementsContainer"></div>
-    </section>
-    <section id="style">
-      <h2>🎨 تخصيص الفضاء</h2>
-      <p>اختر لون طيف المجرة:</p>
-      <input type="color" id="mainColor" onchange="changeTheme(this.value)">
-    </section>
-    <section id="preview">
-      <h2>📱 تجربة خيالية</h2>
-      <div id="previewContainer"></div>
-    </section>
-    <section id="export">
-      <h2>🚀 إطلاق التطبيق</h2>
-      <button onclick="exportApp()">💾 تحميل التطبيق النهائي</button>
-    </section>
-  </main>
-  <footer>
-    Ⓒ Soulayman - كل الحقوق محفوظة لمستقبل لا يمكن تخيله.
-  </footer>
+</header>
 
-  <script>
-    const elements = [];
+<main>
+  <section id="home" class="active" tabindex="0">
+    <h1>مرحباً بك في pixelbuilder2</h1>
+    <p>أفضل منصة لتطوير مهاراتك في البرمجة، التصميم، وبناء المشاريع بطريقة احترافية وسلسة.</p>
+  </section>
+  <section id="contact" tabindex="0">
+    <h1>اتصل بنا</h1>
+    <p>لأي استفسار أو دعم، يمكنك مراسلتنا عبر البريد الإلكتروني</p>
+       <p>Email: pixelbuilder2site@gmail.com</p>
+      <p>whatssap: +212 65114-9570</p>
+      <p>instagram: pixelbuilder2</p>
+      <p>facebook: pixelbuilder2</p>
+  </section>
+  <section id="definition" tabindex="0">
+    <h1>تعريف الموقع</h1>
+    <p>pixelbuilder2 هو موقع يهدف إلى تمكين المستخدمين من تطوير مهاراتهم التقنية والبرمجية من خلال أدوات حديثة ودروس تفاعلية.</p>
+  </section>
+  <section id="features" tabindex="0">
+    <h1>المميزات</h1>
+    <p>منصة متكاملة مع تصميم حديث، خلفيات متحركة، أدوات برمجة مدمجة، ودعم فني مستمر.</p>
+  </section>
+  <section id="skills" tabindex="0">
+    <h1>تطوير المهارات</h1>
+    <p>نوفر لك مسارات تعليمية مخصصة، مشاريع حقيقية، وتمارين تفاعلية لتسريع تعلمك.</p>
+  </section>
+  <section id="about" tabindex="0">
+    <h1>من نحن</h1>
+    <p>فريق من المحترفين في مجال البرمجة والتصميم نسعى لبناء مجتمع تعليمي متكامل وملهم.</p>
+  </section>
+  <section id="help" tabindex="0">
+    <h1>المساعدة</h1>
+    <p>اذا كنت تواجه مشاكل في الموقع او خلل في الموقع او الاتصالات ارجوا ان انصحك بذهاب الى"اتصل بنا" الان</p>
+   
+  </section>
+</main>
 
-    function addElement(type) {
-      const el = document.createElement('div');
-      el.className = 'element';
-      el.textContent = `مكون: ${type}`;
-      document.getElementById('elementsContainer').appendChild(el);
-      elements.push(type);
-    }
+<script>
+  const buttons = document.querySelectorAll('nav button');
+  const sections = document.querySelectorAll('main section');
 
-    function changeTheme(color) {
-      document.body.style.background = color;
-    }
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.setAttribute('aria-selected', 'false'));
+      btn.setAttribute('aria-selected', 'true');
 
-    function exportApp() {
-      let content = '<html><body style="font-family:Orbitron; direction:rtl; background:#000; color:#fff;">';
-      content += '<h2>تطبيقك المستقبلي:</h2>';
-      elements.forEach(el => {
-        content += `<div style='margin:10px;padding:10px;border:1px solid #0ff;'>${el}</div>`;
+      const target = btn.getAttribute('data-target');
+      sections.forEach(sec => {
+        if(sec.id === target) {
+          sec.classList.add('active');
+          sec.focus();
+        } else {
+          sec.classList.remove('active');
+        }
       });
-      content += '</body></html>';
-      const blob = new Blob([content], { type: 'text/html' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'app_55425215.html';
-      a.click();
-    }
-  </script>
+    });
+  });
+</script>
+
 </body>
 </html>
