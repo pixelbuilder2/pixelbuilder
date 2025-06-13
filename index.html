@@ -1,332 +1,352 @@
-
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>pixelbuilder2</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pixelbuilder2.com</title>
   <style>
-    /* الخطوط والألوان */
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #0d324d, #7f5a83, #2c3e50);
-      color: #eee;
-      min-height: 100vh;
-      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
+
+    body {
+      background: #000;
+      overflow-x: hidden;
+      color: white;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #000428, #004e92), url('https://i.ibb.co/Vt8FrR5/water-bubbles.gif') center/cover no-repeat;
+      z-index: -1;
+      opacity: 0.4;
+      animation: animateBg 20s infinite alternate ease-in-out;
+    }
+
+    @keyframes animateBg {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
     header {
-      background: rgba(0, 255, 247, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
-      position: sticky;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      position: fixed;
       top: 0;
-      z-index: 10;
-      box-shadow: 0 0 10px #00fff7aa;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 0 20px #0ff;
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      font-weight: 900;
-      font-size: 2rem;
-      color: #00fff7;
-      gap: 10px;
-      user-select: none;
+
+    #logo {
+      width: 60px;
+      margin-left: 20px;
+      filter: drop-shadow(0 0 10px #0ff);
     }
-    nav {
-      display: flex;
-      gap: 20px;
+
+    #site-name {
+      font-size: 30px;
+      color: #0ff;
+      margin-right: 20px;
+      text-shadow: 0 0 20px #0ff;
     }
-    nav button {
-      background: transparent;
-      border: 2px solid #00fff7;
-      border-radius: 8px;
-      padding: 10px 18px;
-      color: #00fff7;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-    }
-    nav button[aria-selected="true"],
-    nav button:hover {
-      background: #00fff7;
-      color: #002a2a;
-      box-shadow: 0 0 12px #00fff7;
-      border-color: #00fff7;
-    }
-    main {
-      padding: 40px 60px;
-      max-width: 900px;
-      margin: 40px auto;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 15px;
-      box-shadow: 0 0 20px #00fff7aa;
-      min-height: 400px;
-    }
-    main section {
-      display: none;
-      animation: fadeIn 0.6s ease forwards;
-      outline: none;
-    }
-    main section.active {
-      display: block;
-    }
-    main h1 {
-      font-size: 2.8rem;
-      margin-bottom: 12px;
-      position: relative;
-      display: inline-block;
-      border-right: 2px solid #00fff7;
-      white-space: nowrap;
-      overflow: hidden;
-      animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
-    }
-    main p {
-      font-size: 1.25rem;
-      line-height: 1.6;
-      margin-top: 10px;
-      color: #b2ffff;
-    }
-    /* نموذج الاتصال */
-    form {
-      margin-top: 20px;
+
+    #auth-section {
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      color: #00fff7;
+      justify-content: center;
+      align-items: center;
+      padding-top: 100px;
+      text-align: center;
     }
-    form label {
-      font-weight: 700;
-      font-size: 1.1rem;
+
+    #main-title {
+      font-size: 56px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 25px #00ffff;
+      color: #0ff;
     }
-    form input,
-    form textarea {
-      padding: 10px;
-      border-radius: 8px;
-      border: 2px solid #00fff7;
-      background: rgba(0, 255, 247, 0.1);
-      color: #fff;
-      font-size: 1rem;
-      resize: vertical;
-      transition: border-color 0.3s ease;
-    }
-    form input:focus,
-    form textarea:focus {
+
+    #code-input {
+      padding: 14px;
+      font-size: 22px;
+      border: 2px solid #0ff;
+      background-color: black;
+      color: #0ff;
+      border-radius: 12px;
       outline: none;
-      border-color: #00ffe7;
-      background: rgba(0, 255, 247, 0.2);
-      box-shadow: 0 0 8px #00fff7;
+      box-shadow: 0 0 12px #0ff inset;
     }
-    form button {
-      width: 120px;
-      align-self: flex-start;
-      padding: 12px 20px;
-      border: none;
+
+    #submit-btn {
+      margin-top: 18px;
+      padding: 12px 24px;
+      font-size: 20px;
+      background-color: transparent;
+      border: 2px solid #0ff;
       border-radius: 10px;
-      background: #00fff7;
-      color: #002a2a;
-      font-weight: 700;
-      font-size: 1rem;
+      color: #0ff;
       cursor: pointer;
-      transition: background 0.3s ease;
+      box-shadow: 0 0 20px #0ff;
+      transition: 0.4s;
     }
-    form button:hover {
-      background: #00c9b9;
-      box-shadow: 0 0 15px #00fff7;
+
+    #submit-btn:hover {
+      background-color: #0ff;
+      color: #000;
     }
-    /* تأثيرات */
+
+    #get-code {
+      margin-top: 25px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    #get-code a {
+      color: #0ff;
+      text-decoration: underline;
+    }
+
+    .social-links {
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      margin: 0 12px;
+      color: #0ff;
+      font-size: 28px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    #error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    #site-content {
+      display: none;
+      padding: 140px 20px 50px;
+      text-align: center;
+    }
+
+    nav {
+      margin: 40px 0;
+    }
+
+    .neon-button {
+      display: inline-block;
+      margin: 12px;
+      padding: 14px 28px;
+      font-size: 20px;
+      color: #0ff;
+      background: rgba(0,0,0,0.3);
+      border: 2px solid #0ff;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #0ff, 0 0 30px #0ff inset;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .neon-button:hover {
+      background: #0ff;
+      color: #000;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #0ff inset;
+    }
+
+    .section {
+      display: none;
+      margin: 60px auto;
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 50px;
+      border-radius: 24px;
+      max-width: 1000px;
+      box-shadow: 0 0 25px #0ff;
+    }
+
+    .active-section {
+      display: block;
+      animation: fadeIn 1s ease-in-out;
+    }
+
     @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
     }
-    @keyframes typing {
-      from {width: 0;}
-      to {width: 100%;}
+
+    h2 {
+      font-size: 34px;
+      margin-bottom: 20px;
+      color: #0ff;
+      text-shadow: 0 0 12px #0ff;
     }
-    @keyframes blink-caret {
-      50% { border-color: transparent;}
+
+    p {
+      font-size: 22px;
+      line-height: 1.7;
+      color: #ccc;
     }
-    /* فقاعات الماء الخلفية */
-    .bubbles {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-    .bubbles span {
-      position: absolute;
-      bottom: -150px;
-      background: rgba(0, 255, 247, 0.15);
-      border-radius: 50%;
-      animation: rise 15s linear infinite;
-      opacity: 0.6;
-    }
-    .bubbles span:nth-child(1) {
-      width: 25px; height: 25px; left: 10%;
-      animation-delay: 0s;
-      animation-duration: 18s;
-    }
-    .bubbles span:nth-child(2) {
-      width: 40px; height: 40px; left: 25%;
-      animation-delay: 3s;
-      animation-duration: 20s;
-    }
-    .bubbles span:nth-child(3) {
-      width: 15px; height: 15px; left: 40%;
-      animation-delay: 7s;
-      animation-duration: 16s;
-    }
-    .bubbles span:nth-child(4) {
-      width: 30px; height: 30px; left: 55%;
-      animation-delay: 2s;
-      animation-duration: 22s;
-    }
-    .bubbles span:nth-child(5) {
-      width: 50px; height: 50px; left: 70%;
-      animation-delay: 5s;
-      animation-duration: 19s;
-    }
-    .bubbles span:nth-child(6) {
-      width: 20px; height: 20px; left: 85%;
-      animation-delay: 4s;
-      animation-duration: 21s;
-    }
-    .bubbles span:nth-child(7) {
-      width: 35px; height: 35px; left: 90%;
-      animation-delay: 1s;
-      animation-duration: 17s;
-    }
-    @keyframes rise {
-      0% {
-        bottom: -150px;
-        opacity: 0.6;
-        transform: translateX(0) scale(1);
+
+    @media (max-width: 768px) {
+      #main-title {
+        font-size: 38px;
       }
-      50% {
-        opacity: 0.8;
+      #site-name {
+        font-size: 24px;
       }
-      100% {
-        bottom: 110vh;
-        opacity: 0;
-        transform: translateX(100px) scale(1.2);
+      .section {
+        padding: 30px;
       }
     }
-    /* Responsive */
-    @media (max-width: 720px) {
-      header {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px;
-      }
-      nav {
-        justify-content: center;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-      nav button {
-        font-size: 16px;
-        padding: 10px 18px;
-      }
-      main {
-        margin: 35px 15px 60px;
-        padding: 25px 20px;
-        max-width: 95%;
-      }
-      main h1 {
-        font-size: 2.5rem;
-      }
-    }
+    
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+  <header>
+    <img src="WhatsApp Image 2025-06-13 at 15.24.48_af12ad61.jpg" id="logo" alt="logo">
+    
+    <div id="site-name">pixelbuilder2</div>
+  </header>
 
-<div class="bubbles" aria-hidden="true">
-  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-</div>
-
-<header>
-  <div class="logo" aria-label="شعار pixelbuilder2">
-    <!-- اللوغو حرف P -->
-    <svg viewBox="0 0 64 64" fill="none" stroke="#00fff7" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="40" height="40">
-      <path d="M20 12v40h16a12 12 0 0 0 0-24H20z" stroke-width="4" stroke-linejoin="round" />
-      <circle cx="36" cy="32" r="8" stroke-width="4" />
-    </svg>
-    pixelbuilder2
+  <div id="auth-section">
+    <div id="main-title">💫 مرحبا بك في عالم البرمجة- pixelbuilder2 💫</div>
+    <input type="text" id="code-input" placeholder="يرجى ادخال الكود">
+    <button id="submit-btn">دخول</button>
+    <div id="error-message"></div>
+    <div id="get-code">🔑 إذا كنت لا تملك الكود <a href="#">اضغط هنا للحصول عليه</a></div>
+    <div class="social-links">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com/pixel2" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="email://pixelbulder2siteweb@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
   </div>
-  <nav role="navigation" aria-label="قائمة التنقل الرئيسية">
-    <button aria-selected="true" data-target="home" tabindex="0">الرئيسية</button>
-    <button data-target="contact">اتصل بنا</button>
-    <button data-target="definition">تعريف الموقع</button>
-    <button data-target="features">المميزات</button>
-    <button data-target="skills">تطوير المهارات</button>
-    <button data-target="about">من نحن</button>
-    <button data-target="help">المساعدة</button>
-  </nav>
-</header>
 
-<main>
-  <section id="home" class="active" tabindex="0">
-    <h1>مرحباً بك في pixelbuilder2</h1>
-    <p>أفضل منصة لتطوير مهاراتك في البرمجة، التصميم، وبناء المشاريع بطريقة احترافية وسلسة.</p>
-  </section>
-  <section id="contact" tabindex="0">
-    <h1>اتصل بنا</h1>
-    <p>لأي استفسار أو دعم، يمكنك مراسلتنا عبر البريد الإلكتروني</p>
-       <p>Email: pixelbuilder2site@gmail.com</p>
-      <p>whatssap: +212 65114-9570</p>
-      <p>instagram: pixelbuilder2</p>
-      <p>facebook: pixelbuilder2</p>
-  </section>
-  <section id="definition" tabindex="0">
-    <h1>تعريف الموقع</h1>
-    <p>pixelbuilder2 هو موقع يهدف إلى تمكين المستخدمين من تطوير مهاراتهم التقنية والبرمجية من خلال أدوات حديثة ودروس تفاعلية.</p>
-  </section>
-  <section id="features" tabindex="0">
-    <h1>المميزات</h1>
-    <p>منصة متكاملة مع تصميم حديث، خلفيات متحركة، أدوات برمجة مدمجة، ودعم فني مستمر.</p>
-  </section>
-  <section id="skills" tabindex="0">
-    <h1>تطوير المهارات</h1>
-    <p>نوفر لك مسارات تعليمية مخصصة، مشاريع حقيقية، وتمارين تفاعلية لتسريع تعلمك.</p>
-  </section>
-  <section id="about" tabindex="0">
-    <h1>من نحن</h1>
-    <p>فريق من المحترفين في مجال البرمجة والتصميم نسعى لبناء مجتمع تعليمي متكامل وملهم.</p>
-  </section>
-  <section id="help" tabindex="0">
-    <h1>المساعدة</h1>
-    <p>اذا كنت تواجه مشاكل في الموقع او خلل في الموقع او الاتصالات ارجوا ان انصحك بذهاب الى"اتصل بنا" الان</p>
-   
-  </section>
-</main>
+  <div id="site-content">
+    <nav>
+      <button class="neon-button" onclick="showSection('home')">الرئيسية</button>
+      <button class="neon-button" onclick="showSection('about')">تعريف الموقع</button>
+      <button class="neon-button" onclick="showSection('features')">المميزات</button>
+      <button class="neon-button" onclick="showSection('team')">من نحن</button>
+      <button class="neon-button" onclick="showSection('contact')">اتصل بنا</button>
+      <button class="neon-button" onclick="showSection('help')">المساعدة</button>
+      <button class="neon-button" onclick="showSection('اعلان')">الاعلانات</button>
+    </nav>
 
-<script>
-  const buttons = document.querySelectorAll('nav button');
-  const sections = document.querySelectorAll('main section');
+    <div id="home" class="section active-section">
+      <h2>الرئيسية</h2>
+      <p>✨ هذا الموقع هو بوابتك لبناء المستقبل . ابدأ الآن واكتشف كل إمكانياتك!</p>
+    </div>
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.setAttribute('aria-selected', 'false'));
-      btn.setAttribute('aria-selected', 'true');
+    <div id="about" class="section">
+      <h2>تعريف الموقع</h2>
+      <p>pixelbuilder2 هو منصة مبتكرة وخيالية تسمح لك بإنشاء تطبيقات ومواقع بسهولة تامة، دون الحاجة إلى كتابة أي كود.
+تم تصميم الموقع ليمنحك تجربة مستقبلية مليئة بالألوان، النيون، والمؤثرات البصرية، وكأنك تصنع مشروعك داخل عالم رقمي من الخيال.
 
-      const target = btn.getAttribute('data-target');
-      sections.forEach(sec => {
-        if(sec.id === target) {
-          sec.classList.add('active');
-          sec.focus();
-        } else {
-          sec.classList.remove('active');
-        }
-      });
-    });
-  });
-</script>
+يهدف الموقع إلى جعل البرمجة في متناول الجميع، من الأطفال والمبتدئين إلى المبدعين والمحترفين.
+كل ما تحتاجه هو فكرتك، ونحن نوفر لك الأدوات والتصميمات لتبني بها تطبيقك خطوة بخطوة، بأسلوب ممتع وسهل.</p>
+    </div>
 
+    <div id="features" class="section">
+      <h2>المميزات</h2>
+      <p>🔹 دعم دائم وتحديثات مستمرة
+نعمل على تطوير المنصة باستمرار لنمنحك أفضل تجربة ممكنة.</p>
+      <p>🔹 أمان وخصوصية
+يطلب الموقع كود دخول خاص لحماية مشاريعك من الغرباء.</p>
+
+      <p> 🔹 تجربة مستخدم ممتعة وسهلة
+واجهة بسيطة ومباشرة تجعل من تجربة الاستخدام ممتعة حتى للمبتدئين. </p>
+      <p> 🔹 متجاوب مع جميع الأجهزة
+يعمل الموقع بسلاسة على الهواتف، الحواسيب، والأجهزة اللوحية. </p>
+      <p>  🔹 تصميم خيالي ونيون متوهج
+واجهة مستخدم مستوحاة من المستقبل، مليئة بالألوان الزاهية وتأثيرات النيون.</p>
+      <p> 🔹 إنشاء بدون كود
+أنشئ تطبيقاتك ومواقعك بسهولة تامة دون الحاجة إلى تعلم البرمجة. </p>
+    </div>
+
+    <div id="team" class="section">
+      <h2>من نحن</h2>
+      <p>نحن فريق pixelbuilder2، مبدعون من المستقبل، نؤمن أن الإبداع لا يحتاج إلى تعقيد.
+جئنا لنكسر الحدود بين البرمجة والخيال، ونسهّل على الجميع إنشاء تطبيقاتهم الخاصة بدون أي سطر كود.
+
+هدفنا هو تمكين كل شخص من بناء أفكاره وتحويلها إلى واقع باستخدام أدوات ذكية، وتصميمات سحرية، وتجربة استخدام لا تُنسى.
+
+في pixelbuilder2، لا ننتج مواقع أو تطبيقات فقط، بل نصنع عوالم رقمية خيالية ✨.</p>
+    </div>
+
+    <div id="contact" class="section">
+      <h2>اتصل بنا</h2>
+      <p>لأي استفسار أو اقتراح، يمكنك مراسلتنا عبر البريد الإلكتروني أو عبر النموذج الموجود في صفحة المساعدة.</p>
+    </div>
+
+     <div id="help" class="section"> 
+      <h2>المساعدة</h2>
+      <p>ان تواجه مشاكل في هذا الموقع المرجو الاتصال بنا لاحقا ستصل لك الرسالة بعد24ساعة</p>
+             <p>whatssap: +212 65114-9570/+112 716294761</p>
+             <p>email: pixelbuilder2siteweb@gmail.com</p>
+             <p>instagram: pixel2</p>
+             <p>facebook: pixelbuilder2</p>
+
+      <div id="اعلان" class="section"> 
+       <h2>الاعلانات</h2>
+          <p>الاعلانات توجد غالبا في يوم الخميس اذا كانت توجد في مكان النقاط.وشكرا</p>
+           <p>.............................................................................................
+            ...............................................................................................
+            ...............................................................................................
+            ...............................................................................................
+            ...............................................................................................
+            ...............................................................................................
+            ...............................................................................................
+           </p>
+     </div>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById('submit-btn');
+    const codeInput = document.getElementById('code-input');
+    const errorMsg = document.getElementById('error-message');
+    const authSection = document.getElementById('auth-section');
+    const siteContent = document.getElementById('site-content');
+
+    const allowedCodes = ['SF1', 'GG2', 'G1S','K1K','J1S'];
+
+    submitBtn.onclick = () => {
+      if (allowedCodes.includes(codeInput.value.trim())) {
+        authSection.style.display = 'none';
+        siteContent.style.display = 'block';
+        errorMsg.textContent = '';
+      } else {
+        errorMsg.textContent = '❌ الكود الذي أدخلته خاطئ، حاول مرة أخرى';
+      }
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
+      document.getElementById(id).classList.add('active-section');
+    }
+  </script> 
+  
 </body>
 </html>
