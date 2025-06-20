@@ -6,22 +6,6 @@
   <title>pixelbuilder2.com</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
-#user-input {
-  width: 100%;
-  height: 150px;
-  background: linear-gradient(135deg, #000428, #004e92);
-  border: 2px solid #0ff;
-  border-radius: 18px;
-  padding: 18px;
-  font-size: 20px;
-  color: #0ff;
-  caret-color: #0ff;
-  box-shadow: 0 0 25px #0ff, inset 0 0 35px #0ff;
-  text-shadow: 0 0 4px #0ff;
-  outline: none;
-  resize: none;
-  transition: 0.3s ease-in-out;
-}
 
     * {
       margin: 0;
@@ -44,23 +28,16 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: linear-gradient(135deg, #000428, #004e92, #920e0e55, #07ee9555, #ee07a155, #f18a0355), url('https://i.ibb.co/Vt8FrR5/water-bubbles.gif') center/cover no-repeat;
+      background: linear-gradient(135deg, #000428, #004e92, #03ebb855, #07ee9555, #6804db55, #f509a655), url('https://i.ibb.co/Vt8FrR5/water-bubbles.gif') center/cover no-repeat;
       z-index: -1;
       opacity: 0.4;
       animation: animateBg 20s infinite alternate ease-in-out;
     }
 
-   @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
-
+    @keyframes animateBg {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
 
     header {
       display: flex;
@@ -104,31 +81,17 @@
       text-shadow: 0 0 25px #00ffff;
       color: #0ff;
     }
-  #code-input {
-    width: 80%;
-    font-size: 18px;
-    padding: 10px;
-  }
 
-  #submit-btn {
-    font-size: 18px;
-    padding: 10px 20px;
-    margin-top: 12px;
-  }
-
-  #main-title {
-    font-size: 28px;
-    padding: 0 15px;
-  }
-
-  #get-code {
-    font-size: 16px;
-  }
-
-#code-input:focus {
-  box-shadow: 0 0 25px #0ff, inset 0 0 30px #0ff;
-}
-
+    #code-input {
+      padding: 14px;
+      font-size: 22px;
+      border: 2px solid #0ff;
+      background-color: black;
+      color: #0ff;
+      border-radius: 12px;
+      outline: none;
+      box-shadow: 0 0 12px #0ff inset;
+    }
 
     #submit-btn {
       margin-top: 18px;
@@ -177,7 +140,7 @@
     }
 
     #error-message {
-      color: rgb(116, 235, 205);
+      color: rgb(3, 95, 72);
       margin-top: 10px;
       font-size: 18px;
     }
@@ -251,61 +214,13 @@
         font-size: 38px;
       }
       #site-name {
-        font-size: 24px;
+        font-size:65px;
       }
       .section {
         padding: 30px;
       }
     }
-       #main-title {
-    font-size: 28px;
-  }
-
-  #code-input {
-    width: 80%;
-    font-size: 18px;
-    padding: 10px;
-  }
-
-  #submit-btn {
-    font-size: 16px;
-    padding: 10px 20px;
-  }
-
-  .neon-button {
-    font-size: 16px;
-    padding: 10px 20px;
-    margin: 8px;
-  }
-
-  header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  #site-name {
-    font-size: 30px;
-  }
-
-  #settings-menu {
-    width: 90%;
-    right: 5%;
-    top: 60px;
-  }
-
-  .section {
-    padding: 20px;
-  }
-
-  form {
-    width: 100%;
-    padding: 20px;
-  }
-
-  input, textarea {
-    width: 100%;
-  }
- 
+      
 
     form {
       background: #111;
@@ -347,17 +262,7 @@
       color: lime;
       font-weight: bold;
     }
-    #bg-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  opacity: 0.4;
-  background: linear-gradient(135deg, #000428, #004e92, #920e0e55), url('https://i.ibb.co/Vt8FrR5/water-bubbles.gif') center/cover no-repeat;
-  animation: animateBg 20s infinite alternate ease-in-out;
-}
+
 #settings-menu {
   display: none;
   position: absolute;
@@ -378,136 +283,74 @@
   text-shadow: 0 0 10px #0ff;
   transition: background 0.3s ease;
 }
-#ai-helper {
-  background: rgba(0, 15, 40, 0.9);
-  border: 2px solid #0ff;
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 0 40px #0ff inset;
-  max-width: 900px;
-  margin: 0 auto 60px auto;
-  color: #0ff;
-  font-family: 'Cairo', sans-serif;
-}
 #settings-btn {
   padding: 10px 16px;
-  font-size: 18px;
+  font-size: 16px;
   background: transparent;
   border: 2px solid #0ff;
+  border-radius: 12px;
   color: #0ff;
-  border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 0 10px #0ff;
   transition: 0.3s;
-  z-index: 1001;
+  white-space: nowrap;
 }
 
-#settings-btn:hover {
-  background: #0ff;
-  color: #000;
-}
-
-/* مظهر مناسب للهواتف */
+/* عند الهواتف (شاشة صغيرة) */
 @media (max-width: 768px) {
   #settings-btn {
-    font-size: 16px;
-    padding: 8px 14px;
-    margin-right: 10px;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(0,0,0,0.7);
-    border: 2px solid #0ff;
-    box-shadow: 0 0 15px #0ff;
-  }
-
-  #settings-menu {
-    width: 90vw;
-    right: 5vw;
-    top: auto;
-    bottom: 80px;
-  }
-}
-
-
-/* عند الهواتف أو الشاشات الصغيرة */
-@media (max-width: 768px) {
-  #settings-btn {
-    padding: 6px 10px;
     font-size: 14px;
+    padding: 8px 12px;
+    width: 100px;
   }
-}
 
-
-#ai-helper textarea {
-  background: #002040;
-  color: #0ff;
-  border: 1px solid #0ff;
-  border-radius: 10px;
-  font-size: 18px;
-  padding: 12px;
-  box-shadow: 0 0 15px #0ff inset;
-  resize: none;
-}
-
-#ai-helper textarea {
-  width: 100%;
-  background: linear-gradient(135deg, #000428, #004e92);
-  color: #0ff;
-  border: 2px solid #0ff;
-  border-radius: 18px;
-  font-size: 20px;
-  padding: 18px;
-  box-shadow: 0 0 25px #0ff, inset 0 0 35px #0ff;
-  resize: none;
-  outline: none;
-  transition: 0.3s ease-in-out;
-  caret-color: #0ff;
-  text-shadow: 0 0 4px #0ff;
-}
-@media (max-width: 768px) {
   #settings-menu {
-    width: 90%;
-    right: 5%;
-    top: 65px;
-    font-size: 16px;
-    padding: 20px;
+    width: 90vw !important;
+    right: 5vw !important;
+    top: 60px !important;
   }
+}
 
-  #settings-menu label,
-  #settings-menu select,
-  #settings-menu input[type="range"] {
-    font-size: 15px;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
+#ai-chat textarea {
+  background: linear-gradient(135deg, #1a0033, #000033);
+  color: #e0b3ff;
+  border: 2px solid #b300ff;
+  border-radius: 16px;
+  font-size: 20px;
+  padding: 16px;
+  width: 100%;
+  box-shadow: 0 0 20px #b300ff inset, 0 0 10px #6600cc;
+  outline: none;
+  transition: 0.3s;
+  resize: none;
+}
 
-  header button {
-    font-size: 16px;
-    padding: 8px 14px;
-  }
+#ai-chat textarea:focus {
+  background: linear-gradient(135deg, #29004d, #000044);
+  box-shadow: 0 0 25px #cc33ff, inset 0 0 30px #9900cc;
+}
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.25) contrast(1.1) blur(1px);
 }
 
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <head>
-  ...
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-KF987NTP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
-  ...
-</head>
-
 </head>
 <body>
-  <div id="bg-layer"></div>
+  <video autoplay muted loop id="bg-video">
+  <source src="https://cdn.coverr.co/videos/coverr-hacking-terminal-8535/1080p.mp4" type="video/mp4">
+  متصفحك لا يدعم تشغيل الفيديو.
+</video>
+
+ 
 
   <header>
   <div style="display: flex; align-items: center;">
@@ -517,12 +360,12 @@
   </div>
 
   <div style="flex: 1; text-align: center;">
-    <div id="site-name" class="glow-text">🔧 Pixel<span style="color:#fff;">Builder</span><span style="color:#f0f;">2</span></div>
+    <div id="site-name" class="glow-text"> Pixel<span style="color:#fff;">Builder</span><span style="color:#f0f;">2</span></div>
 
   </div>
 
   <div style="position: relative; margin-right: 20px;">
-    <button onclick="toggleSettings()" style="padding: 10px 16px; font-size: 18px; background: transparent; border: 2px solid #0ff; color: #0ff; border-radius: 10px; cursor: pointer; box-shadow: 0 0 10px #0ff;">⚙️ الإعدادات</button>
+   <button id="settings-btn" onclick="toggleSettings()">⚙️ الإعدادات</button>
     <div id="settings-menu" style="display:none; position:absolute; top:50px; right:0; background:#dfcaca; border:1px solid #0ff; border-radius:12px; padding:15px; z-index:1000; box-shadow:0 0 20px #0ff;">
     <label>🖼️ الخلفية:
   <select onchange="changeBackground(this.value)">
@@ -614,14 +457,15 @@
              <p>email: pixelbuilder2siteweb@gmail.com</p>
              <p>instagram: pixel.2</p>
              <p>facebook: pixelbuilder2</p>
-                  <p><button class="neon-button" onclick="showSection('تحميل')">التحميلات</button></p>
+                <p><button class="neon-button" onclick="showSection('تحميل')">التحميلات</button></p>
+              
       </div>
       <div id="اعلان" class="section"> 
        <h2>الاعلانات</h2>
           <p>الاعلانات توجد غالبا في يوم الخميس اذا كانت توجد في مكان النقاط.وشكرا</p>
-       <p>.................................................................................
+           <p>.............................................................................
           .................................................................................
-          .................................................................................
+         .................................................................................
           .................................................................................
           .................................................................................                 
           .................................................................................
@@ -663,7 +507,7 @@
             <p>                                                                                                      </p>
           <button class="neon-button" onclick="$('jeu')">كيفية صنع كود خاص بك </button>
           <p>                                                                         </p>
-          <button class="neon-button" onclick="$('jeu')">كيفية صنع موقع خاص بك في اول مرة لك</button>
+          <button class="forEach" onclick="$('jeu')">كيفية صنع موقع خاص بك في اول مرة لك</button>
           <p>                                                                                        </p>
 
       </div>
@@ -672,12 +516,22 @@
   <div id="ai-login">
     <p>يرجى إدخال الكود للدخول:</p>
      <input type="text" id="ai-code-input" placeholder="أدخل الكود هنا">
-    <button onclick="aiCheckCode()">دخول</button>
+    <button onclick="aiCheckCode()">دخول</button> 
     <p id="ai-login-error" style="color: red;"></p>
   </div>
-
-  </div>
+  </d>
   <div id="ai-chat" style="display:none; margin-top: 20px;">
+    <div style="position: relative; display: flex; align-items: center; margin-top: 10px;">
+  <button onclick="toggleQuestionList()" style="background: #003366; color: #0ff; border: 2px solid #0ff; padding: 10px 16px; border-radius: 8px; font-size: 20px; cursor: pointer; box-shadow: 0 0 12px #0ff; margin-right: 10px;">≡</button>
+  <ul id="question-list" style="display: none; position: absolute; top: 50px; left: 0; background: #001f3f; border: 2px solid #0ff; border-radius: 10px; padding: 10px; list-style: none; width: 100%; max-width: 400px; z-index: 1000; box-shadow: 0 0 20px #0ff;">
+    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">دروس وتعليمات على اللغة البرمجية</li>
+    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">تعلم كيفية البرمجة و استخدام اداتها</li>
+    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">تطوير المهارات الفردية في البرمجة بصفة عامة</li>
+    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">كيفية صنع تطبيق باللغة البرمجية html and app.js and css</li>
+    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">كيفية صنع كود خاص بك</li>
+    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">كيفية صنع موقع خاص بك في اول مرة لك</li>
+  </ul>
+</div>
     <textarea id="user-input" rows="4" style="width: 100%;" placeholder="اكتب سؤالك أو طلبك هنا..."></textarea><br>
     <button onclick="aiSendMessage()">إرسال</button>
     <div id="ai-response" style="margin-top: 15px; padding: 15px; background: #001f3f; border-radius: 10px; color: #0ff; font-size: 18px; box-shadow: 0 0 20px #0ff;"></div>
@@ -787,40 +641,58 @@
   }
 </script>
 <script>
+   
+  
   const allowedAICodes = ['AI2025', 'DEVHELP', 'SKILLUP'];
-
-  const validQuestions = [
-    "دروس وتعليمات على اللغة البرمجية",
-    "تعلم كيفية البرمجة و استخدام اداتها",
-    "تطوير المهارات الفردية في البرمجة بصفة عامة",
-    "كيفية صنع تطبيق باللغة البرمجية html and app.js and css",
-    "كيفية صنع كود خاص بك",
-    "كيفية صنع موقع خاص بك في اول مرة لك"
-  ];
 
   function aiCheckCode() {
     const input = document.getElementById("ai-code-input").value.trim();
+    const loginSection = document.getElementById("ai-login");
+    const chatSection = document.getElementById("ai-chat");
+    const error = document.getElementById("ai-login-error");
+
     if (allowedAICodes.includes(input)) {
-      document.getElementById("ai-login").style.display = "none";
-      document.getElementById("ai-chat").style.display = "block";
-      document.getElementById("ai-login-error").textContent = "";
+      loginSection.style.display = "none";
+      chatSection.style.display = "block";
+      error.textContent = "";
     } else {
-      document.getElementById("ai-login-error").textContent = "❌ الكود خاطئ، حاول مرة أخرى";
+      error.textContent = "❌ الكود خاطئ. حاول مجددًا.";
     }
   }
 
   function aiSendMessage() {
-    const userInput = document.getElementById("user-input").value.trim();
+    const question = document.getElementById("user-input").value.trim();
     const responseBox = document.getElementById("ai-response");
 
-    if (validQuestions.includes(userInput)) {
-      responseBox.innerHTML = `✅ هذا سؤال صالح: "<b>${userInput}</b>"<br>📌 سيتم عرض المحتوى المناسب قريبًا.`;
-    } else {
-      responseBox.innerHTML = `❌ عذراً، هذا السؤال غير موجود لدينا. يرجى المحاولة بسؤال آخر.`;
-    }
+    const knownAnswers = {
+      "دروس وتعليمات على اللغة البرمجية": "ابدأ بتعلم HTML و CSS ثم JavaScript.",
+      "تعلم كيفية البرمجة و استخدام اداتها": "تعلم أدوات مثل VS Code و Git و المتصفحات.",
+      "تطوير المهارات الفردية في البرمجة بصفة عامة": "مارس التحديات يوميًا وتعلم من مشاريع جاهزة.",
+      "كيفية صنع تطبيق باللغة البرمجية html and app.js and css": "أنشئ هيكل HTML ثم أضف CSS و JS عبر app.js.",
+      "كيفية صنع كود خاص بك": "ابدأ بفكرة صغيرة وحولها إلى كود بنفسك.",
+      "كيفية صنع موقع خاص بك في اول مرة لك": "ابدأ من قالب بسيط أو HTML فقط، وجرّب رفعه على GitHub Pages."
+    };
 
-    document.getElementById("user-input").value = "";
+    if (knownAnswers[question]) {
+      responseBox.innerHTML = `✅ <b>الجواب:</b> ${knownAnswers[question]}`;
+    } else {
+      responseBox.innerHTML = "❌ لم يتم العثور على إجابة لهذا السؤال. حاول بواحد من الأسئلة المحددة.";
+    }
+  }
+
+
+</script>
+<script>
+  function toggleQuestionList() {
+    const list = document.getElementById("question-list");
+    list.style.display = (list.style.display === "none" || list.style.display === "") ? "block" : "none";
+  }
+
+  function selectQuestion(text) {
+    document.getElementById("user-input").value = text;
+    document.getElementById("question-list").style.display = "none";
   }
 </script>
+
 </body>
 </html>
