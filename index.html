@@ -1,698 +1,901 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>pixelbuilder2.com</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pixelbuilder2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-      scroll-behavior: smooth;
+  :root {
+    --neon-blue: #00ffff;
+    --neon-purple: #b500f2;
+    --neon-pink: #ff00ff;
+    --bg-dark: #0a0a1a;
+    --text-light: #e0f7ff;
+    --shadow-glow-blue: 0 0 10px var(--neon-blue), 0 0 25px var(--neon-blue);
+    --shadow-glow-purple: 0 0 10px var(--neon-purple), 0 0 25px var(--neon-purple);
+    --shadow-glow-pink: 0 0 12px var(--neon-pink), 0 0 30px var(--neon-pink);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+  }
+
+  body {
+    background: radial-gradient(ellipse at center, #00111f 0%, #000000 80%);
+    color: var(--text-light);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* خلفية نجوم متلألئة */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, #00111f 0%, #000000 90%);
+    z-index: -2;
+  }
+  .stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 5% 20%, var(--neon-blue) 1px, transparent 2px),
+      radial-gradient(circle at 15% 40%, var(--neon-purple) 1.5px, transparent 2.5px),
+      radial-gradient(circle at 30% 80%, var(--neon-pink) 1px, transparent 2px),
+      radial-gradient(circle at 60% 50%, var(--neon-blue) 1.3px, transparent 2.5px),
+      radial-gradient(circle at 75% 10%, var(--neon-purple) 1.1px, transparent 2px),
+      radial-gradient(circle at 90% 70%, var(--neon-pink) 1.4px, transparent 2.5px);
+    background-repeat: repeat;
+    animation: twinkle 4s infinite alternate ease-in-out;
+    z-index: -1;
+  }
+  @keyframes twinkle {
+    0% {opacity: 1;}
+    100% {opacity: 0.5;}
+  }
+
+  /* هيدر */
+  header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 60px;
+    background: rgba(10, 10, 30, 0.9);
+    box-shadow: 0 0 35px var(--neon-purple);
+    user-select: none;
+    z-index: 15;
+  }
+
+  /* اللوغو دائري متلألئ */
+  .logo {
+    position: absolute;
+    right: 25px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--neon-blue), 0 0 40px var(--neon-pink);
+    cursor: pointer;
+    animation: pulseGlow 3s infinite ease-in-out;
+    transition: box-shadow 0.3s ease;
+  }
+  .logo:hover {
+    box-shadow: 0 0 35px var(--neon-pink), 0 0 60px var(--neon-blue);
+  }
+
+  /* عنوان بالوسط مع تأثير كتابة متلألئ */
+  .title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    color: var(--neon-pink);
+    text-shadow: 0 0 8px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
+    animation: flicker 3s linear infinite;
+    user-select: text;
+  }
+
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      text-shadow: 0 0 8px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
     }
-
-    body {
-      background: #000;
-      overflow-x: hidden;
-      color: white;
+    20%, 22%, 24%, 55% {
+      text-shadow: none;
     }
+  }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #000428, #004e92, #03ebb855, #07ee9555, #6804db55, #f509a655), url('https://i.ibb.co/Vt8FrR5/water-bubbles.gif') center/cover no-repeat;
-      z-index: -1;
-      opacity: 0.4;
-      animation: animateBg 20s infinite alternate ease-in-out;
+  /* زر الإعدادات اليسار، أيقونة نيون مع هولدر */
+  .settings-btn {
+    position: absolute;
+    left: 25px;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 3px solid var(--neon-purple);
+    background: transparent;
+    color: var(--neon-purple);
+    cursor: pointer;
+    font-size: 26px;
+    line-height: 44px;
+    text-align: center;
+    box-shadow: 0 0 15px var(--neon-purple), 0 0 40px var(--neon-purple);
+    transition: all 0.3s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .settings-btn:hover {
+    color: var(--neon-pink);
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 40px var(--neon-pink), 0 0 60px var(--neon-pink);
+  }
+
+  /* حركة نبض خفيف متواصل للأزرار */
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 15px var(--neon-blue), 0 0 40px var(--neon-pink);
     }
-
-    @keyframes animateBg {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
+    50% {
+      box-shadow: 0 0 30px var(--neon-pink), 0 0 60px var(--neon-blue);
     }
+  }
 
+  /* الرئيسية */
+  main {
+    flex: 1;
+    max-width: 960px;
+    margin: 45px auto 70px;
+    padding: 20px 28px 40px;
+    background: rgba(10, 10, 30, 0.9);
+    border-radius: 30px;
+    box-shadow: 0 0 60px var(--neon-purple);
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* أزرار جانبية عريضة وفخمة مع أيقونات */
+  .side-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+
+  .side-buttons button {
+    flex: 1;
+    margin: 0 10px;
+    padding: 18px 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--neon-purple);
+    background: transparent;
+    border: 3px solid var(--neon-purple);
+    border-radius: 35px;
+    box-shadow: 0 0 20px var(--neon-purple);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    user-select: none;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .side-buttons button svg {
+    fill: var(--neon-purple);
+    width: 24px;
+    height: 24px;
+    transition: fill 0.3s ease;
+  }
+  .side-buttons button:hover,
+  .side-buttons button.active {
+    color: var(--neon-pink);
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 40px var(--neon-pink);
+  }
+  .side-buttons button:hover svg,
+  .side-buttons button.active svg {
+    fill: var(--neon-pink);
+  }
+  .side-buttons button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
+    animation: shine 3s infinite;
+  }
+  .side-buttons button:hover::before,
+  .side-buttons button.active::before {
+    animation-play-state: running;
+  }
+  .side-buttons button::before {
+    animation-play-state: paused;
+  }
+  @keyframes shine {
+    0% {left: -100%;}
+    100% {left: 100%;}
+  }
+
+  /* محتوى الأكواد */
+  .codes-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--neon-pink) transparent;
+  }
+  .codes-list::-webkit-scrollbar {
+    width: 12px;
+  }
+  .codes-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .codes-list::-webkit-scrollbar-thumb {
+    background-color: var(--neon-pink);
+    border-radius: 15px;
+  }
+
+  /* عناصر الأكواد */
+  .code-item {
+    background: #121233;
+    border-radius: 30px;
+    padding: 22px 28px;
+    margin-bottom: 26px;
+    box-shadow: 0 0 30px var(--neon-purple);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .code-item:hover {
+    box-shadow: 0 0 50px var(--neon-pink);
+    transform: scale(1.04);
+  }
+
+  .code-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--neon-pink);
+    margin-bottom: 18px;
+    text-shadow: 0 0 15px var(--neon-pink);
+  }
+
+  .code-snippet {
+    font-family: 'JetBrains Mono', monospace;
+    background: #0a0a1a;
+    color: var(--neon-blue);
+    padding: 22px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    white-space: pre-wrap;
+    max-height: 260px;
+    overflow: auto;
+    box-shadow: inset 0 0 15px var(--neon-blue);
+  }
+
+  .copy-btn {
+    margin-top: 20px;
+    background: var(--neon-pink);
+    color: #000;
+    border: none;
+    padding: 15px 45px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1.3rem;
+    box-shadow: 0 0 35px var(--neon-pink);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    display: inline-block;
+  }
+  .copy-btn:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 45px var(--neon-blue);
+  }
+  .copy-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* إشعار نسخ */
+  .copy-notif {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: var(--neon-pink);
+    color: #000;
+    padding: 22px 50px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    z-index: 200;
+    box-shadow: 0 0 40px var(--neon-pink);
+  }
+  .copy-notif.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* لوحة الإعدادات انزلاق جانبي */
+  #settingsPanel {
+    position: fixed;
+    top: 0; left: 0;
+    width: 320px;
+    height: 100vh;
+    background: #111122ee;
+    box-shadow: 5px 0 35px var(--neon-purple);
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    padding: 30px 25px;
+    color: var(--text-light);
+    font-family: 'JetBrains Mono', monospace;
+    transform: translateX(-120%);
+    transition: transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    z-index: 999;
+    user-select: none;
+  }
+  #settingsPanel.open {
+    transform: translateX(0);
+  }
+  #settingsPanel h3 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 900;
+    color: var(--neon-purple);
+    text-shadow: 0 0 25px var(--neon-purple);
+    font-size: 2rem;
+  }
+  #settingsPanel label {
+    display: block;
+    margin: 20px 0 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  #settingsPanel input[type="checkbox"] {
+    margin-left: 10px;
+    transform: scale(1.4);
+    cursor: pointer;
+  }
+  #settingsPanel button.close-btn {
+    display: block;
+    margin: 40px auto 0;
+    background: var(--neon-pink);
+    color: #000;
+    border: none;
+    padding: 14px 45px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1.2rem;
+    box-shadow: 0 0 30px var(--neon-pink);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  #settingsPanel button.close-btn:hover {
+    background: var(--neon-blue);
+    box-shadow: 0 0 40px var(--neon-blue);
+  }
+
+  /* زر البحث العائم */
+  #searchToggle {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 60px;
+    height: 60px;
+    background: var(--neon-pink);
+    border-radius: 50%;
+    box-shadow: 0 0 35px var(--neon-pink);
+    cursor: pointer;
+    border: none;
+    font-size: 32px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 250;
+    transition: box-shadow 0.3s ease;
+  }
+  #searchToggle:hover {
+    box-shadow: 0 0 55px var(--neon-pink);
+  }
+
+  /* حقل البحث العائم */
+  #searchBar {
+    position: fixed;
+    bottom: 110px;
+    left: 40px;
+    width: 300px;
+    max-width: 80vw;
+    padding: 14px 25px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: 3px solid var(--neon-pink);
+    background: #0a0a1add;
+    color: var(--neon-pink);
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 0 25px var(--neon-pink);
+    outline: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 260;
+  }
+  #searchBar.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #searchBar::placeholder {
+    color: var(--neon-pink);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 700px) {
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background: rgba(109, 63, 63, 0.7);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      box-shadow: 0 0 20px #0ff;
+      padding: 12px 30px;
     }
-
-    #logo {
-      width: 60px;
-      margin-left: 20px;
-      filter: drop-shadow(0 0 10px #0ff);
+    .logo {
+      width: 44px;
+      height: 44px;
     }
-
-    #site-name {
-      font-size: 66px;
-      color: #0ff;
-      margin-right: 20px;
-      text-shadow: 0 0 20px #0ff;
-    }
-
-    #auth-section {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding-top: 100px;
-      text-align: center;
-    }
-
-    #main-title {
-      font-size: 56px;
-      margin-bottom: 30px;
-      text-shadow: 0 0 25px #00ffff;
-      color: #0ff;
-    }
-
-    #code-input {
-      padding: 14px;
+    .settings-btn {
+      width: 38px;
+      height: 38px;
       font-size: 22px;
-      border: 2px solid #0ff;
-      background-color: black;
-      color: #0ff;
-      border-radius: 12px;
-      outline: none;
-      box-shadow: 0 0 12px #0ff inset;
+      left: 15px;
     }
-
-    #submit-btn {
-      margin-top: 18px;
-      padding: 12px 24px;
-      font-size: 20px;
-      background-color: transparent;
-      border: 2px solid #0ff;
-      border-radius: 10px;
-      color: #0ff;
-      cursor: pointer;
-      box-shadow: 0 0 20px #0ff;
-      transition: 0.4s;
+    .title {
+      font-size: 2rem;
     }
-
-    #submit-btn:hover {
-      background-color: #0ff;
-      color: #000;
+    main {
+      margin: 30px 15px 50px;
+      padding: 15px 18px 35px;
     }
-
-    #get-code {
-      margin-top: 25px;
-      font-size: 18px;
-      color: #fff;
+    .side-buttons button {
+      margin: 0 6px;
+      font-size: 1rem;
+      padding: 15px 0;
     }
-
-    #get-code a {
-      color: #0ff;
-      text-decoration: underline;
+    .code-snippet {
+      font-size: 1rem;
+      max-height: 180px;
     }
-
-    .social-links {
-      margin-top: 20px;
+    #searchBar {
+      bottom: 90px;
+      left: 20px;
+      width: 240px;
+      font-size: 1rem;
+      padding: 10px 18px;
     }
-
-    .social-links a {
-      margin: 0 12px;
-      color: #0ff;
+    #searchToggle {
+      bottom: 30px;
+      left: 20px;
+      width: 52px;
+      height: 52px;
       font-size: 28px;
-      text-decoration: none;
-      transition: 0.3s;
     }
-
-    .social-links a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    #error-message {
-      color: rgb(3, 95, 72);
-      margin-top: 10px;
-      font-size: 18px;
-    }
-
-    #site-content {
-      display: none;
-      padding: 140px 20px 50px;
-      text-align: center;
-    }
-
-    nav {
-      margin: 40px 0;
-    }
-
-    .neon-button {
-      display: inline-block;
-      margin: 12px;
-      padding: 14px 28px;
-      font-size: 20px;
-      color: #0ff;
-      background: rgba(0,0,0,0.3);
-      border: 2px solid #0ff;
-      border-radius: 14px;
-      text-decoration: none;
-      box-shadow: 0 0 15px #0ff, 0 0 30px #0ff inset;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-
-    .neon-button:hover {
-      background: #0ff;
-      color: #000;
-      box-shadow: 0 0 25px #0ff, 0 0 50px #0ff inset;
-    }
-
-    .section {
-      display: none;
-      margin: 60px auto;
-      background-color: rgba(0, 0, 0, 0.75);
-      padding: 50px;
-      border-radius: 24px;
-      max-width: 1000px;
-      box-shadow: 0 0 25px #0ff;
-    }
-
-    .active-section {
-      display: block;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    h2 {
-      font-size: 34px;
-      margin-bottom: 20px;
-      color: #0ff;
-      text-shadow: 0 0 12px #0ff;
-    }
-
-    p {
-      font-size: 22px;
-      line-height: 1.7;
-      color: #ccc;
-    }
-
-    @media (max-width: 768px) {
-      #main-title {
-        font-size: 38px;
-      }
-      #site-name {
-        font-size:65px;
-      }
-      .section {
-        padding: 30px;
-      }
-    }
-      
-
-    form {
-      background: #111;
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 0 20px #0713c255;
-    }
-
-    input, textarea {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      background: #222;
-      color: rgb(11, 168, 147);
-    }
-
-    button {
-      background: #0ff;
-      color: #000;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #00cccc;
-    }
-
-    #messageSent {
-      margin-top: 20px;
-      color: lime;
-      font-weight: bold;
-    }
-
-#settings-menu {
-  display: none;
-  position: absolute;
-  top: 50px;
-  right: 0;
-  background: rgba(10, 10, 30, 0.6); /* خلفية شفافة بلون داكن */
-  border: 2px solid #0ff;
-  border-radius: 16px;
-  padding: 30px 25px;
-  width: 320px;
-  z-index: 1000;
-  box-shadow: 0 0 25px #0ff, inset 0 0 15px #0ff;
-  backdrop-filter: blur(12px); /* تمويه الخلفية */
-  -webkit-backdrop-filter: blur(12px); /* لدعم متصفحات أخرى */
-  font-size: 18px;
-  color: #0ff;
-  font-weight: 600;
-  text-shadow: 0 0 10px #0ff;
-  transition: background 0.3s ease;
-}
-#settings-btn {
-  padding: 10px 16px;
-  font-size: 16px;
-  background: transparent;
-  border: 2px solid #0ff;
-  border-radius: 12px;
-  color: #0ff;
-  cursor: pointer;
-  box-shadow: 0 0 10px #0ff;
-  transition: 0.3s;
-  white-space: nowrap;
-}
-
-/* عند الهواتف (شاشة صغيرة) */
-@media (max-width: 768px) {
-  #settings-btn {
-    font-size: 14px;
-    padding: 8px 12px;
-    width: 100px;
   }
-
-  #settings-menu {
-    width: 90vw !important;
-    right: 5vw !important;
-    top: 60px !important;
-  }
-}
-
-#ai-chat textarea {
-  background: linear-gradient(135deg, #1a0033, #000033);
-  color: #e0b3ff;
-  border: 2px solid #b300ff;
-  border-radius: 16px;
-  font-size: 20px;
-  padding: 16px;
-  width: 100%;
-  box-shadow: 0 0 20px #b300ff inset, 0 0 10px #6600cc;
-  outline: none;
-  transition: 0.3s;
-  resize: none;
-}
-
-#ai-chat textarea:focus {
-  background: linear-gradient(135deg, #29004d, #000044);
-  box-shadow: 0 0 25px #cc33ff, inset 0 0 30px #9900cc;
-}
-
-#bg-video {
+  #settingsPanel {
   position: fixed;
   top: 0;
   left: 0;
-  min-width: 100vw;
-  min-height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  filter: brightness(0.25) contrast(1.1) blur(1px);
+  width: 320px;
+  max-width: 80vw;
+  height: 100vh;
+  background: #0c0c1fcc;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px #ff33cccc;
+  padding: 25px 20px 30px;
+  color: var(--neon-pink);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  z-index: 9999;
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow-y: auto;
 }
 
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+#settingsPanel.open {
+  transform: translateX(0);
+}
+
+#settingsPanel h3 {
+  margin: 0 0 15px;
+  font-size: 1.6rem;
+  text-align: center;
+  text-shadow: 0 0 15px var(--neon-pink);
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-group label {
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+.setting-group select,
+.setting-group input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 9px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--neon-pink) 0%, var(--neon-purple) 100%);
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--neon-pink);
+  transition: box-shadow 0.3s ease;
+}
+
+.setting-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--neon-pink);
+  box-shadow: 0 0 8px var(--neon-pink);
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.setting-group input[type="range"]:focus::-webkit-slider-thumb {
+  background: var(--neon-purple);
+  box-shadow: 0 0 15px var(--neon-purple);
+}
+
+.setting-group input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--neon-pink);
+  box-shadow: 0 0 8px var(--neon-pink);
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.setting-group input[type="range"]:focus::-moz-range-thumb {
+  background: var(--neon-purple);
+  box-shadow: 0 0 15px var(--neon-purple);
+}
+
+/* زر الإغلاق */
+.close-btn {
+  margin-top: auto;
+  padding: 12px 0;
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+  border: none;
+  border-radius: 25px;
+  color: #111;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--neon-pink);
+  transition: background 0.4s ease;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink));
+  outline: none;
+}
+
+/* مفتاح التشغيل/الإيقاف (Switch) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background-color: var(--neon-purple);
+  border-radius: 28px;
+  transition: 0.4s;
+  box-shadow: 0 0 8px var(--neon-purple);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--neon-pink);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--neon-pink);
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--neon-pink);
+  box-shadow: 0 0 12px var(--neon-pink);
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+  background-color: var(--neon-purple);
+  box-shadow: 0 0 12px var(--neon-purple);
+}
+
+/* لعرض القيمة بجانب السلايدر */
+.setting-group label span {
+  font-weight: 700;
+  margin-left: 8px;
+  color: var(--neon-blue);
+}
+
+</style>
 </head>
 <body>
-  <video autoplay muted loop id="bg-video">
-  <source src="https://cdn.coverr.co/videos/coverr-hacking-terminal-8535/1080p.mp4" type="video/mp4">
-  متصفحك لا يدعم تشغيل الفيديو.
-</video>
 
- 
+<div class="stars"></div>
 
-  <header>
-  <div style="display: flex; align-items: center;">
-    <div style="width: 79px; height: 70px; border-radius: 50%; overflow: hidden; margin-left: 20px; box-shadow: 0 0 15px #0ff;">
-      <img src="WhatsApp Image 2025-06-13 at 15.24.48_af12ad61.jpg" alt="logo" style="width: 100%; height: 100%; object-fit: cover;">
-    </div>
-  </div>
-
-  <div style="flex: 1; text-align: center;">
-    <div id="site-name" class="glow-text"> Pixel<span style="color:#fff;">Builder</span><span style="color:#f0f;">2</span></div>
-
-  </div>
-
-  <div style="position: relative; margin-right: 20px;">
-   <button id="settings-btn" onclick="toggleSettings()">⚙️ الإعدادات</button>
-    <div id="settings-menu" style="display:none; position:absolute; top:50px; right:0; background:#dfcaca; border:1px solid #0ff; border-radius:12px; padding:15px; z-index:1000; box-shadow:0 0 20px #0ff;">
-    <label>🖼️ الخلفية:
-  <select onchange="changeBackground(this.value)">
-    <option value="bubbles">فقاعات ماء</option>
-    <option value="space">خلفية فضاء</option>
-    <option value="grid">شبكة نيون</option>
-    <option value="video">فيديو حي</option>
-  </select>
-</label>
-<label>🧠 نمط ذكي:
-  <select onchange="toggleSmartMode(this.value)">
-    <option value="off">عادي</option>
-    <option value="on">مساعد ذكي</option>
-  </select>
-</label>
-
-  
-
-         </select>
-      </label><br><br>
-      <label>🌗 الوضع:
-        <select onchange="toggleTheme(this.value)">
-          <option value="dark">ليلي</option>
-          <option value="light">نهاري</option>
-        </select>
-      </label><br><br>
-      <label>🔍 الزوم:
-        <input type="range" min="0.8" max="1.5" step="0.1" value="1" onchange="zoomSite(this.value)">
-      </label><br><br>
-      <label>🎨 الألوان:
-        <select onchange="changeColors(this.value)">
-          <option value="default">افتراضي</option>
-          <option value="red">أحمر</option>
-          <option value="green">أخضر</option>
-          <option value="blue">أزرق</option>
-        </select>
-      </label>
-    </div>
-  </div>
+<header>
+  <button class="settings-btn" title="الإعدادات" id="settingsBtn" aria-label="فتح الإعدادات">⚙️</button>
+  <div class="title">pixelbuilder2</div>
+ <img src="WhatsApp Image 2025-06-13 at 15.24.48_af12ad61.jpg" alt="لوغو الموقع" class="logo" />
 </header>
 
-
-  <div id="auth-section">
-    <div id="main-title">💫 مرحبا بك في عالم البرمجة- pixelbuilder2 💫</div>
-    <input type="text" id="code-input" placeholder="يرجى ادخال الكود">
-    <button id="submit-btn">دخول</button>
-    <div id="error-message"></div>
-    <div id="get-code">🔑 إذا كنت لا تملك الكود <a href="#">اضغط هنا للحصول عليه</a></div>
-    <div class="social-links">
-      <a href="https://facebook.com/pixel builder" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="https://instagram.com/pixel.2" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="email://pixelbulder2siteweb@gmail.com"><i class="fas fa-envelope"></i></a>
-    </div>
+<main>
+  <div class="side-buttons" id="navButtons" role="navigation" aria-label="قائمة التنقل">
+    <button class="active" data-category="all" aria-current="page" aria-label="الرئيسية">
+      <!-- أيقونة المنزل -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9L12 2L21 9V21H15V15H9V21H3V9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      الرئيسية
+    </button>
+    <button data-category="html" aria-label="أكواد HTML">
+      <!-- أيقونة HTML -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4H21L19 20L12 22L5 20L3 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      HTML
+    </button>
+    <button data-category="css" aria-label="أكواد CSS">
+      <!-- أيقونة CSS -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3H22L20 21L12 23L4 21L2 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      CSS
+    </button>
+    <button data-category="js" aria-label="أكواد JavaScript">
+      <!-- أيقونة JS -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4V20L17 14L7 8V4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      JavaScript
+    </button>
+    <button data-category="about" aria-label="حول الموقع">
+      <!-- أيقونة معلومات -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="12" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="8" r="1" fill="currentColor"/></svg>
+      حول الموقع
+    </button>
   </div>
 
-  <div id="site-content">
-    <nav>
-      <button class="neon-button" onclick="showSection('home')">الرئيسية</button>
-      <button class="neon-button" onclick="showSection('contact')">التقديم</button>
-      <button class="neon-button" onclick="showSection('help')">المساعدة</button>
-      <button class="neon-button" onclick="showSection('اعلان')">الاعلانات</button>
-    </nav>
+  <div class="codes-list" id="codesList" tabindex="0" aria-live="polite" aria-atomic="true">
+    <!-- الأكواد تظهر هنا -->
+  </div>
+</main>
 
-    <div id="home" class="section active-section">
-      <h2>الرئيسية</h2>
-      <p>✨ هذا الموقع هو بوابتك لبناء المستقبل .<nav> <button class="neon-button" onclick="showSection('سري')">مكان تقديم الاكواد المجهزة</button></nav> ابدأ الآن واكتشف كل إمكانياتك!</p>
-    </div>
+<!-- إشعار نسخ -->
+<div class="copy-notif" id="copyNotif" role="alert" aria-live="assertive">تم نسخ الكود!</div>
 
+<!-- لوحة الإعدادات الجانبية -->
+<!-- داخل لوحة الإعدادات (#settingsPanel) -->
+<div id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <h3 id="settingsTitle">الإعدادات</h3>
   
+  <label>
+    صوت عند نسخ الكود
+    <input type="checkbox" id="soundToggle" checked aria-checked="true" role="checkbox" />
+  </label>
+  
+  <label for="themeSelect">اختيار لون الثيم:</label>
+  <select id="themeSelect" aria-label="اختيار لون الثيم">
+    <option value="purple-pink">بنفسجي-وردي</option>
+    <option value="blue-green">أزرق-أخضر</option>
+    <option value="red-orange">أحمر-برتقالي</option>
+  </select>
+  
+  <label for="glowRange">شدة توهج النيون:</label>
+  <input type="range" id="glowRange" min="0" max="100" value="50" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" />
+  
+  <label for="zoomRange">تكبير/تصغير المحتوى:</label>
+  <input type="range" id="zoomRange" min="50" max="150" value="100" aria-valuemin="50" aria-valuemax="150" aria-valuenow="100" />
 
-
-    <div id="contact" class="section">
-      <h2>التقديم</h2>
-      <p><form action="https://formspree.io/f/your_form_id" method="POST">
-  <h2>📨 ارسل لنا الكود الخاص بك</h2>
-       <p>يرجى ملئ البطاقة</p>
-  <input type="phon" name="whatssap" placeholder="رقم الهاتف" required><br><br>
-  <input type="email" name="email" placeholder="بريدك الإلكتروني" required><br><br>
-  <textarea name="message" placeholder="اكتب الكود htmlالخاص بك.." rows="5" required></textarea><br><br>
-  <button type="submit">إرسال</button>
-</form>:منصتنا تقدم افضل اكواد بمعنى مواقع اريد ا ننقدم لكم اكواد خاصة لكم   </p>
-   <button class="neon-button" onclick="showSection('dossier')">ملفات التحميل</button>
-    </div>
-
-     <div id="help" class="section"> 
-      <h2>المساعدة</h2>
-      <p>ان تواجه مشاكل في هذا الموقع المرجو الاتصال بنا لاحقا ستصل لك الرسالة بعد24ساعة</p>
-             <p>whatssap: +212 65114-9570/+112 716294761</p>
-             <p>email: pixelbuilder2siteweb@gmail.com</p>
-             <p>instagram: pixel.2</p>
-             <p>facebook: pixelbuilder2</p>
-                <p><button class="neon-button" onclick="showSection('تحميل')">التحميلات</button></p>
-              
-      </div>
-      <div id="اعلان" class="section"> 
-       <h2>الاعلانات</h2>
-          <p>الاعلانات توجد غالبا في يوم الخميس اذا كانت توجد في مكان النقاط.وشكرا</p>
-           <p>.............................................................................
-          .................................................................................
-         .................................................................................
-          .................................................................................
-          .................................................................................                 
-          .................................................................................
-           </p>
-     </div>
-     <div id="سري" class="section"> 
-       <h2>مكان تقديم اكواد مجهزة</h2>
-         <p>الاكواد هي اساس للتئسيس المواقع الكبرى و انشاء صفحات الويب
-       الاكواد هي مهمة للمبرمج و هي اساس للمبرمج كما توجد في زر التالي.:<butoon  class="neon-button" onclick="showSection('code')">code</butoon>
-         </p>
-           </div>
-
-     <div id="code" class="section">
-        <h2>الاكواد  </h2>
-           <p><button class="neon-button" onclick="showSection('contact')">التقديم</button>    عليك اولا تقديم كود خاص بك :تقديم كود خاص بك في قسم التقديم</p>
-     </div>
-    <div id="dossier" class="section">
-     <h2>ملفات</h2>
-     <p>الملفات ليست متشابهة.كل ملف و كود خاص به </p>
-<a href="site web.txt" download class="neon-button">📥 تحميل الملف</a>
-<a href="code.html.txt" download class="neon-button">📥 تحميل الملف</a>
-<a href="pdf.code.html.txt" download class="neon-button">📥 تحميل الملف</a>
-<a href="pdf..txt" download class="neon-button">📥 تحميل الملف</a>
-<a href="pdf.html.txt" download class="neon-button">📥 تحميل الملف</a>
-<a href="code.html.code.txt" download class="neon-button">📥 تحميل الملف</a>
-<a href="code.site.txt" download class="neon-button">📥 تحميل الملف</a>
-    </div>
-      <div id="تحميل" class="section">
-          <h2>التحميلات</h2>
-                       <p><button class="neon-button" onclick="showSection('ai-helper')">مساعد الذكاء الاصطناعي</button></p>
-                       <p>الموقع سيكون في الزر اعلاه</p>
-          <button class="neon-button" onclick="$('jeu')">دروس وتعليمات على اللغة البرمجية</button>
-          <p>                                                                                       </p>
-          <button class="neon-button" onclick="$('jeu')">تعلم كيفية البرمجة و استخدام اداتها</button>
-          <p>                                                                                        </p>
-          <button class="neon-button" onclick="$('jeu')">تطوير المهارات الفردية في البرمجة بصفة عامة</button>
-          <p>                                                                                                 </p>
-          <button class="neon-button" onclick="$('jeu')">كيفية صنع تطبيق باللغة البرمجية html and app.js and css</button>
-            <p>                                                                                                      </p>
-          <button class="neon-button" onclick="$('jeu')">كيفية صنع كود خاص بك </button>
-          <p>                                                                         </p>
-          <button class="forEach" onclick="$('jeu')">كيفية صنع موقع خاص بك في اول مرة لك</button>
-          <p>                                                                                        </p>
-
-      </div>
-<div id="ai-helper" class="section">
-  <h2>مساعد الذكاء الاصطناعي لتطوير المهارات</h2>
-  <div id="ai-login">
-    <p>يرجى إدخال الكود للدخول:</p>
-     <input type="text" id="ai-code-input" placeholder="أدخل الكود هنا">
-    <button onclick="aiCheckCode()">دخول</button> 
-    <p id="ai-login-error" style="color: red;"></p>
-  </div>
-  </d>
-  <div id="ai-chat" style="display:none; margin-top: 20px;">
-    <div style="position: relative; display: flex; align-items: center; margin-top: 10px;">
-  <button onclick="toggleQuestionList()" style="background: #003366; color: #0ff; border: 2px solid #0ff; padding: 10px 16px; border-radius: 8px; font-size: 20px; cursor: pointer; box-shadow: 0 0 12px #0ff; margin-right: 10px;">≡</button>
-  <ul id="question-list" style="display: none; position: absolute; top: 50px; left: 0; background: #001f3f; border: 2px solid #0ff; border-radius: 10px; padding: 10px; list-style: none; width: 100%; max-width: 400px; z-index: 1000; box-shadow: 0 0 20px #0ff;">
-    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">دروس وتعليمات على اللغة البرمجية</li>
-    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">تعلم كيفية البرمجة و استخدام اداتها</li>
-    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">تطوير المهارات الفردية في البرمجة بصفة عامة</li>
-    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">كيفية صنع تطبيق باللغة البرمجية html and app.js and css</li>
-    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">كيفية صنع كود خاص بك</li>
-    <li onclick="selectQuestion(this.innerText)" style="padding: 8px; cursor: pointer;">كيفية صنع موقع خاص بك في اول مرة لك</li>
-  </ul>
+  <button class="close-btn" id="closeSettingsBtn">إغلاق</button>
 </div>
-    <textarea id="user-input" rows="4" style="width: 100%;" placeholder="اكتب سؤالك أو طلبك هنا..."></textarea><br>
-    <button onclick="aiSendMessage()">إرسال</button>
-    <div id="ai-response" style="margin-top: 15px; padding: 15px; background: #001f3f; border-radius: 10px; color: #0ff; font-size: 18px; box-shadow: 0 0 20px #0ff;"></div>
-  </div>
-</div> 
 
-  <script>
-    const submitBtn = document.getElementById('submit-btn');
-    const codeInput = document.getElementById('code-input');
-    const errorMsg = document.getElementById('error-message');
-    const authSection = document.getElementById('auth-section');
-    const siteContent = document.getElementById('site-content');
 
-    const allowedCodes = ['554g', 'Q15H9VS4', '412HG'];
+<!-- زر البحث العائم -->
+<button id="searchToggle" aria-label="فتح البحث">🔍</button>
 
-    submitBtn.onclick = () => {
-      if (allowedCodes.includes(codeInput.value.trim())) {
-        authSection.style.display = 'none';
-        siteContent.style.display = 'block';
-        errorMsg.textContent = '';
-      } else {
-        errorMsg.textContent = '❌ الكود الذي أدخلته خاطئ، حاول مرة أخرى';
-      }
+<!-- حقل البحث -->
+<input type="text" id="searchBar" placeholder="ابحث عن أكواد..." aria-label="حقل البحث عن الأكواد" />
+
+<script>
+  const codesData = [
+    {title: "HTML - زر أزرق متوهج", category:"html", code:`<button style="background:#00ffff;color:#000;padding:10px 20px;border:none;border-radius:10px;box-shadow:0 0 8px #00ffff;">زر متوهج</button>`},
+    {title: "HTML - جدول بسيط", category:"html", code:`<table border="1" style="width:100%;border-collapse:collapse;">
+  <tr><th>الاسم</th><th>العمر</th></tr>
+  <tr><td>سليمان</td><td>13</td></tr>
+  <tr><td>فاطمة</td><td>12</td></tr>
+</table>`},
+    {title: "CSS - تأثير الكتابة التلقائية", category:"css", code:`@keyframes typing { from { width: 0 } to { width: 100% } }`},
+    {title: "CSS - تدرج ألوان خلفية", category:"css", code:`background: linear-gradient(45deg, #00ffff, #b500f2);`},
+    {title: "CSS - زر بمؤثر Hover", category:"css", code:`button:hover {
+  background-color: #0ff;
+  color: #000;
+  box-shadow: 0 0 20px #0ff;
+}`},
+    {title: "JavaScript - تغيير لون الخلفية", category:"js", code:`document.body.style.backgroundColor = '#121212';`},
+    {title: "JavaScript - نسخة نص للوحة", category:"js", code:`navigator.clipboard.writeText('نص لنسخه').then(() => alert('تم النسخ'));`},
+    {title: "JavaScript - عداد تنازلي", category:"js", code:`let count = 10;
+const interval = setInterval(() => {
+  console.log(count);
+  count--;
+  if(count < 0) clearInterval(interval);
+}, 1000);`},
+    {title: "JavaScript - إظهار رسالة ترحيب", category:"js", code:`alert('مرحباً بك في موقع أكواد 2090!');`},
+    {title: "حول الموقع", category:"about", code:`هذا الموقع يقدم لك أكواد برمجية جاهزة مع تصميم مستقبلي وفخم.`}
+  ];
+
+  const codesListEl = document.getElementById('codesList');
+  const copyNotif = document.getElementById('copyNotif');
+  const soundToggle = document.getElementById('soundToggle');
+  const settingsPanel = document.getElementById('settingsPanel');
+  const navButtons = document.getElementById('navButtons');
+  const searchToggle = document.getElementById('searchToggle');
+  const searchBar = document.getElementById('searchBar');
+
+  let currentCategory = 'all';
+
+  // عرض الأكواد حسب التصنيف
+  function displayCodes(codes) {
+    codesListEl.innerHTML = '';
+    if (codes.length === 0) {
+      codesListEl.innerHTML = '<p style="text-align:center;color:#f55;font-weight:bold;margin-top:50px;">لا توجد أكواد في هذا القسم.</p>';
+      return;
     }
-    
+    codes.forEach(({title, code}) => {
+      const codeItem = document.createElement('div');
+      codeItem.className = 'code-item';
+      codeItem.tabIndex = 0;
 
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
-      document.getElementById(id).classList.add('active-section');
-    }
-     
-    function checkCode() {
-      const code = document.getElementById("userCode").value;
-      const content = document.getElementById("content");
-      const error = document.getElementById("error");
-      
-      if (code === "2025") {
-        content.style.display = "block";
-        error.innerText = "";
-      } else {
-        content.style.display = "none";
-        error.innerText = "❌الكود خاطئ ,المرجو اعادة المحاولة مرة اخرى";
-      }
-    }
-  
-  </script> 
-  
- <script>
-  function toggleSettings() {
-    const menu = document.getElementById("settings-menu");
-    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
-  }
+      const titleEl = document.createElement('h3');
+      titleEl.className = 'code-title';
+      titleEl.textContent = title;
 
-  function changeLanguage(lang) {
-    alert("🚧 تغيير اللغة إلى: " + lang + " (سيتم تفعيلها في التحديث القادم)");
-  }
+      const codeEl = document.createElement('pre');
+      codeEl.className = 'code-snippet';
+      codeEl.textContent = code;
 
-  function toggleTheme(mode) {
-    if (mode === "light") {
-      document.body.style.background = "#f0f0f0";
-      document.body.style.color = "#000";
-    } else {
-      document.body.style.background = "#000";
-      document.body.style.color = "#fff";
-    }
-  }
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-btn';
+      copyBtn.textContent = 'نسخ الكود';
+      copyBtn.setAttribute('aria-label', `نسخ الكود: ${title}`);
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(code).then(() => {
+          copyNotif.classList.add('show');
+          setTimeout(() => copyNotif.classList.remove('show'), 1500);
+        });
+        if(soundToggle.checked) playClickSound();
+      };
 
-  function zoomSite(value) {
-    document.body.style.transform = `scale(${value})`;
-    document.body.style.transformOrigin = 'top center';
-  }
-
-  function changeColors(theme) {
-    let root = document.documentElement;
-    if (theme === "red") {
-      root.style.setProperty('--main-color', '#f00');
-    } else if (theme === "green") {
-      root.style.setProperty('--main-color', '#0f0');
-    } else if (theme === "blue") {
-      root.style.setProperty('--main-color', '#00f');
-    } else {
-      root.style.setProperty('--main-color', '#0ff');
-    }
-    document.querySelectorAll('.neon-button').forEach(btn => {
-      btn.style.borderColor = getComputedStyle(root).getPropertyValue('--main-color');
-      btn.style.boxShadow = `0 0 20px ${getComputedStyle(root).getPropertyValue('--main-color')}`;
-      btn.style.color = getComputedStyle(root).getPropertyValue('--main-color');
+      codeItem.appendChild(titleEl);
+      codeItem.appendChild(codeEl);
+      codeItem.appendChild(copyBtn);
+      codesListEl.appendChild(codeItem);
     });
   }
-</script>
-<script>
-  function changeBackground(value) {
-    const bgLayer = document.getElementById("bg-layer");
-    let background = "";
 
-    if (value === 'bubbles') {
-      background = "linear-gradient(135deg, #000428, #004e92, #920e0e55), url('https://i.ibb.co/Vt8FrR5/water-bubbles.gif') center/cover no-repeat";
-    } else if (value === 'space') {
-      background = "linear-gradient(135deg, #0f0f3e, #1c1c7e), url('https://i.ibb.co/2P5qjRW/space-stars.gif') center/cover no-repeat";
-    } else if (value === 'grid') {
-      background = "linear-gradient(135deg, #0a0a0a, #1b1b1b), url('https://i.ibb.co/kScGJys/neon-grid.gif') center/cover no-repeat";
-    } else if (value === 'video') {
-      background = "linear-gradient(135deg, #000, #111), url('https://media.giphy.com/media/xTiTntDJpQrxpVbD6g/giphy.gif') center/cover no-repeat";
-    }
+  // تفعيل زر التنقل وتغيير القسم
+  navButtons.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+      currentCategory = category;
+      navButtons.querySelectorAll('button').forEach(b => {
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-current', 'page');
+      displayCodes(category === 'all' ? codesData : codesData.filter(c => c.category === category));
+      searchBar.value = '';
+    });
+  });
 
-    bgLayer.style.background = background;
+  // عرض الكل في البداية
+  displayCodes(codesData);
+
+  // صوت نقرة زر
+  function playClickSound() {
+    const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-16.mp3');
+    audio.volume = 0.12;
+    audio.play();
   }
-</script>
-<script>
-   
-  
-  const allowedAICodes = ['AI2025', 'DEVHELP', 'SKILLUP'];
 
-  function aiCheckCode() {
-    const input = document.getElementById("ai-code-input").value.trim();
-    const loginSection = document.getElementById("ai-login");
-    const chatSection = document.getElementById("ai-chat");
-    const error = document.getElementById("ai-login-error");
+  // فتح وإغلاق لوحة الإعدادات
+  document.getElementById('settingsBtn').addEventListener('click', () => {
+    settingsPanel.classList.add('open');
+  });
+  document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+    settingsPanel.classList.remove('open');
+  });
 
-    if (allowedAICodes.includes(input)) {
-      loginSection.style.display = "none";
-      chatSection.style.display = "block";
-      error.textContent = "";
+  // زر البحث العائم
+  searchToggle.addEventListener('click', () => {
+    if(searchBar.classList.contains('visible')) {
+      searchBar.classList.remove('visible');
+      searchBar.value = '';
+      displayCodes(currentCategory === 'all' ? codesData : codesData.filter(c => c.category === currentCategory));
     } else {
-      error.textContent = "❌ الكود خاطئ. حاول مجددًا.";
+      searchBar.classList.add('visible');
+      searchBar.focus();
     }
-  }
+  });
 
-  function aiSendMessage() {
-    const question = document.getElementById("user-input").value.trim();
-    const responseBox = document.getElementById("ai-response");
-
-    const knownAnswers = {
-      "دروس وتعليمات على اللغة البرمجية": "ابدأ بتعلم HTML و CSS ثم JavaScript.",
-      "تعلم كيفية البرمجة و استخدام اداتها": "تعلم أدوات مثل VS Code و Git و المتصفحات.",
-      "تطوير المهارات الفردية في البرمجة بصفة عامة": "مارس التحديات يوميًا وتعلم من مشاريع جاهزة.",
-      "كيفية صنع تطبيق باللغة البرمجية html and app.js and css": "أنشئ هيكل HTML ثم أضف CSS و JS عبر app.js.",
-      "كيفية صنع كود خاص بك": "ابدأ بفكرة صغيرة وحولها إلى كود بنفسك.",
-      "كيفية صنع موقع خاص بك في اول مرة لك": "ابدأ من قالب بسيط أو HTML فقط، وجرّب رفعه على GitHub Pages."
-    };
-
-    if (knownAnswers[question]) {
-      responseBox.innerHTML = `✅ <b>الجواب:</b> ${knownAnswers[question]}`;
-    } else {
-      responseBox.innerHTML = "❌ لم يتم العثور على إجابة لهذا السؤال. حاول بواحد من الأسئلة المحددة.";
+  // فلترة البحث الحي
+  searchBar.addEventListener('input', e => {
+    const term = e.target.value.trim().toLowerCase();
+    if(term.length === 0) {
+      displayCodes(currentCategory === 'all' ? codesData : codesData.filter(c => c.category === currentCategory));
+      return;
     }
-  }
-
+    const filtered = codesData.filter(({title, category}) =>
+      title.toLowerCase().includes(term) || category.toLowerCase().includes(term)
+    );
+    displayCodes(filtered);
+  });
 
 </script>
-<script>
-  function toggleQuestionList() {
-    const list = document.getElementById("question-list");
-    list.style.display = (list.style.display === "none" || list.style.display === "") ? "block" : "none";
-  }
-
-  function selectQuestion(text) {
-    document.getElementById("user-input").value = text;
-    document.getElementById("question-list").style.display = "none";
-  }
-</script>
+<footer role="contentinfo" style="
+  background: #0a0a0a;
+  padding: 18px 25px;
+  text-align: center;
+  color: var(--neon-pink);
+  box-shadow: 0 0 25px var(--neon-pink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  user-select: none;
+  margin-top: auto;
+">
+  &copy;مرحبا بكم في الموقع المخصص soulayman bagueri الذي يقدم اكواد جاهزة
+</footer>
 
 </body>
 </html>
