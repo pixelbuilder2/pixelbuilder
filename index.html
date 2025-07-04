@@ -11,10 +11,19 @@
   gtag('js', new Date());
   gtag('config', '	GTM-WRJTD7X2');
 </script>
-
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>pixelbuilder2.com</title>
 <style>
+  /* تصميم لشاشات أقل من 600px */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+  .container {
+    padding: 10px;
+  }
+}
+
   @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
 
   :root {
@@ -560,7 +569,7 @@
   }
 
   /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width:600px) {
     .hamburger {
       display: flex;
     }
@@ -587,6 +596,28 @@
       bottom: 12px;
     }
   }
+  .card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      width: 300px;
+      text-align: center;
+    }
+    .card img {
+      width: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+    .card h2 {
+      margin: 10px 0 5px;
+      color: #333;
+    }
+    .card p {
+      color: #666;
+      font-size: 14px;
+    }
+  
 </style>
 </head>
 <body>
@@ -688,11 +719,30 @@
   <section id="support" aria-label="قسم المساعدة والدعم">
     <h2>🛠️ المساعدة والدعم</h2>
     <div class="support-card" role="region" aria-label="بطاقة الدعم">
-      <p class="support-note">يرجى ملء البطاقة إذا كان لديك أي مشكلة في الموقع أو السيرفر.</p>
-      <label for="supportMsg">صف مشكلتك أو سؤالك:</label>
-      <textarea id="supportMsg" placeholder="اكتب مشكلتك هنا..."></textarea>
-      <button class="btn" onclick="sendSupport()">إرسال الطلب</button>
-      <p id="supportResp" class="help-text" role="alert" aria-live="polite"></p>
+  <div class="support-card" role="region" aria-label="بطاقة الدعم">
+  <p class="support-note">يرجى ملء البطاقة إذا كان لديك أي استفسار أو مشكلة.</p>
+
+  <label for="supportName">الاسم الكامل:</label>
+  <input type="text" id="supportName" placeholder="أدخل اسمك الكامل" />
+
+  <label for="supportEmail">البريد الإلكتروني:</label>
+  <input type="text" id="supportEmail" placeholder="example@email.com" />
+
+  <label for="supportType">نوع الطلب:</label>
+  <select id="supportType">
+    <option value="مشكلة تقنية">مشكلة تقنية</option>
+    <option value="طلب ميزة جديدة">طلب ميزة جديدة</option>
+    <option value="استفسار عام">استفسار عام</option>
+    <option value="أخرى">أخرى</option>
+  </select>
+
+  <label for="supportMsg">وصف المشكلة أو الطلب:</label>
+  <textarea id="supportMsg" placeholder="اكتب مشكلتك أو طلبك هنا..."></textarea>
+
+  <button class="btn" onclick="sendSupport()">إرسال الطلب</button>
+  <p id="supportResp" class="help-text" role="alert" aria-live="polite"></p>
+</div>
+
     </div>
   </section>
 
@@ -724,7 +774,7 @@
 
 <!-- مساعد ذكي -->
 <div id="chat-assistant" role="complementary" aria-label="مساعد ذكي">
-  <div id="chat-header" tabindex="0" role="button" aria-pressed="false" aria-expanded="false">💡 مساعد ذكي (انقر للفتح/الإغلاق)</div>
+  <div id="chat-header" tabindex="0" role="button" aria-pressed="false" aria-expanded="false">مساعد الذكي</div>
   <div id="chat-messages" style="display:none;"></div>
   <div id="chat-input-container" style="display:none;">
     <input type="text" id="chat-input" aria-label="أدخل رسالة للمساعد" autocomplete="off" />
@@ -1047,7 +1097,7 @@ localStorage.setItem(visitKey, count);
 
 document.addEventListener("DOMContentLoaded", () => {
   const visitDiv = document.createElement("div");
-  visitDiv.textContent = `عدد زياراتك للموقع: ${count}`;
+  visitDiv.textContent = `عدد زيارتك للموقع المخصص لك: ${count}`;
   visitDiv.style.position = "fixed";
   visitDiv.style.bottom = "10px";
   visitDiv.style.right = "10px";
@@ -1060,6 +1110,29 @@ document.addEventListener("DOMContentLoaded", () => {
   visitDiv.style.zIndex = 99999;
   document.body.appendChild(visitDiv);
 });
+function sendSupport() {
+  const name = document.getElementById('supportName').value.trim();
+  const email = document.getElementById('supportEmail').value.trim();
+  const type = document.getElementById('supportType').value;
+  const msg = document.getElementById('supportMsg').value.trim();
+  const resp = document.getElementById('supportResp');
+
+  if(!name || !email || !msg) {
+    resp.textContent = "يرجى ملء جميع الحقول المطلوبة.";
+    return;
+  }
+
+  // هنا يمكن مستقبلاً إرسال البيانات إلى سيرفر أو بريد
+  console.log("طلب دعم:", {name, email, type, msg});
+  resp.textContent = "✅ تم إرسال الطلب بنجاح. شكراً لتواصلك معنا!";
+  
+  // تفريغ الحقول
+  document.getElementById('supportName').value = '';
+  document.getElementById('supportEmail').value = '';
+  document.getElementById('supportType').value = 'مشكلة تقنية';
+  document.getElementById('supportMsg').value = '';
+}
+
 </script>
 
 </body>
