@@ -358,12 +358,19 @@
     padding: 10px 22px;
     font-size: 1rem;
   }
+body {
+  background-image: url('construction-worker-walking-stockcake.jpg'); /* رابط الصورة */
+  background-size: cover;        /* تجعل الصورة تغطي كل الشاشة */
+  background-position: center;   /* تجعل الصورة تتمركز */
+  background-repeat: no-repeat;  /* تمنع تكرار الصورة */
+  background-attachment: fixed;  /* تجعل الصورة ثابتة عند التمرير */
+}
 
   .help-text {
     margin-top: -12px;
     margin-bottom: 15px;
     font-weight: 700;
-    color: #f66;
+    color: rgb(158, 195, 229);
     min-height: 20px;
     user-select: none;
   }
@@ -569,71 +576,31 @@
   }
 
   /* Responsive */
-/* تصميم الكروت */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  width: 300px;
-  text-align: center;
-  transition: 0.3s ease;
-}
-.card img {
-  width: 100px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
-.card h2 {
-  margin: 10px 0 5px;
-  color: #333;
-}
-.card p {
-  color: #666;
-  font-size: 14px;
-}
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
 
-/* ✅ ميديا كويري لتناسب الهواتف */
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
-  }
+      nav#navDesktop {
+        display: none;
+      }
 
-  nav#navDesktop {
-    display: none;
-  }
+      .logo {
+        font-size: 1.3rem;
+      }
 
-  main {
-    margin-top: 110px;
-    max-width: 95vw;
-    padding: 0 15px 40px 15px;
-  }
+      .card {
+        width: 90%;
+      }
 
-  header {
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
+      .login-box {
+        width: 90%;
+      }
 
-  .header-left {
-    gap: 8px;
-  }
-
-  .logo {
-    font-size: 1.3rem;
-  }
-
-  #chat-assistant {
-    width: 90vw;
-    left: 5vw;
-    bottom: 12px;
-  }
-
-  .card {
-    width: 90%; /* ✅ جعل الكارت متجاوب */
-    margin: auto;
-  }
-}
-
+      header {
+        flex-wrap: wrap;
+      }
+    }
 </style>
 </head>
 <body>
