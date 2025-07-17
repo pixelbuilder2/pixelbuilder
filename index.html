@@ -2,1119 +2,980 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
-<meta charset="UTF-8" />
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=	GTM-WRJTD7X2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', '	GTM-WRJTD7X2');
-</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pixelbuilder2.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pixel-soulayman</title>
 <style>
-  /* تصميم لشاشات أقل من 600px */
-@media (max-width: 600px) {
-  body {
-    font-size: 14px;
-  }
-  .container {
-    padding: 10px;
-  }
-}
 
-  @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+  /* الخطوط */
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
+  /* ألوان نيون */
   :root {
-    --primary-color: #7f5af0; /* أرجواني */
-    --primary-hover: #9d79f8;
-    --background-dark: #1a1a2e;
-    --background-light: #f0f0ff;
-    --text-light: #e0e0ff;
-    --text-dark: #222222;
-    --shadow-glow: rgba(127, 90, 240, 0.7);
+    --neon-cyan: #0ff;
+    --neon-pink: #ff007f;
+    --neon-purple: #bf00ff;
+    --neon-blue: #00ccff;
+    --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   }
 
+  /* إعدادات أساسية */
+  * {
+    box-sizing: border-box;
+  }
   body {
-    margin: 0; padding: 0;
+    margin: 0;
     font-family: 'Cairo', sans-serif;
-    background: var(--background-dark);
-    color: var(--text-light);
+    background: var(--bg-gradient);
+    color: #eee;
     min-height: 100vh;
-    transition: background 0.3s, color 0.3s;
-  }
-  body.light {
-    background: var(--background-light);
-    color: var(--text-dark);
-  }
-
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 60px;
-    background: #2e2e52;
-    border-bottom: 3px solid var(--primary-color);
-    box-shadow: 0 0 15px var(--shadow-glow);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    z-index: 999;
-    user-select: none;
-  }
-  body.light header {
-    background: #dfe4ff;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 15px #bbace6;
-    color: var(--text-dark);
-  }
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  .logo {
-    font-weight: 900;
-    font-size: 1.6rem;
-    color: var(--primary-color);
-    user-select: text;
-    text-shadow: 0 0 10px var(--primary-color);
-  }
-  body.light .logo {
-    color: #5b3cc4;
-    text-shadow: none;
-  }
-
-  .settings-btn {
-    background: transparent;
-    border: none;
-    color: var(--primary-color);
-    font-size: 1.6rem;
-    cursor: pointer;
-    user-select: none;
-    transition: color 0.3s;
-  }
-  body.light .settings-btn {
-    color: #5b3cc4;
-  }
-  .settings-btn:hover {
-    color: var(--primary-hover);
-  }
-
-  .auth-buttons button {
-    background: var(--primary-color);
-    border: none;
-    color: #f0e9ff;
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    box-shadow: 0 0 8px var(--primary-color);
-  }
-  body.light .auth-buttons button {
-    background: #a595f9;
-    color: var(--text-dark);
-    box-shadow: 0 0 8px #a595f9aa;
-  }
-  .auth-buttons button:hover {
-    background: var(--primary-hover);
-    box-shadow: 0 0 15px var(--primary-hover);
-  }
-
-  nav#navDesktop {
-    margin-top: 60px;
-    background: #2e2e52;
-    border-bottom: 3px solid var(--primary-color);
-    box-shadow: 0 0 25px var(--shadow-glow);
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    position: sticky;
-    top: 60px;
-    z-index: 998;
-    padding: 8px 0;
-  }
-  body.light nav#navDesktop {
-    background: #dfe4ff;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 25px #bbace6;
-  }
-  nav#navDesktop button {
-    background: transparent;
-    border: none;
-    color: var(--primary-color);
-    padding: 14px 26px;
-    cursor: pointer;
-    font-weight: 800;
-    font-size: 1.15rem;
-    border-radius: 25px;
-    letter-spacing: 0.03em;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-  }
-  body.light nav#navDesktop button {
-    color: #5b3cc4;
-  }
-  nav#navDesktop button.active,
-  nav#navDesktop button:hover {
-    background: var(--primary-color);
-    color: #f0e9ff;
-    box-shadow: 0 0 20px var(--primary-color);
-  }
-  body.light nav#navDesktop button.active,
-  body.light nav#navDesktop button:hover {
-    background: #5b3cc4;
-    color: var(--background-light);
-    box-shadow: 0 0 20px #a595f9;
-  }
-
-  /* قائمة الموبايل */
-  .hamburger {
-    width: 28px;
-    height: 22px;
-    display: none;
     flex-direction: column;
+  }
+  /* إعدادات أساسية */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background-image: url('https://i.postimg.cc/DZPdv4zG/construction-worker-walking-stockcake.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: rgba(15, 32, 39, 0.75);
+    background-blend-mode: overlay;
+    color: #eee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  /* نصوص نيون */
+  .neon-text {
+    color: var(--neon-cyan);
+    text-shadow:
+      0 0 5px var(--neon-cyan),
+      0 0 10px var(--neon-cyan),
+      0 0 20px var(--neon-cyan),
+      0 0 40px var(--neon-cyan);
+  }
+
+  /* ترويسة الموقع */
+  header {
+    display: flex;
     justify-content: space-between;
-    cursor: pointer;
-  }
-  .hamburger div {
-    height: 4px;
-    background: var(--primary-color);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-  }
-  body.light .hamburger div {
-    background: #5b3cc4;
-  }
-  .hamburger.active div:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-  .hamburger.active div:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.active div:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-  }
-  nav#navMobile {
-    display: none;
-    background: #2e2e52;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    padding: 12px 0;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    z-index: 997;
-  }
-  body.light nav#navMobile {
-    background: #dfe4ff;
-  }
-  nav#navMobile button {
-    background: transparent;
-    border: none;
-    color: var(--primary-color);
-    padding: 14px 24px;
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  body.light nav#navMobile button {
-    color: #5b3cc4;
-  }
-  nav#navMobile button.active,
-  nav#navMobile button:hover {
-    background: var(--primary-color);
-    color: #f0e9ff;
-    box-shadow: 0 0 15px var(--primary-color);
-  }
-  body.light nav#navMobile button.active,
-  body.light nav#navMobile button:hover {
-    background: #5b3cc4;
-    color: var(--background-light);
-    box-shadow: 0 0 15px #a595f9;
-  }
-
-  main {
-    margin: 125px auto 40px auto;
-    max-width: 900px;
-    padding: 0 22px 50px 22px;
-    min-height: 70vh;
-  }
-  main section {
-    display: none;
-  }
-  main section.active {
-    display: block;
-    animation: fadeIn 0.6s ease forwards;
-  }
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-
-  h2 {
-    margin-top: 0;
-    font-size: 2.3rem;
-    margin-bottom: 14px;
-    letter-spacing: 0.04em;
-  }
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 700;
-    font-size: 1.15rem;
-  }
-
-  input[type=text],
-  input[type=password],
-  textarea,
-  select,
-  input[type=color] {
-    width: 100%;
-    padding: 12px 16px;
-    margin-bottom: 22px;
-    border-radius: 22px;
-    border: 2px solid var(--primary-color);
-    background: #3a3a6a;
-    color: var(--text-light);
-    font-size: 1.15rem;
-    font-family: 'Cairo', sans-serif;
-    resize: vertical;
-    transition: border-color 0.3s, background 0.3s, color 0.3s;
-    box-shadow: 0 0 15px var(--shadow-glow);
-  }
-  body.light input[type=text],
-  body.light input[type=password],
-  body.light textarea,
-  body.light select,
-  body.light input[type=color] {
-    background: #f0f0ff;
-    border-color: #a595f9;
-    color: var(--text-dark);
-    box-shadow: 0 0 15px #a595f9cc;
-  }
-  input[type=text]:focus,
-  input[type=password]:focus,
-  textarea:focus,
-  select:focus,
-  input[type=color]:focus {
-    outline: none;
-    border-color: var(--primary-hover);
-    box-shadow: 0 0 20px var(--primary-hover);
-  }
-  body.light input[type=text]:focus,
-  body.light input[type=password]:focus,
-  body.light textarea:focus,
-  body.light select:focus,
-  body.light input[type=color]:focus {
-    border-color: #9d79f8;
-    box-shadow: 0 0 20px #9d79f8cc;
-  }
-  textarea {
-    min-height: 100px;
-  }
-
-  .btn {
-    background: var(--primary-color);
-    color: #f0e9ff;
-    border: none;
-    padding: 14px 36px;
-    border-radius: 30px;
-    font-size: 1.25rem;
-    font-weight: 900;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    box-shadow: 0 0 20px var(--primary-color);
-  }
-  .btn:hover {
-    background: var(--primary-hover);
-    box-shadow: 0 0 25px var(--primary-hover);
-  }
-  body.light .btn {
-    background: #a595f9;
-    color: var(--text-dark);
-    box-shadow: 0 0 20px #a595f9;
-  }
-  body.light .btn:hover {
-    background: #9d79f8;
-    box-shadow: 0 0 25px #9d79f8;
-  }
-
-  .nested-btn {
-    padding: 10px 22px;
-    font-size: 1rem;
-  }
-body {
-  background-image: url('construction-worker-walking-stockcake.jpg'); /* رابط الصورة */
-  background-size: cover;        /* تجعل الصورة تغطي كل الشاشة */
-  background-position: center;   /* تجعل الصورة تتمركز */
-  background-repeat: no-repeat;  /* تمنع تكرار الصورة */
-  background-attachment: fixed;  /* تجعل الصورة ثابتة عند التمرير */
-}
-
-  .help-text {
-    margin-top: -12px;
-    margin-bottom: 15px;
-    font-weight: 700;
-    color: rgb(158, 195, 229);
-    min-height: 20px;
-    user-select: none;
-  }
-  body.light .help-text {
-    color: #a33;
-  }
-
-  /* بطاقة الدعم ملونة */
-  .support-card {
-    background: linear-gradient(135deg, #7f5af0cc 0%, #b084f5cc 100%);
-    padding: 22px 25px;
-    border-radius: 20px;
-    color: #f0e9ff;
-    box-shadow: 0 0 35px #7f5af0bb;
-  }
-  .support-note {
-    font-weight: 800;
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-    user-select: none;
-  }
-  .support-card textarea {
-    background: #5a3fa9cc;
-    color: #f0e9ff;
-    box-shadow: 0 0 20px #7f5af0cc inset;
-    border-color: #a98fff;
-  }
-  .support-card textarea:focus {
-    background: #6a4fffcc;
-    border-color: #c2b2ff;
-    box-shadow: 0 0 25px #9d79f8cc inset;
-  }
-
-  /* إعدادات متقدمة */
-  #settingsModal {
-    background: #2a2a4e;
-    color: #c7c3ff;
-    border-radius: 25px;
-    box-shadow: 0 0 60px #7f5af0cc;
-  }
-  @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
-
-  .neon-settings-btn {
-    font-family: 'Cairo', sans-serif;
-    padding: 14px 28px;
-    font-size: 18px;
-    color: #fff;
-    background: #141414;
-    border: 2px solid #7f5af0;
-    border-radius: 40px;
-    box-shadow: 0 0 10px #7f5af0, 0 0 20px #7f5af0, 0 0 30px #2cb67d;
-    cursor: pointer;
-    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    transition: 0.3s ease;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
+    padding: 12px 24px;
+    background: #011b22cc;
+    border-bottom: 2px solid var(--neon-cyan);
+    box-shadow:
+      0 0 12px var(--neon-cyan),
+      inset 0 0 20px var(--neon-cyan);
+    user-select:none;
+  }
+  .header-left, .header-center, .header-right {
+    display: flex;
+    align-items: center;
+  }
+  .header-center {
+    flex-grow: 1;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  button {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 8px 16px;
+    margin-left: 12px;
+    border-radius: 14px;
+    border: 2px solid var(--neon-cyan);
+    background: transparent;
+    color: var(--neon-cyan);
+    box-shadow:
+      0 0 8px var(--neon-cyan);
+    transition: all 0.3s ease;
+    user-select:none;
+  }
+  button:hover, button:focus {
+    background: var(--neon-cyan);
+    color: #011b22;
+    box-shadow:
+      0 0 20px var(--neon-cyan),
+      0 0 40px var(--neon-cyan);
+    outline: none;
   }
 
-  .neon-settings-btn::before {
+  /* التنقل بين الأقسام */
+  nav#mainButtons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    background: #011b22cc;
+    padding: 14px 0;
+    border-top: 2px solid var(--neon-cyan);
+    border-bottom: 2px solid var(--neon-cyan);
+    box-shadow:
+      0 0 20px var(--neon-cyan),
+      inset 0 0 25px var(--neon-cyan);
+  }
+  nav#mainButtons button {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    box-shadow:
+      0 0 8px var(--neon-pink);
+  }
+  nav#mainButtons button:hover, nav#mainButtons button:focus {
+    background: var(--neon-pink);
+    color: #011b22;
+    box-shadow:
+      0 0 25px var(--neon-pink),
+      0 0 45px var(--neon-pink);
+  }
+
+  /* أقسام المحتوى */
+  main {
+    flex-grow: 1;
+    padding: 20px 24px;
+    max-width: 960px;
+    margin: 0 auto 80px auto;
+    width: 100%;
+  }
+  section.page {
+    display: none;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(1, 27, 34, 0.8);
+    border: 3px solid var(--neon-purple);
+    box-shadow:
+      0 0 15px var(--neon-purple),
+      inset 0 0 25px var(--neon-purple);
+    transition: all 0.4s ease;
+  }
+  section.page.active {
+    display: block;
+  }
+
+  /* إطار نيون للأقسام */
+  .page {
+    position: relative;
+  }
+  .page::before {
     content: "";
     position: absolute;
-    top: 0; left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(127, 90, 240, 0.3), transparent);
-    transition: 0.5s;
-    z-index: 0;
+    top: -6px; left: -6px; right: -6px; bottom: -6px;
+    border-radius: 25px;
+    pointer-events: none;
+    box-shadow:
+      0 0 12px var(--neon-purple),
+      0 0 40px var(--neon-purple),
+      0 0 70px var(--neon-purple);
+    opacity: 0.8;
+    transition: opacity 0.4s ease;
+    z-index: -1;
   }
 
-  .neon-settings-btn:hover::before {
-    left: 100%;
-  }
-
-  .neon-settings-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #7f5af0, 0 0 30px #2cb67d, 0 0 40px #7f5af0;
-  }
-
-  .neon-settings-btn i {
-    animation: spin 2s linear infinite;
-  } 
-
-  /* مساعد ذكي */
-  #chat-assistant {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 300px;
-    max-width: 95vw;
-    background: #2e2e52;
-    border-radius: 20px;
-    box-shadow: 0 0 30px var(--primary-color);
-    color: var(--text-light);
-    font-family: 'Cairo', sans-serif;
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 9999;
-  }
-  body.light #chat-assistant {
-    background: #dfe4ff;
-    color: var(--text-dark);
-    box-shadow: 0 0 30px #a595f9;
-  }
-  #chat-header {
-    padding: 14px 20px;
-    font-weight: 900;
-    font-size: 1.3rem;
-    background: var(--primary-color);
-    cursor: pointer;
-    user-select: none;
+  /* العناوين */
+  h1.neon-text, h2.neon-text {
+    margin-top: 0;
     text-align: center;
   }
-  body.light #chat-header {
-    background: #5b3cc4;
-    color: var(--background-light);
-  }
-  #chat-messages {
-    max-height: 280px;
-    overflow-y: auto;
-    padding: 15px 20px;
-    font-size: 1rem;
-    flex-grow: 1;
-  }
-  .chat-msg {
-    margin-bottom: 14px;
-    padding: 12px 18px;
-    border-radius: 18px;
-    max-width: 85%;
-    line-height: 1.4;
-  }
-  .chat-msg.user {
-    background: #7f5af0cc;
-    color: #f0e9ff;
-    margin-left: auto;
-    box-shadow: 0 0 15px #7f5af0cc;
-  }
-  body.light .chat-msg.user {
-    background: #a595f9cc;
-    color: var(--text-dark);
-    box-shadow: 0 0 15px #a595f9cc;
-  }
-  .chat-msg.bot {
-    background: #463f6e;
-    color: #cccfff;
-    margin-right: auto;
-  }
-  body.light .chat-msg.bot {
-    background: #b0b7dc;
-    color: #333355;
-  }
-  #chat-input-container {
+
+  /* النماذج */
+  form {
     display: flex;
-    padding: 12px 20px;
-    background: #241f4f;
+    flex-direction: column;
+    gap: 16px;
   }
-  body.light #chat-input-container {
-    background: #b4b9e5;
-  }
-  #chat-input {
-    flex-grow: 1;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 18px;
-    font-size: 1.1rem;
-    font-family: 'Cairo', sans-serif;
-    outline: none;
-    box-shadow: inset 0 0 12px #7f5af0cc;
-    color: #f0e9ff;
-    background: #463f6e;
-  }
-  body.light #chat-input {
-    background: #d0d5f7;
-    color: var(--text-dark);
-    box-shadow: inset 0 0 12px #a595f9cc;
-  }
-  #chat-send-btn {
-    margin-left: 14px;
-    padding: 10px 22px;
-    border: none;
-    border-radius: 20px;
-    background: var(--primary-color);
-    color: #f0e9ff;
-    font-weight: 700;
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 2px solid var(--neon-blue);
+    background: #011b22;
+    color: var(--neon-cyan);
     font-size: 1rem;
+    font-family: 'Cairo', sans-serif;
+    box-shadow:
+      0 0 12px var(--neon-blue);
+    resize: vertical;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  textarea:focus {
+    border-color: var(--neon-pink);
+    box-shadow:
+      0 0 25px var(--neon-pink),
+      inset 0 0 40px var(--neon-pink);
+    outline: none;
+  }
+
+  /* أزرار النماذج */
+  button.primary {
+    align-self: center;
+    width: 180px;
+    background: transparent;
+    border: 3px solid var(--neon-pink);
+    color: var(--neon-pink);
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow:
+      0 0 15px var(--neon-pink);
+    transition: all 0.3s ease;
+    border-radius: 24px;
+  }
+  button.primary:hover, button.primary:focus {
+    background: var(--neon-pink);
+    color: #011b22;
+    box-shadow:
+      0 0 35px var(--neon-pink),
+      0 0 60px var(--neon-pink);
+    outline: none;
+  }
+
+  /* القوائم والمشاريع */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .project-item {
+    background: #022833cc;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 2px solid var(--neon-cyan);
+    box-shadow:
+      0 0 15px var(--neon-cyan);
+    color: #0ffbcc;
+  }
+  .project-item h3 {
+    margin: 0 0 6px 0;
+  }
+  .project-item button {
+    margin-left: 8px;
+    border-color: var(--neon-purple);
+    color: var(--neon-purple);
+    box-shadow:
+      0 0 8px var(--neon-purple);
+    font-weight: 600;
+  }
+  .project-item button:hover, .project-item button:focus {
+    background: var(--neon-purple);
+    color: #011b22;
+    box-shadow:
+      0 0 25px var(--neon-purple),
+      0 0 45px var(--neon-purple);
+    outline: none;
+  }
+
+  /* الرسائل */
+  .msg {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    min-height: 24px;
+  }
+  .msg.error {
+    color: #ff4466;
+    text-shadow: 0 0 6px #ff4466;
+  }
+  .msg.success {
+    color: #66ff99;
+    text-shadow: 0 0 8px #66ff99;
+  }
+
+  /* شريط الأسفل */
+  #footerBar {
+    position: fixed;
+    bottom: 6px;
+    right: 6px;
+    left: 6px;
+    background: #011b22cc;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: var(--neon-cyan);
+    box-shadow:
+      0 0 20px var(--neon-cyan),
+      inset 0 0 30px var(--neon-cyan);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    user-select:none;
+    z-index: 2000;
+  }
+  #footerBar button {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    box-shadow:
+      0 0 12px var(--neon-pink);
+    padding: 6px 14px;
+    font-size: 1rem;
+  }
+
+  /* بوت الذكاء الاصطناعي */
+  #aiChat {
+    position: fixed;
+    bottom: 70px;
+    left: 12px;
+    width: 350px;
+    max-height: 350px;
+    background: #011b22cc;
+    border-radius: 22px;
+    border: 3px solid var(--neon-cyan);
+    box-shadow:
+      0 0 25px var(--neon-cyan),
+      inset 0 0 35px var(--neon-cyan);
+    display: flex;
+    flex-direction: column;
+    user-select:none;
+    z-index: 3000;
+  }
+  #aiChatHeader {
+    font-weight: 700;
+    font-size: 1.2rem;
+    background: #011b22;
+    border-bottom: 2px solid var(--neon-cyan);
+    padding: 12px 18px;
+    color: var(--neon-cyan);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px 20px 0 0;
+    box-shadow:
+      0 0 20px var(--neon-cyan);
+  }
+  #btnToggleBot {
+    background: transparent;
+    border: none;
+    color: var(--neon-cyan);
+    font-size: 1.6rem;
     cursor: pointer;
-    box-shadow: 0 0 15px var(--primary-color);
-    transition: background-color 0.3s;
+    user-select:none;
+    transition: color 0.3s ease;
   }
-  #chat-send-btn:hover {
-    background: var(--primary-hover);
+  #btnToggleBot:hover {
+    color: var(--neon-pink);
   }
-  body.light #chat-send-btn {
-    background: #a595f9;
-    color: var(--text-dark);
+  #aiMessages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #0ffbcc;
+    font-weight: 600;
   }
-  body.light #chat-send-btn:hover {
-    background: #9d79f8;
+  #aiMessages p.bot {
+    align-self: flex-start;
+    background: #022833cc;
+    padding: 10px 16px;
+    border-radius: 14px;
+    color: var(--neon-cyan);
+    text-shadow:
+      0 0 15px var(--neon-cyan);
+  }
+  #aiMessages p.user {
+    align-self: flex-end;
+    background: var(--neon-pink);
+    color: #011b22;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 14px;
+    text-shadow: none;
+  }
+  #aiInputContainer {
+    padding: 12px 18px;
+    background: #011b22;
+    border-top: 2px solid var(--neon-cyan);
+  }
+  #aiInput {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 22px;
+    border: none;
+    font-size: 1rem;
+    font-family: 'Cairo', sans-serif;
+    box-shadow:
+      inset 0 0 28px var(--neon-cyan);
+    outline: none;
+    color: var(--neon-cyan);
+    background: #011b22;
+    transition: box-shadow 0.3s ease;
+  }
+  #aiInput:focus {
+    box-shadow:
+      0 0 40px var(--neon-cyan),
+      inset 0 0 48px var(--neon-cyan);
+  }
+
+  /* صفحات تسجيل الدخول والتسجيل */
+  #loginForm, #registerForm, #requestForm {
+    max-width: 420px;
+    margin: 0 auto;
+    background: #011b22cc;
+    padding: 30px 36px 40px;
+    border-radius: 20px;
+    box-shadow:
+      0 0 28px var(--neon-cyan),
+      inset 0 0 38px var(--neon-cyan);
+  }
+  #loginForm h2, #registerForm h2, #requestForm h2 {
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  #loginForm button, #registerForm button, #requestForm button {
+    margin-top: 10px;
   }
 
   /* Responsive */
-    @media (max-width: 768px) {
-      .hamburger {
-        display: flex;
-      }
-
-      nav#navDesktop {
-        display: none;
-      }
-
-      .logo {
-        font-size: 1.3rem;
-      }
-
-      .card {
-        width: 90%;
-      }
-
-      .login-box {
-        width: 90%;
-      }
-
-      header {
-        flex-wrap: wrap;
-      }
+  @media (max-width: 960px) {
+    #aiChat {
+      width: 90vw;
+      max-height: 300px;
+      left: 5vw;
+      bottom: 80px;
     }
+    main {
+      padding: 16px 12px;
+      margin-bottom: 90px;
+    }
+  }
+  @media (max-width: 480px) {
+    header {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .header-center {
+      order: 3;
+      font-size: 1.3rem;
+      flex-grow: 1;
+      justify-content: center;
+    }
+    .header-left, .header-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+    nav#mainButtons {
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 0;
+    }
+    nav#mainButtons button {
+      flex: 1 1 calc(50% - 12px);
+      font-size: 0.9rem;
+      padding: 10px 12px;
+      margin: 4px 0;
+    }
+    #footerBar {
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    #footerBar button {
+      flex: 1 1 100%;
+      font-size: 1rem;
+      margin-top: 6px;
+    }
+  }
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-left">
-    <button id="openSettings" class="settings-btn" title="⚙️ إعدادات الموقع">⚙️</button>
+    <button id="btnSettings" title="فتح الإعدادات" aria-label="فتح الإعدادات">⚙️ الإعدادات</button>
   </div>
-  <div class="logo" aria-label="شعار الموقع">welcom to pixel</div>
-  <div class="header-right auth-buttons">
-    <button class="login-btn" onclick="switchSection('login')">تسجيل دخول</button>
-    <button class="signup-btn" onclick="switchSection('login')">إنشاء حساب</button>
-  </div>
-  <div class="hamburger" id="hamburgerBtn" aria-label="فتح القائمة الرئيسية" role="button" tabindex="0">
-    <div></div><div></div><div></div>
+  <div class="header-center neon-text" aria-label="عنوان الموقع">منصة المشاريع Soulayman</div>
+  <div class="header-right">
+    <button id="btnLoginNav" aria-label="تسجيل دخول">تسجيل دخول</button>
+    <button id="btnRegisterNav" aria-label="إنشاء حساب">إنشاء حساب</button>
+    <button id="btnLogoutNav" style="display:none;" aria-label="تسجيل خروج">تسجيل خروج</button>
   </div>
 </header>
 
-<nav id="navDesktop" aria-label="القائمة الرئيسية">
-  <button class="active" onclick="switchSection('create', this)">📦 إنشاء مشروع</button>
-  <button onclick="switchSection('edit', this)">✏️ تعديل مشروع</button>
-  <button onclick="switchSection('share', this)">🚀 مشاركة مشروع</button>
-  <button onclick="switchSection('design', this)">🎨 تصميم المشروع</button>
-  <button onclick="switchSection('support', this)">🛠️ المساعدة</button>
+<nav id="mainButtons" aria-label="قائمة تنقل الأقسام">
+  <button data-page="home" aria-controls="home" aria-selected="true">الرئيسية</button>
+  <button data-page="create" aria-controls="create">إنشاء مشروع</button>
+  <button data-page="edit" aria-controls="edit">تعديل مشروع</button>
+  <button data-page="online" aria-controls="online">مشروع Onlin</button>
+  <button data-page="share" aria-controls="share">مشاركة مشروع</button>
 </nav>
 
-<nav id="navMobile" class="mobile-menu" aria-label="القائمة الرئيسية">
-  <button class="active" onclick="mobileNavClick('create', this)">📦 إنشاء مشروع</button>
-  <button onclick="mobileNavClick('edit', this)">✏️ تعديل مشروع</button>
-  <button onclick="mobileNavClick('share', this)">🚀 مشاركة مشروع</button>
-  <button onclick="mobileNavClick('design', this)">🎨 تصميم المشروع</button>
-  <button onclick="mobileNavClick('support', this)">🛠️ المساعدة</button>
-</nav>
-
-<main id="mainContent" tabindex="-1">
-
-  <!-- تسجيل دخول / إنشاء حساب -->
-  <section id="login" class="active" aria-label="تسجيل الدخول أو إنشاء حساب">
-    <h2>تسجيل دخول أو إنشاء حساب</h2>
-    <label for="username">اسم المستخدم</label>
-    <input type="text" id="username" placeholder="اختر اسم المستخدم" autocomplete="username" />
-    <label for="password">كلمة المرور</label>
-    <input type="password" id="password" placeholder="كلمة المرور" autocomplete="current-password" />
-    <div class="auth-buttons">
-      <button class="btn" onclick="login()">تسجيل الدخول</button>
-      <button class="btn nested-btn" onclick="signup()">إنشاء حساب</button>
-    </div>
-    <div id="authMsg" class="help-text" role="alert" aria-live="polite"></div>
+<main>
+  <!-- الصفحة الرئيسية -->
+  <section id="home" class="page active" aria-label="الصفحة الرئيسية">
+    <h1 class="neon-text">مرحبًا بك في منصة المشاريع</h1>
+    <p>سجل الدخول أو أنشئ حسابًا لبدء إنشاء وتعديل ومشاركة مشاريعك بسهولة وأمان.</p>
   </section>
 
   <!-- إنشاء مشروع -->
-  <section id="create" aria-label="إنشاء مشروع جديد">
-    <h2>📦 إنشاء مشروع جديد</h2>
-    <label for="projectName">اسم المشروع</label>
-    <input type="text" id="projectName" placeholder="أدخل اسم المشروع" />
-    <label for="projectDesc">وصف المشروع</label>
-    <textarea id="projectDesc" placeholder="وصف مختصر للمشروع..."></textarea>
-    <button class="btn" onclick="createProject()">بدء المشروع</button>
-    <div id="createMsg" class="help-text" role="alert" aria-live="polite"></div>
+  <section id="create" class="page" aria-label="إنشاء مشروع">
+    <h2 class="neon-text">إنشاء مشروع جديد</h2>
+    <form id="createProjectForm">
+      <input type="text" id="projectTitle" placeholder="عنوان المشروع" aria-label="عنوان المشروع" required minlength="3" />
+      <textarea id="projectDesc" placeholder="وصف المشروع" aria-label="وصف المشروع" required minlength="5"></textarea>
+      <button type="submit" class="primary">إنشاء المشروع</button>
+      <p id="createProjectMsg" class="msg" aria-live="polite"></p>
+    </form>
   </section>
 
   <!-- تعديل مشروع -->
-  <section id="edit" aria-label="تعديل مشروع">
-    <h2>✏️ تعديل مشروع</h2>
-    <label for="editProjectId">معرف المشروع</label>
-    <input type="text" id="editProjectId" placeholder="أدخل معرف المشروع" />
-    <label for="editProjectDesc">تعديل الوصف</label>
-    <textarea id="editProjectDesc" placeholder="عدل وصف المشروع هنا"></textarea>
-    <button class="btn" onclick="editProject()">حفظ التعديلات</button>
-    <div id="editMsg" class="help-text" role="alert" aria-live="polite"></div>
+  <section id="edit" class="page" aria-label="تعديل مشروع">
+    <h2 class="neon-text">تعديل مشاريعك</h2>
+    <div id="editProjectsList" class="projects-list" tabindex="0" aria-live="polite" aria-label="قائمة المشاريع المعدلة"></div>
+  </section>
+
+  <!-- مشروع Onlin -->
+  <section id="online" class="page" aria-label="مشاريع مفعلة">
+    <h2 class="neon-text">مشاريع Onlin مفعلة</h2>
+    <ul id="onlineProjectsList" class="projects-list" tabindex="0" aria-live="polite"></ul>
   </section>
 
   <!-- مشاركة مشروع -->
-  <section id="share" aria-label="مشاركة مشروع">
-    <h2>🚀 مشاركة مشروعك</h2>
-    <label for="shareProjectId">معرف المشروع</label>
-    <input type="text" id="shareProjectId" placeholder="أدخل معرف المشروع للمشاركة" />
-    <button class="btn" onclick="shareProject()">نسخ رابط المشاركة</button>
-    <div id="shareMsg" class="help-text" role="alert" aria-live="polite"></div>
+  <section id="share" class="page" aria-label="مشاركة مشروع">
+    <h2 class="neon-text">مشاركة مشاريعك</h2>
+    <div id="shareProjectsList" class="projects-list" tabindex="0" aria-live="polite"></div>
   </section>
 
-  <!-- تصميم المشروع -->
-  <section id="design" aria-label="تصميم المشروع">
-    <h2>🎨 تصميم المشروع</h2>
-    <label for="projectColor">اختر لون التصميم</label>
-    <input type="color" id="projectColor" value="#7f5af0" />
-    <label for="projectFont">اختر نوع الخط</label>
-    <select id="projectFont" aria-label="اختيار الخط">
-      <option value="'Cairo', sans-serif">Cairo (افتراضي)</option>
-      <option value="'Arial', sans-serif">Arial</option>
-      <option value="'Courier New', monospace">Courier New</option>
-      <option value="'Tahoma', sans-serif">Tahoma</option>
-      <option value="'Times New Roman', serif">Times New Roman</option>
-    </select>
-    <button class="btn" onclick="applyDesign()">تطبيق التصميم</button>
+  <!-- تسجيل دخول -->
+  <section id="login" class="page" aria-label="تسجيل دخول">
+    <form id="loginForm" aria-live="assertive" aria-describedby="loginMsg">
+      <h2 class="neon-text">تسجيل الدخول</h2>
+      <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" aria-label="البريد الإلكتروني" required />
+      <input type="password" id="loginPassword" placeholder="كلمة المرور" aria-label="كلمة المرور" required minlength="6" />
+      <button type="submit" class="primary">دخول</button>
+      <p id="loginMsg" class="msg" role="alert"></p>
+    </form>
   </section>
 
-  <!-- قسم المساعدة -->
-  <section id="support" aria-label="قسم المساعدة والدعم">
-    <h2>🛠️ المساعدة والدعم</h2>
-    <div class="support-card" role="region" aria-label="بطاقة الدعم">
-  <div class="support-card" role="region" aria-label="بطاقة الدعم">
-  <p class="support-note">يرجى ملء البطاقة إذا كان لديك أي استفسار أو مشكلة.</p>
-
-  <label for="supportName">الاسم الكامل:</label>
-  <input type="text" id="supportName" placeholder="أدخل اسمك الكامل" />
-
-  <label for="supportEmail">البريد الإلكتروني:</label>
-  <input type="text" id="supportEmail" placeholder="example@email.com" />
-
-  <label for="supportType">نوع الطلب:</label>
-  <select id="supportType">
-    <option value="مشكلة تقنية">مشكلة تقنية</option>
-    <option value="طلب ميزة جديدة">طلب ميزة جديدة</option>
-    <option value="استفسار عام">استفسار عام</option>
-    <option value="أخرى">أخرى</option>
-  </select>
-
-  <label for="supportMsg">وصف المشكلة أو الطلب:</label>
-  <textarea id="supportMsg" placeholder="اكتب مشكلتك أو طلبك هنا..."></textarea>
-
-  <button class="btn" onclick="sendSupport()">إرسال الطلب</button>
-  <p id="supportResp" class="help-text" role="alert" aria-live="polite"></p>
-</div>
-
-    </div>
+  <!-- إنشاء حساب -->
+  <section id="register" class="page" aria-label="إنشاء حساب">
+    <form id="registerForm" aria-live="assertive" aria-describedby="registerMsg">
+      <h2 class="neon-text">إنشاء حساب جديد</h2>
+      <input type="email" id="registerEmail" placeholder="البريد الإلكتروني" aria-label="البريد الإلكتروني" required />
+      <input type="password" id="registerPassword" placeholder="كلمة المرور" aria-label="كلمة المرور" required minlength="6" />
+      <input type="password" id="registerPasswordConfirm" placeholder="تأكيد كلمة المرور" aria-label="تأكيد كلمة المرور" required minlength="6" />
+      <button type="submit" class="primary">تسجيل</button>
+      <p id="registerMsg" class="msg" role="alert"></p>
+    </form>
   </section>
 
+  <!-- إرسال طلب -->
+  <section id="request" class="page" aria-label="إرسال طلب">
+    <form id="requestForm" aria-live="assertive" aria-describedby="requestMsg">
+      <h2 class="neon-text">إرسال مشكلة أو اقتراح</h2>
+      <textarea id="requestText" placeholder="اكتب مشكلتك أو اقتراحك هنا" aria-label="اكتب مشكلتك أو اقتراحك هنا" required minlength="10"></textarea>
+      <button type="submit" class="primary">إرسال</button>
+      <p id="requestMsg" class="msg" role="alert"></p>
+    </form>
+  </section>
 </main>
 
-<!-- إعدادات متقدمة -->
-<div id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" style="display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);padding:25px 30px;max-width:320px;z-index:10000;">
-  <h3 id="settingsTitle">⚙️ إعدادات الموقع</h3>
-  <label for="themeSelect">الوضع (فاتح / داكن):</label>
-  <select id="themeSelect" aria-label="اختيار الوضع">
-    <option value="dark" selected>داكن</option>
-    <option value="light">فاتح</option>
-  </select>
-
-  <label for="colorTheme">لون التصميم الرئيسي:</label>
-  <input type="color" id="colorTheme" value="#7f5af0" aria-label="اختيار لون التصميم الرئيسي" />
-
-  <label for="zoomRange">تكبير الموقع (%):</label>
-  <input type="range" id="zoomRange" min="80" max="130" value="100" step="1" aria-valuemin="80" aria-valuemax="130" aria-valuenow="100" aria-label="تكبير الموقع" />
-
-  <label for="langSelect">اللغة:</label>
-  <select id="langSelect" aria-label="اختيار اللغة">
-    <option value="ar" selected>العربية</option>
-    <option value="en">English</option>
-  </select>
-
-  <button id="closeSettingsBtn" class="btn nested-btn" style="width:100%;margin-top:20px;">إغلاق الإعدادات</button>
+<!-- شريط الأسفل: عدد الزوار + إرسال طلب -->
+<div id="footerBar" role="contentinfo" aria-live="polite">
+  <div id="visitorCount" aria-label="عدد الزوار">الزوار: 0</div>
+  <div>
+    <button id="btnSendRequest" aria-label="إرسال طلب">إرسال طلب</button>
+  </div>
 </div>
 
-<!-- مساعد ذكي -->
-<div id="chat-assistant" role="complementary" aria-label="مساعد ذكي">
-  <div id="chat-header" tabindex="0" role="button" aria-pressed="false" aria-expanded="false">مساعد الذكي</div>
-  <div id="chat-messages" style="display:none;"></div>
-  <div id="chat-input-container" style="display:none;">
-    <input type="text" id="chat-input" aria-label="أدخل رسالة للمساعد" autocomplete="off" />
-    <button id="chat-send-btn" aria-label="إرسال رسالة">إرسال</button>
+<!-- بوت الذكاء الاصطناعي -->
+<div id="aiChat" role="region" aria-label="بوت الدعم الذكي" style="display:none;">
+  <div id="aiChatHeader">
+    بوت الدعم الذكي
+    <button id="btnToggleBot" aria-label="إغلاق البوت">×</button>
+  </div>
+  <div id="aiMessages" aria-live="polite" aria-relevant="additions"></div>
+  <div id="aiInputContainer">
+    <input id="aiInput" type="text" placeholder="اكتب رسالتك واضغط إنتر..." aria-label="اكتب رسالتك واضغط إنتر" autocomplete="off" />
   </div>
 </div>
 
 <script>
-  // تخزين البيانات في localStorage
-  function getData() {
-    return JSON.parse(localStorage.getItem('projectHubData') || '{"users":[], "projects":[]}');
-  }
-  function saveData(data) {
-    localStorage.setItem('projectHubData', JSON.stringify(data));
-  }
-  function saveUser(user) {
-    localStorage.setItem('projectHubUser', JSON.stringify(user));
-  }
-  function getUser() {
-    return JSON.parse(localStorage.getItem('projectHubUser') || 'null');
-  }
-  function clearUser() {
-    localStorage.removeItem('projectHubUser');
-  }
+  // التنقل بين الصفحات
+  const buttons = document.querySelectorAll('nav#mainButtons button');
+  const pages = document.querySelectorAll('section.page');
 
-  // تسجيل دخول
-  function login() {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    const msg = document.getElementById('authMsg');
-    if(!username || !password) {
-      msg.textContent = "يرجى إدخال اسم المستخدم وكلمة المرور";
-      return;
-    }
-    const data = getData();
-    const user = data.users.find(u => u.username === username && u.password === password);
-    if(user) {
-      saveUser(user);
-      msg.textContent = "تم تسجيل الدخول بنجاح";
-      switchSection('create');
-      updateAuthUI();
-    } else {
-      msg.textContent = "خطأ في اسم المستخدم أو كلمة المرور";
-    }
-  }
-  // إنشاء حساب
-  function signup() {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    const msg = document.getElementById('authMsg');
-    if(!username || !password) {
-      msg.textContent = "يرجى إدخال اسم المستخدم وكلمة المرور";
-      return;
-    }
-    const data = getData();
-    if(data.users.find(u => u.username === username)) {
-      msg.textContent = "اسم المستخدم موجود مسبقاً";
-      return;
-    }
-    data.users.push({username,password});
-    saveData(data);
-    saveUser({username,password});
-    msg.textContent = "تم إنشاء الحساب وتسجيل الدخول";
-    switchSection('create');
-    updateAuthUI();
-  }
-  // تحديث عرض تسجيل الدخول حسب حالة المستخدم
-  function updateAuthUI() {
-    const user = getUser();
-    const authDiv = document.querySelector('.auth-buttons');
-    if(user) {
-      authDiv.innerHTML = `<span>مرحباً، <strong>${user.username}</strong></span> <button class="btn nested-btn" onclick="logout()">تسجيل خروج</button>`;
-    } else {
-      authDiv.innerHTML = `<button class="login-btn btn">تسجيل دخول</button> <button class="signup-btn btn nested-btn">إنشاء حساب</button>`;
-      document.querySelector('.login-btn').onclick = () => switchSection('login');
-      document.querySelector('.signup-btn').onclick = () => switchSection('login');
-    }
-  }
-  function logout() {
-    clearUser();
-    updateAuthUI();
-    switchSection('login');
-  }
-
-  // التنقل بين الأقسام
-  function switchSection(sectionId, btn) {
-    const sections = document.querySelectorAll('main section');
-    sections.forEach(s => s.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
-    // تحديث أزرار navDesktop
-    if(btn) {
-      document.querySelectorAll('#navDesktop button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-    // تحديث أزرار navMobile
-    if(btn && btn.parentElement.id === 'navMobile') {
-      document.querySelectorAll('#navMobile button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      // إخفاء القائمة عند اختيار عنصر
-      document.getElementById('hamburgerBtn').classList.remove('active');
-      document.getElementById('navMobile').style.display = 'none';
-    }
-    // التركيز على main content للقراءة السريعة
-    document.getElementById('mainContent').focus();
-  }
-
-  // زر القائمة الموبايل
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMobile = document.getElementById('navMobile');
-  hamburger.onclick = () => {
-    hamburger.classList.toggle('active');
-    if(navMobile.style.display === 'flex') {
-      navMobile.style.display = 'none';
-    } else {
-      navMobile.style.display = 'flex';
-    }
-  };
-
-  function mobileNavClick(sectionId, btn) {
-    switchSection(sectionId, btn);
-  }
-
-  // إنشاء مشروع
-  function createProject() {
-    const user = getUser();
-    const name = document.getElementById('projectName').value.trim();
-    const desc = document.getElementById('projectDesc').value.trim();
-    const msg = document.getElementById('createMsg');
-    if(!user) {
-      msg.textContent = "يجب تسجيل الدخول أولاً";
-      return;
-    }
-    if(!name) {
-      msg.textContent = "يرجى إدخال اسم المشروع";
-      return;
-    }
-    const data = getData();
-    const id = 'P'+Date.now();
-    data.projects.push({id, name, desc, owner: user.username, design: {color:'#7f5af0', font: "'Cairo', sans-serif"}});
-    saveData(data);
-    msg.textContent = `تم إنشاء المشروع. معرف المشروع: ${id}`;
-    document.getElementById('projectName').value = '';
-    document.getElementById('projectDesc').value = '';
-  }
-
-  // تعديل مشروع
-  function editProject() {
-    const user = getUser();
-    const id = document.getElementById('editProjectId').value.trim();
-    const newDesc = document.getElementById('editProjectDesc').value.trim();
-    const msg = document.getElementById('editMsg');
-    if(!user) {
-      msg.textContent = "يجب تسجيل الدخول أولاً";
-      return;
-    }
-    if(!id) {
-      msg.textContent = "يرجى إدخال معرف المشروع";
-      return;
-    }
-    const data = getData();
-    const project = data.projects.find(p => p.id === id && p.owner === user.username);
-    if(!project) {
-      msg.textContent = "المشروع غير موجود أو ليس من ضمن مشاريعك";
-      return;
-    }
-    project.desc = newDesc;
-    saveData(data);
-    msg.textContent = "تم حفظ التعديلات بنجاح";
-  }
-
-  // مشاركة مشروع - نسخ رابط (رابط افتراضي فقط)
-  function shareProject() {
-    const id = document.getElementById('shareProjectId').value.trim();
-    const msg = document.getElementById('shareMsg');
-    if(!id) {
-      msg.textContent = "يرجى إدخال معرف المشروع";
-      return;
-    }
-    const url = `${location.origin}${location.pathname}?project=${encodeURIComponent(id)}`;
-    navigator.clipboard.writeText(url).then(() => {
-      msg.textContent = `تم نسخ الرابط: ${url}`;
-    }).catch(() => {
-      msg.textContent = `الرابط: ${url} (نسخ تلقائي لم ينجح)`;
+  function showPage(id) {
+    pages.forEach(p => {
+      p.classList.toggle('active', p.id === id);
+    });
+    buttons.forEach(btn => {
+      btn.setAttribute('aria-selected', btn.dataset.page === id ? 'true' : 'false');
     });
   }
 
-  // تطبيق التصميم على المشروع (معاينة فقط)
-  function applyDesign() {
-    const color = document.getElementById('projectColor').value;
-    const font = document.getElementById('projectFont').value;
-    document.documentElement.style.setProperty('--primary-color', color);
-    document.body.style.fontFamily = font;
-    alert("تم تطبيق التصميم على الصفحة (معاينة فقط)");
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      showPage(btn.dataset.page);
+    });
+  });
+
+  // عرض صفحة تسجيل الدخول والتسجيل
+  const btnLoginNav = document.getElementById('btnLoginNav');
+  const btnRegisterNav = document.getElementById('btnRegisterNav');
+  const btnLogoutNav = document.getElementById('btnLogoutNav');
+  const btnSettings = document.getElementById('btnSettings');
+
+  btnLoginNav.onclick = () => showPage('login');
+  btnRegisterNav.onclick = () => showPage('register');
+  btnLogoutNav.onclick = () => {
+    localStorage.removeItem('loggedInUser');
+    alert('تم تسجيل الخروج!');
+    updateNavButtons();
+    showPage('home');
+  };
+  btnSettings.onclick = () => showPage('request');
+
+  function updateNavButtons() {
+    const loggedIn = localStorage.getItem('loggedInUser');
+    if(loggedIn) {
+      btnLoginNav.style.display = 'none';
+      btnRegisterNav.style.display = 'none';
+      btnLogoutNav.style.display = 'inline-block';
+    } else {
+      btnLoginNav.style.display = 'inline-block';
+      btnRegisterNav.style.display = 'inline-block';
+      btnLogoutNav.style.display = 'none';
+    }
   }
 
-  // إرسال طلب الدعم
-  function sendSupport() {
-    const msg = document.getElementById('supportMsg').value.trim();
-    const resp = document.getElementById('supportResp');
-    if(!msg) {
-      resp.textContent = "يرجى كتابة المشكلة أو السؤال.";
+  updateNavButtons();
+
+  // ========================================
+  // إدارة المستخدمين (ببساطة مع localStorage)
+  function getUsers() {
+    return JSON.parse(localStorage.getItem('users') || '[]');
+  }
+  function saveUsers(users) {
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+  function findUser(email) {
+    const users = getUsers();
+    return users.find(u => u.email === email);
+  }
+
+  // تسجيل حساب جديد
+  document.getElementById('registerForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+    const pw = document.getElementById('registerPassword').value;
+    const pw2 = document.getElementById('registerPasswordConfirm').value;
+    const msg = document.getElementById('registerMsg');
+    msg.textContent = '';
+    if(pw !== pw2){
+      msg.textContent = 'كلمات المرور غير متطابقة.';
+      msg.className = 'msg error';
       return;
     }
-    resp.textContent = "شكراً لتواصلك، سيتم الرد عليك قريباً.";
-    document.getElementById('supportMsg').value = '';
+    if(findUser(email)){
+      msg.textContent = 'هذا البريد مسجل مسبقًا.';
+      msg.className = 'msg error';
+      return;
+    }
+    if(pw.length < 6){
+      msg.textContent = 'يجب أن تكون كلمة المرور 6 أحرف على الأقل.';
+      msg.className = 'msg error';
+      return;
+    }
+    const users = getUsers();
+    users.push({email, password: pw});
+    saveUsers(users);
+    msg.textContent = 'تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.';
+    msg.className = 'msg success';
+    e.target.reset();
+  });
+
+  // تسجيل دخول
+  document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const pw = document.getElementById('loginPassword').value;
+    const msg = document.getElementById('loginMsg');
+    msg.textContent = '';
+    const user = findUser(email);
+    if(!user || user.password !== pw) {
+      msg.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      msg.className = 'msg error';
+      return;
+    }
+    localStorage.setItem('loggedInUser', email);
+    msg.textContent = 'تم تسجيل الدخول بنجاح!';
+    msg.className = 'msg success';
+    updateNavButtons();
+    showPage('home');
+    e.target.reset();
+  });
+
+  // ========================================
+  // إدارة المشاريع
+  function getProjects() {
+    return JSON.parse(localStorage.getItem('projects') || '[]');
+  }
+  function saveProjects(projects) {
+    localStorage.setItem('projects', JSON.stringify(projects));
   }
 
-  // إعدادات الموقع (الوضع، اللون، الزوم، اللغة)
-  const settingsModal = document.getElementById('settingsModal');
-  const openSettingsBtn = document.getElementById('openSettings');
-  const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-  const themeSelect = document.getElementById('themeSelect');
-  const zoomRange = document.getElementById('zoomRange');
-  const colorTheme = document.getElementById('colorTheme');
-  const langSelect = document.getElementById('langSelect');
+  // إنشاء مشروع
+  document.getElementById('createProjectForm').addEventListener('submit', e => {
+    e.preventDefault();
+    if(!localStorage.getItem('loggedInUser')) {
+      alert('يجب تسجيل الدخول لإنشاء مشروع.');
+      return;
+    }
+    const title = document.getElementById('projectTitle').value.trim();
+    const desc = document.getElementById('projectDesc').value.trim();
+    if(title.length < 3 || desc.length < 5) {
+      alert('يرجى كتابة عنوان ووصف صالحين.');
+      return;
+    }
+    const projects = getProjects();
+    projects.push({
+      id: Date.now(),
+      title,
+      desc,
+      owner: localStorage.getItem('loggedInUser'),
+      online: false
+    });
+    saveProjects(projects);
+    const msg = document.getElementById('createProjectMsg');
+    msg.textContent = 'تم إنشاء المشروع بنجاح!';
+    msg.className = 'msg success';
+    e.target.reset();
+    loadProjectsForEdit();
+    loadProjectsForShare();
+    loadOnlineProjects();
+  });
 
-  openSettingsBtn.onclick = () => {
-    settingsModal.style.display = 'block';
-  };
-  closeSettingsBtn.onclick = () => {
-    settingsModal.style.display = 'none';
-  };
+  // تحميل مشاريع التعديل
+  function loadProjectsForEdit() {
+    const list = document.getElementById('editProjectsList');
+    list.innerHTML = '';
+    if(!localStorage.getItem('loggedInUser')){
+      list.innerHTML = '<p>يجب تسجيل الدخول لعرض مشاريعك.</p>';
+      return;
+    }
+    const user = localStorage.getItem('loggedInUser');
+    const projects = getProjects().filter(p => p.owner === user);
+    if(projects.length === 0) {
+      list.innerHTML = '<p>لا توجد مشاريع حتى الآن.</p>';
+      return;
+    }
+    projects.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'project-item';
+      div.setAttribute('tabindex', '0');
+      div.innerHTML = `
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+        <button data-id="${p.id}" class="btnEdit">تعديل</button>
+        <button data-id="${p.id}" class="btnDelete">حذف</button>
+      `;
+      list.appendChild(div);
+    });
+    // أزرار التعديل والحذف
+    list.querySelectorAll('.btnEdit').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const id = Number(e.target.dataset.id);
+        editProject(id);
+      });
+    });
+    list.querySelectorAll('.btnDelete').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const id = Number(e.target.dataset.id);
+        deleteProject(id);
+      });
+    });
+  }
+  function editProject(id) {
+    const projects = getProjects();
+    const project = projects.find(p => p.id === id);
+    if(!project){
+      alert('المشروع غير موجود.');
+      return;
+    }
+    const newTitle = prompt('عدل عنوان المشروع:', project.title);
+    if(newTitle === null) return;
+    const newDesc = prompt('عدل وصف المشروع:', project.desc);
+    if(newDesc === null) return;
+    project.title = newTitle.trim() || project.title;
+    project.desc = newDesc.trim() || project.desc;
+    saveProjects(projects);
+    alert('تم التعديل!');
+    loadProjectsForEdit();
+  }
+  function deleteProject(id) {
+    if(!confirm('هل أنت متأكد من حذف هذا المشروع؟')) return;
+    let projects = getProjects();
+    projects = projects.filter(p => p.id !== id);
+    saveProjects(projects);
+    loadProjectsForEdit();
+  }
 
-  function applyTheme(theme) {
-    if(theme === 'light') {
-      document.body.classList.add('light');
-      document.getElementById('chat-assistant').classList.add('light');
+  // مشاريع أونلاين
+  function loadOnlineProjects() {
+    const ul = document.getElementById('onlineProjectsList');
+    ul.innerHTML = '';
+    const projects = getProjects().filter(p => p.online);
+    if(projects.length === 0) {
+      ul.innerHTML = '<p>لا توجد مشاريع مفعلة حتى الآن.</p>';
+      return;
+    }
+    projects.forEach(p => {
+      const li = document.createElement('li');
+      li.className = 'project-item';
+      li.setAttribute('tabindex', '0');
+      li.innerHTML = `<h3>${p.title}</h3><p>${p.desc}</p>`;
+      ul.appendChild(li);
+    });
+  }
+
+  // مشاريع للمشاركة
+  function loadProjectsForShare() {
+    const list = document.getElementById('shareProjectsList');
+    list.innerHTML = '';
+    if(!localStorage.getItem('loggedInUser')){
+      list.innerHTML = '<p>يجب تسجيل الدخول لعرض المشاريع.</p>';
+      return;
+    }
+    const user = localStorage.getItem('loggedInUser');
+    const projects = getProjects().filter(p => p.owner === user);
+    if(projects.length === 0) {
+      list.innerHTML = '<p>لا توجد مشاريع للمشاركة.</p>';
+      return;
+    }
+    projects.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'project-item';
+      div.setAttribute('tabindex', '0');
+      div.innerHTML = `
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+        <button data-id="${p.id}" class="btnToggleOnline">${p.online ? 'إلغاء التفعيل' : 'تفعيل المشروع'}</button>
+      `;
+      list.appendChild(div);
+    });
+    // أزرار التفعيل/الإلغاء
+    list.querySelectorAll('.btnToggleOnline').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const id = Number(e.target.dataset.id);
+        toggleProjectOnline(id);
+      });
+    });
+  }
+  function toggleProjectOnline(id) {
+    const projects = getProjects();
+    const project = projects.find(p => p.id === id);
+    if(!project) return;
+    project.online = !project.online;
+    saveProjects(projects);
+    loadProjectsForShare();
+    loadOnlineProjects();
+  }
+
+  // إرسال طلب (مشكلة أو اقتراح)
+  const btnSendRequest = document.getElementById('btnSendRequest');
+  btnSendRequest.addEventListener('click', () => {
+    showPage('request');
+  });
+  document.getElementById('requestForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const text = document.getElementById('requestText').value.trim();
+    const msg = document.getElementById('requestMsg');
+    msg.textContent = '';
+    if(text.length < 10){
+      msg.textContent = 'يرجى كتابة طلب أو مشكلة مفصلة (10 أحرف على الأقل).';
+      msg.className = 'msg error';
+      return;
+    }
+    let requests = JSON.parse(localStorage.getItem('requests') || '[]');
+    requests.push({id: Date.now(), text});
+    localStorage.setItem('requests', JSON.stringify(requests));
+    msg.textContent = 'تم إرسال طلبك بنجاح! شكرًا لك.';
+    msg.className = 'msg success';
+    e.target.reset();
+  });
+
+  // عداد الزوار
+  function updateVisitorCount() {
+    let count = Number(localStorage.getItem('visitorCount') || '0');
+    count++;
+    localStorage.setItem('visitorCount', count.toString());
+    document.getElementById('visitorCount').textContent = 'الزوار: ' + count.toLocaleString();
+  }
+  updateVisitorCount();
+
+  // بوت ذكي متطور (ردود تلقائية مع تحسين النصوص)
+  const aiChat = document.getElementById('aiChat');
+  const btnToggleBot = document.getElementById('btnToggleBot');
+  const aiMessages = document.getElementById('aiMessages');
+  const aiInput = document.getElementById('aiInput');
+
+  btnToggleBot.addEventListener('click', () => {
+    aiChat.style.display = 'none';
+  });
+
+  function appendAIMessage(text, sender = 'bot') {
+    const p = document.createElement('p');
+    p.textContent = text;
+    p.className = sender;
+    aiMessages.appendChild(p);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  function botReply(userText) {
+    userText = userText.toLowerCase();
+    appendAIMessage(userText, 'user');
+
+    // ردود ذكية محسنة
+    if(userText.includes('مرحبا') || userText.includes('السلام')) {
+      appendAIMessage('مرحبًا بك! كيف يمكنني مساعدتك في إدارة مشاريعك؟');
+    } else if(userText.includes('كيف') || userText.includes('مساعدة')) {
+      appendAIMessage('يمكنك استخدام الأزرار أعلاه لإنشاء وتعديل ومشاركة مشاريعك بكل سهولة.');
+    } else if(userText.includes('مشروع جديد') || userText.includes('إنشاء مشروع')) {
+      appendAIMessage('اذهب إلى صفحة "إنشاء مشروع" لبدء مشروع جديد.');
+    } else if(userText.includes('تسجيل دخول') || userText.includes('دخول')) {
+      appendAIMessage('يمكنك تسجيل الدخول من خلال زر "تسجيل دخول" في الأعلى.');
+    } else if(userText.includes('مشاكل') || userText.includes('اقتراح')) {
+      appendAIMessage('إذا واجهتك مشكلة، يمكنك إرسال طلب عبر صفحة "إرسال طلب".');
     } else {
-      document.body.classList.remove('light');
-      document.getElementById('chat-assistant').classList.remove('light');
+      appendAIMessage('عذرًا، لم أفهم طلبك. حاول صياغة سؤالك بشكل مختلف أو استخدم كلمات مثل "إنشاء مشروع" أو "تسجيل دخول".');
     }
   }
-  themeSelect.onchange = () => {
-    applyTheme(themeSelect.value);
-  };
 
-  zoomRange.oninput = () => {
-    document.body.style.zoom = zoomRange.value +     '%';
-  };
-
-  colorTheme.oninput = () => {
-    document.documentElement.style.setProperty('--primary-color', colorTheme.value);
-  };
-
-  langSelect.onchange = () => {
-    alert('تغيير اللغة إلى: ' + langSelect.options[langSelect.selectedIndex].text + '\nهذه خاصية تجريبية في النسخة الحالية.');
-  };
-
-  // مساعد ذكي (بسيط جداً)
-  const chatHeader = document.getElementById('chat-header');
-  const chatMessages = document.getElementById('chat-messages');
-  const chatInputContainer = document.getElementById('chat-input-container');
-  const chatInput = document.getElementById('chat-input');
-  const chatSendBtn = document.getElementById('chat-send-btn');
-
-  chatHeader.onclick = () => {
-    const expanded = chatHeader.getAttribute('aria-expanded') === 'true';
-    if(expanded) {
-      chatMessages.style.display = 'none';
-      chatInputContainer.style.display = 'none';
-      chatHeader.setAttribute('aria-expanded', 'false');
-    } else {
-      chatMessages.style.display = 'block';
-      chatInputContainer.style.display = 'flex';
-      chatHeader.setAttribute('aria-expanded', 'true');
-      chatInput.focus();
-    }
-  };
-
-  function appendMessage(sender, text) {
-    const div = document.createElement('div');
-    div.classList.add('chat-msg', sender);
-    div.textContent = text;
-    chatMessages.appendChild(div);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  chatSendBtn.onclick = () => {
-    const text = chatInput.value.trim();
-    if(!text) return;
-    appendMessage('user', text);
-    chatInput.value = '';
-
-    setTimeout(() => {
-      // ردود بسيطة تلقائية
-      if(text.includes('مرحبا') || text.includes('أهلًا')) {
-        appendMessage('bot', 'مرحباً! كيف يمكنني مساعدتك في مشروعك اليوم؟');
-      } else if(text.includes('مساعدة')) {
-        appendMessage('bot', 'يمكنك استخدام قسم المساعدة لإرسال مشاكلك أو استفساراتك.');
-      } else if(text.includes('شكرًا') || text.includes('شكرا')) {
-        appendMessage('bot', 'على الرحب والسعة!');
-      } else {
-        appendMessage('bot', 'عذراً، لم أفهم طلبك. حاول أن تكون أكثر تحديداً.');
+  aiInput.addEventListener('keypress', e => {
+    if(e.key === 'Enter'){
+      const val = aiInput.value.trim();
+      if(val){
+        botReply(val);
+        aiInput.value = '';
       }
-    }, 1000);
-  };
-
-  // بداية
-  updateAuthUI();
-
-  // تهيئة لتحديد القسم المناسب بناء على رابط مع معرف المشروع (اختياري)
-  function initFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const proj = urlParams.get('project');
-    if(proj) {
-      switchSection('share');
-      document.getElementById('shareProjectId').value = proj;
     }
-  }
-  initFromUrl();
+  });
 
-</script>
-<script>
-// عداد زوار محلي
-const visitKey = 'pixelbuilder2_visit_count';
-let count = localStorage.getItem(visitKey);
-if (!count) count = 0;
-count = parseInt(count) + 1;
-localStorage.setItem(visitKey, count);
+  // إظهار الصفحة الرئيسية عند بداية التشغيل
+  showPage('home');
+  updateNavButtons();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const visitDiv = document.createElement("div");
-  visitDiv.textContent = `عدد زيارتك للموقع المخصص لك: ${count}`;
-  visitDiv.style.position = "fixed";
-  visitDiv.style.bottom = "10px";
-  visitDiv.style.right = "10px";
-  visitDiv.style.background = "#2e2e52";
-  visitDiv.style.color = "#fff";
-  visitDiv.style.padding = "10px 20px";
-  visitDiv.style.borderRadius = "15px";
-  visitDiv.style.fontWeight = "bold";
-  visitDiv.style.boxShadow = "0 0 10px #7f5af0";
-  visitDiv.style.zIndex = 99999;
-  document.body.appendChild(visitDiv);
-});
-function sendSupport() {
-  const name = document.getElementById('supportName').value.trim();
-  const email = document.getElementById('supportEmail').value.trim();
-  const type = document.getElementById('supportType').value;
-  const msg = document.getElementById('supportMsg').value.trim();
-  const resp = document.getElementById('supportResp');
+  // إظهار البوت تلقائياً بعد 3 ثوانٍ
+  setTimeout(() => {
+    aiChat.style.display = 'flex';
+    appendAIMessage('مرحبًا! أنا بوت الدعم الذكي. اكتب سؤالك أو طلبك هنا.');
+  }, 3000);
 
-  if(!name || !email || !msg) {
-    resp.textContent = "يرجى ملء جميع الحقول المطلوبة.";
-    return;
-  }
-
-  // هنا يمكن مستقبلاً إرسال البيانات إلى سيرفر أو بريد
-  console.log("طلب دعم:", {name, email, type, msg});
-  resp.textContent = "✅ تم إرسال الطلب بنجاح. شكراً لتواصلك معنا!";
-  
-  // تفريغ الحقول
-  document.getElementById('supportName').value = '';
-  document.getElementById('supportEmail').value = '';
-  document.getElementById('supportType').value = 'مشكلة تقنية';
-  document.getElementById('supportMsg').value = '';
-}
+  // تحديث قائمة المشاريع عند التغيير
+  loadProjectsForEdit();
+  loadProjectsForShare();
+  loadOnlineProjects();
 
 </script>
 
