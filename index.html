@@ -1,982 +1,636 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>pixel-soulayman</title>
+<title>PixelBuilder2 Enterprise Hub</title>
 <style>
-
-  /* الخطوط */
-  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-
-  /* ألوان نيون */
-  :root {
-    --neon-cyan: #0ff;
-    --neon-pink: #ff007f;
-    --neon-purple: #bf00ff;
-    --neon-blue: #00ccff;
-    --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  
+  html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #020e20, #000011);
+    color: #e0f7fa;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  a {
+    color: #00ffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: #00bcd4;
   }
 
-  /* إعدادات أساسية */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Cairo', sans-serif;
-    background: var(--bg-gradient);
-    color: #eee;
-    min-height: 100vh;
+  /* ==== SIDEBAR ==== */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 270px;
+    height: 100vh;
+    background: linear-gradient(180deg, #003544, #001d22);
+    box-shadow: 3px 0 25px #00fff7cc;
     display: flex;
     flex-direction: column;
+    padding: 2.5rem 1.5rem;
+    gap: 1.8rem;
+    z-index: 2000;
   }
-  /* إعدادات أساسية */
-  * {
-    box-sizing: border-box;
+  #sidebar h2 {
+    color: #00fff7;
+    font-weight: 900;
+    font-size: 2.6rem;
+    letter-spacing: 4px;
+    margin-bottom: 1.8rem;
+    user-select: none;
+    text-align: center;
+    text-shadow: 0 0 10px #00fff7bb;
   }
-  body {
-    margin: 0;
-    font-family: 'Cairo', sans-serif;
-    background-image: url('https://i.postimg.cc/DZPdv4zG/construction-worker-walking-stockcake.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: rgba(15, 32, 39, 0.75);
-    background-blend-mode: overlay;
-    color: #eee;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  /* نصوص نيون */
-  .neon-text {
-    color: var(--neon-cyan);
-    text-shadow:
-      0 0 5px var(--neon-cyan),
-      0 0 10px var(--neon-cyan),
-      0 0 20px var(--neon-cyan),
-      0 0 40px var(--neon-cyan);
-  }
-
-  /* ترويسة الموقع */
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 24px;
-    background: #011b22cc;
-    border-bottom: 2px solid var(--neon-cyan);
-    box-shadow:
-      0 0 12px var(--neon-cyan),
-      inset 0 0 20px var(--neon-cyan);
-    user-select:none;
-  }
-  .header-left, .header-center, .header-right {
-    display: flex;
-    align-items: center;
-  }
-  .header-center {
-    flex-grow: 1;
-    justify-content: center;
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-  button {
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 8px 16px;
-    margin-left: 12px;
-    border-radius: 14px;
-    border: 2px solid var(--neon-cyan);
+  #sidebar button {
     background: transparent;
-    color: var(--neon-cyan);
-    box-shadow:
-      0 0 8px var(--neon-cyan);
+    border: none;
+    color: #00fff7cc;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 0.8rem 1.2rem;
+    border-radius: 18px;
+    box-shadow: 0 0 18px #00fff7bb;
+    cursor: pointer;
     transition: all 0.3s ease;
-    user-select:none;
-  }
-  button:hover, button:focus {
-    background: var(--neon-cyan);
-    color: #011b22;
-    box-shadow:
-      0 0 20px var(--neon-cyan),
-      0 0 40px var(--neon-cyan);
-    outline: none;
-  }
-
-  /* التنقل بين الأقسام */
-  nav#mainButtons {
+    text-align: left;
     display: flex;
-    justify-content: center;
-    gap: 14px;
-    background: #011b22cc;
-    padding: 14px 0;
-    border-top: 2px solid var(--neon-cyan);
-    border-bottom: 2px solid var(--neon-cyan);
-    box-shadow:
-      0 0 20px var(--neon-cyan),
-      inset 0 0 25px var(--neon-cyan);
+    align-items: center;
+    gap: 12px;
   }
-  nav#mainButtons button {
-    border-color: var(--neon-pink);
-    color: var(--neon-pink);
-    box-shadow:
-      0 0 8px var(--neon-pink);
+  #sidebar button svg {
+    width: 22px;
+    height: 22px;
+    stroke: #00fff7cc;
+    transition: stroke 0.3s ease;
   }
-  nav#mainButtons button:hover, nav#mainButtons button:focus {
-    background: var(--neon-pink);
-    color: #011b22;
-    box-shadow:
-      0 0 25px var(--neon-pink),
-      0 0 45px var(--neon-pink);
+  #sidebar button:hover {
+    background: #00fff7;
+    color: #001d22;
+    box-shadow: 0 0 30px #00fff7;
+  }
+  #sidebar button:hover svg {
+    stroke: #001d22;
+  }
+  #sidebar button.active {
+    background: #00c4aa;
+    color: #001d22;
+    box-shadow: 0 0 35px #00c4aa;
+  }
+  #sidebar button.active svg {
+    stroke: #001d22;
   }
 
-  /* أقسام المحتوى */
-  main {
-    flex-grow: 1;
-    padding: 20px 24px;
-    max-width: 960px;
-    margin: 0 auto 80px auto;
-    width: 100%;
+  /* ==== HEADER ==== */
+  header {
+    position: fixed;
+    top: 0; left: 270px;
+    right: 0;
+    height: 70px;
+    background: rgba(0, 255, 247, 0.07);
+    backdrop-filter: blur(8px);
+    box-shadow: inset 0 -1px 8px #00fff7bb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 1500;
   }
-  section.page {
+  header h1 {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: #00fff7;
+    letter-spacing: 2px;
+    user-select: none;
+    text-shadow: 0 0 12px #00fff7cc;
+  }
+  nav.topnav a {
+    color: #00eee4cc;
+    font-weight: 700;
+    margin-left: 1.8rem;
+    font-size: 1.05rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  nav.topnav a:hover,
+  nav.topnav a.active {
+    background: #00fff7;
+    color: #001d22;
+    box-shadow: 0 0 30px #00fff7;
+  }
+
+  /* ==== MAIN CONTAINER ==== */
+  main.container {
+    margin-left: 270px;
+    margin-top: 70px;
+    padding: 2rem 3rem;
+    min-height: calc(100vh - 70px);
+    background: linear-gradient(180deg, #001d22, #000911);
+    overflow-y: auto;
+  }
+
+  /* ==== SECTIONS ==== */
+  section {
     display: none;
-    padding: 20px;
-    border-radius: 20px;
-    background: rgba(1, 27, 34, 0.8);
-    border: 3px solid var(--neon-purple);
-    box-shadow:
-      0 0 15px var(--neon-purple),
-      inset 0 0 25px var(--neon-purple);
-    transition: all 0.4s ease;
+    animation: fadeIn 0.6s ease forwards;
   }
-  section.page.active {
+  section.active {
     display: block;
   }
 
-  /* إطار نيون للأقسام */
-  .page {
-    position: relative;
-  }
-  .page::before {
-    content: "";
-    position: absolute;
-    top: -6px; left: -6px; right: -6px; bottom: -6px;
-    border-radius: 25px;
-    pointer-events: none;
-    box-shadow:
-      0 0 12px var(--neon-purple),
-      0 0 40px var(--neon-purple),
-      0 0 70px var(--neon-purple);
-    opacity: 0.8;
-    transition: opacity 0.4s ease;
-    z-index: -1;
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
   }
 
-  /* العناوين */
-  h1.neon-text, h2.neon-text {
-    margin-top: 0;
-    text-align: center;
+  section h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: #00fff7;
+    text-shadow: 0 0 20px #00fff7cc;
+  }
+  section p.lead {
+    font-size: 1.3rem;
+    max-width: 900px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    color: #a2fffccc;
   }
 
-  /* النماذج */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  textarea {
-    padding: 12px 16px;
-    border-radius: 14px;
-    border: 2px solid var(--neon-blue);
-    background: #011b22;
-    color: var(--neon-cyan);
-    font-size: 1rem;
-    font-family: 'Cairo', sans-serif;
-    box-shadow:
-      0 0 12px var(--neon-blue);
-    resize: vertical;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-  }
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus,
-  textarea:focus {
-    border-color: var(--neon-pink);
-    box-shadow:
-      0 0 25px var(--neon-pink),
-      inset 0 0 40px var(--neon-pink);
-    outline: none;
-  }
-
-  /* أزرار النماذج */
-  button.primary {
-    align-self: center;
-    width: 180px;
-    background: transparent;
-    border: 3px solid var(--neon-pink);
-    color: var(--neon-pink);
-    font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow:
-      0 0 15px var(--neon-pink);
-    transition: all 0.3s ease;
-    border-radius: 24px;
-  }
-  button.primary:hover, button.primary:focus {
-    background: var(--neon-pink);
-    color: #011b22;
-    box-shadow:
-      0 0 35px var(--neon-pink),
-      0 0 60px var(--neon-pink);
-    outline: none;
-  }
-
-  /* القوائم والمشاريع */
-  .projects-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .project-item {
-    background: #022833cc;
-    padding: 14px 18px;
-    border-radius: 16px;
-    border: 2px solid var(--neon-cyan);
-    box-shadow:
-      0 0 15px var(--neon-cyan);
-    color: #0ffbcc;
-  }
-  .project-item h3 {
-    margin: 0 0 6px 0;
-  }
-  .project-item button {
-    margin-left: 8px;
-    border-color: var(--neon-purple);
-    color: var(--neon-purple);
-    box-shadow:
-      0 0 8px var(--neon-purple);
-    font-weight: 600;
-  }
-  .project-item button:hover, .project-item button:focus {
-    background: var(--neon-purple);
-    color: #011b22;
-    box-shadow:
-      0 0 25px var(--neon-purple),
-      0 0 45px var(--neon-purple);
-    outline: none;
-  }
-
-  /* الرسائل */
-  .msg {
-    font-weight: 700;
-    font-size: 0.95rem;
-    margin-top: 6px;
-    min-height: 24px;
-  }
-  .msg.error {
-    color: #ff4466;
-    text-shadow: 0 0 6px #ff4466;
-  }
-  .msg.success {
-    color: #66ff99;
-    text-shadow: 0 0 8px #66ff99;
-  }
-
-  /* شريط الأسفل */
-  #footerBar {
-    position: fixed;
-    bottom: 6px;
-    right: 6px;
-    left: 6px;
-    background: #011b22cc;
-    border-radius: 20px;
-    padding: 10px 20px;
-    color: var(--neon-cyan);
-    box-shadow:
-      0 0 20px var(--neon-cyan),
-      inset 0 0 30px var(--neon-cyan);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    user-select:none;
-    z-index: 2000;
-  }
-  #footerBar button {
-    border-color: var(--neon-pink);
-    color: var(--neon-pink);
-    box-shadow:
-      0 0 12px var(--neon-pink);
-    padding: 6px 14px;
-    font-size: 1rem;
-  }
-
-  /* بوت الذكاء الاصطناعي */
-  #aiChat {
-    position: fixed;
-    bottom: 70px;
-    left: 12px;
-    width: 350px;
-    max-height: 350px;
-    background: #011b22cc;
-    border-radius: 22px;
-    border: 3px solid var(--neon-cyan);
-    box-shadow:
-      0 0 25px var(--neon-cyan),
-      inset 0 0 35px var(--neon-cyan);
-    display: flex;
-    flex-direction: column;
-    user-select:none;
-    z-index: 3000;
-  }
-  #aiChatHeader {
-    font-weight: 700;
-    font-size: 1.2rem;
-    background: #011b22;
-    border-bottom: 2px solid var(--neon-cyan);
-    padding: 12px 18px;
-    color: var(--neon-cyan);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 20px 20px 0 0;
-    box-shadow:
-      0 0 20px var(--neon-cyan);
-  }
-  #btnToggleBot {
-    background: transparent;
+  /* ==== BUTTONS ==== */
+  button.primary-btn {
+    background: #00fff7;
+    color: #001d22;
+    font-weight: 900;
     border: none;
-    color: var(--neon-cyan);
-    font-size: 1.6rem;
+    padding: 1rem 3rem;
+    border-radius: 40px;
+    font-size: 1.3rem;
+    box-shadow: 0 0 40px #00fff7bb;
     cursor: pointer;
-    user-select:none;
-    transition: color 0.3s ease;
+    transition: background-color 0.3s ease;
+    user-select: none;
   }
-  #btnToggleBot:hover {
-    color: var(--neon-pink);
+  button.primary-btn:hover {
+    background: #00c4aa;
+    box-shadow: 0 0 60px #00c4aa;
   }
-  #aiMessages {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 14px 18px;
+
+  /* ==== CARDS GRID ==== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 2.6rem;
+    margin-top: 1.2rem;
+  }
+  .card {
+    background: rgba(0, 255, 247, 0.12);
+    padding: 2rem;
+    border-radius: 22px;
+    box-shadow: 0 0 40px #00fff7aa;
+    color: #001d22;
+    font-weight: 700;
+    cursor: default;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 70px #00fff7ff;
+  }
+  .card h3 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    color: #001d22;
+    text-shadow: 0 0 10px #00fff7bb;
+  }
+  .card p {
+    font-weight: 500;
+    color: #004d57cc;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* ==== FORMS ==== */
+  form {
+    max-width: 600px;
+    margin: 2rem auto 0 auto;
+    background: #003844cc;
+    padding: 2.3rem 2.5rem;
+    border-radius: 26px;
+    box-shadow: 0 0 60px #00fff7aa;
+    color: #e0f7fa;
+  }
+  form input, form select, form textarea {
+    width: 100%;
+    padding: 0.9rem 1.3rem;
+    margin-bottom: 1.3rem;
+    border-radius: 15px;
+    border: none;
+    background: #00575a;
+    color: #b4ffffcc;
+    font-size: 1rem;
+    box-shadow: inset 0 0 15px #00fff7aa;
+    font-weight: 700;
+  }
+  form input::placeholder, form textarea::placeholder {
+    color: #8eeef9aa;
+  }
+  form textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  form button {
+    background: #00fff7;
+    color: #001d22;
+    font-weight: 900;
+    padding: 1rem 0;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 40px #00fff7cc;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  form button:hover {
+    background: #00c4aa;
+  }
+
+  /* ==== TABLE ==== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    box-shadow: 0 0 30px #00fff7bb;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  table th, table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 700;
+    color: #001d22;
+  }
+  table th {
+    background: #00fff7cc;
+    color: #001d22;
+  }
+  table tr:nth-child(even) {
+    background: #00fff733;
+  }
+  table tr:hover {
+    background: #00c4aaaa;
+    color: #001d22;
+  }
+
+  /* ==== SETTINGS SUBMENU ==== */
+  #settingsSubmenu {
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    color: #0ffbcc;
-    font-weight: 600;
+    gap: 1rem;
   }
-  #aiMessages p.bot {
-    align-self: flex-start;
-    background: #022833cc;
-    padding: 10px 16px;
-    border-radius: 14px;
-    color: var(--neon-cyan);
-    text-shadow:
-      0 0 15px var(--neon-cyan);
-  }
-  #aiMessages p.user {
-    align-self: flex-end;
-    background: var(--neon-pink);
-    color: #011b22;
-    font-weight: 700;
-    padding: 10px 16px;
-    border-radius: 14px;
-    text-shadow: none;
-  }
-  #aiInputContainer {
-    padding: 12px 18px;
-    background: #011b22;
-    border-top: 2px solid var(--neon-cyan);
-  }
-  #aiInput {
-    width: 100%;
-    padding: 14px 20px;
-    border-radius: 22px;
+  #settingsSubmenu button {
+    background: #00fff7cc;
+    color: #001d22;
+    font-weight: 900;
     border: none;
-    font-size: 1rem;
-    font-family: 'Cairo', sans-serif;
-    box-shadow:
-      inset 0 0 28px var(--neon-cyan);
-    outline: none;
-    color: var(--neon-cyan);
-    background: #011b22;
-    transition: box-shadow 0.3s ease;
+    padding: 0.9rem 0;
+    border-radius: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 0 30px #00fff7cc;
+    transition: background-color 0.3s ease;
+    user-select: none;
   }
-  #aiInput:focus {
-    box-shadow:
-      0 0 40px var(--neon-cyan),
-      inset 0 0 48px var(--neon-cyan);
+  #settingsSubmenu button:hover {
+    background: #00c4aa;
   }
 
-  /* صفحات تسجيل الدخول والتسجيل */
-  #loginForm, #registerForm, #requestForm {
-    max-width: 420px;
-    margin: 0 auto;
-    background: #011b22cc;
-    padding: 30px 36px 40px;
-    border-radius: 20px;
-    box-shadow:
-      0 0 28px var(--neon-cyan),
-      inset 0 0 38px var(--neon-cyan);
-  }
-  #loginForm h2, #registerForm h2, #requestForm h2 {
-    margin-bottom: 24px;
+  /* ==== FOOTER ==== */
+  footer {
+    margin-top: 3rem;
+    padding: 2rem 1rem;
+    background: #001d22;
+    text-align: center;
     font-weight: 700;
-  }
-  #loginForm button, #registerForm button, #requestForm button {
-    margin-top: 10px;
+    color: #00fff7;
+    user-select: none;
+    box-shadow: inset 0 0 30px #00fff7bb;
   }
 
-  /* Responsive */
-  @media (max-width: 960px) {
-    #aiChat {
-      width: 90vw;
-      max-height: 300px;
-      left: 5vw;
-      bottom: 80px;
+  /* ==== SCROLL TO TOP BUTTON ==== */
+  #scrollTopBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #00fff7;
+    color: #001d22;
+    border: none;
+    padding: 1rem 1.3rem;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 0 30px #00fff7cc;
+    display: none;
+    z-index: 3000;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  #scrollTopBtn:hover {
+    background: #00c4aa;
+  }
+
+  /* ==== RESPONSIVE ==== */
+  @media (max-width: 1024px) {
+    main.container {
+      margin-left: 220px;
+      padding: 2rem 2rem;
     }
-    main {
-      padding: 16px 12px;
-      margin-bottom: 90px;
+    #sidebar {
+      width: 220px;
+      padding: 2rem 1rem;
     }
   }
-  @media (max-width: 480px) {
-    header {
-      flex-wrap: wrap;
-      gap: 8px;
+  @media (max-width: 768px) {
+    #sidebar {
+      width: 60px;
+      padding: 1rem 0.5rem;
     }
-    .header-center {
-      order: 3;
-      font-size: 1.3rem;
-      flex-grow: 1;
+    #sidebar h2 {
+      display: none;
+    }
+    #sidebar button {
+      font-size: 0;
+      padding: 1rem 0.4rem;
       justify-content: center;
     }
-    .header-left, .header-right {
-      width: 100%;
-      justify-content: space-between;
+    #sidebar button svg {
+      margin: 0 auto;
     }
-    nav#mainButtons {
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 12px 0;
+    main.container {
+      margin-left: 60px;
+      padding: 1.2rem 1rem;
     }
-    nav#mainButtons button {
-      flex: 1 1 calc(50% - 12px);
+    header {
+      left: 60px;
+      padding: 0 1rem;
+    }
+    nav.topnav a {
+      margin-left: 1rem;
       font-size: 0.9rem;
-      padding: 10px 12px;
-      margin: 4px 0;
-    }
-    #footerBar {
-      font-size: 0.9rem;
-      padding: 8px 14px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    #footerBar button {
-      flex: 1 1 100%;
-      font-size: 1rem;
-      margin-top: 6px;
     }
   }
+
 </style>
 </head>
 <body>
 
+<!-- SIDEBAR -->
+<div id="sidebar" aria-label="Sidebar navigation">
+  <h2>PIXELBUILDER2</h2>
+  <button id="nav-hero" aria-label="Go to Home" class="active" onclick="showSection('hero')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9L12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    Home
+  </button>
+  <button id="nav-services" aria-label="Go to Services" onclick="showSection('services')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+    Services
+  </button>
+  <button id="nav-projects" aria-label="Go to Projects" onclick="showSection('projects')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Projects
+  </button>
+  <button id="nav-team" aria-label="Go to Team" onclick="showSection('team')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7 7 0 0 1 13 0"/></svg>
+    Team
+  </button>
+  <button id="nav-blog" aria-label="Go to Blog" onclick="showSection('blog')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Blog
+  </button>
+  <button id="nav-contact" aria-label="Go to Contact" onclick="showSection('contact')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 8V7a2 2 0 0 0-2-2h-4l-3-3-3 3H5a2 2 0 0 0-2 2v1"/></svg>
+    Contact
+  </button>
+  <button id="nav-settings" aria-label="Go to Settings" onclick="showSection('settings')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
+</div>
+
+<!-- HEADER -->
 <header>
-  <div class="header-left">
-    <button id="btnSettings" title="فتح الإعدادات" aria-label="فتح الإعدادات">⚙️ الإعدادات</button>
-  </div>
-  <div class="header-center neon-text" aria-label="عنوان الموقع">منصة المشاريع Soulayman</div>
-  <div class="header-right">
-    <button id="btnLoginNav" aria-label="تسجيل دخول">تسجيل دخول</button>
-    <button id="btnRegisterNav" aria-label="إنشاء حساب">إنشاء حساب</button>
-    <button id="btnLogoutNav" style="display:none;" aria-label="تسجيل خروج">تسجيل خروج</button>
-  </div>
+  <h1>PixelBuilder2 Enterprise Hub</h1>
+  <nav class="topnav" aria-label="Top navigation">
+    <a href="#" onclick="showSection('hero'); return false;" class="active" id="topnav-home">Home</a>
+    <a href="#" onclick="showSection('services'); return false;" id="topnav-services">Services</a>
+    <a href="#" onclick="showSection('projects'); return false;" id="topnav-projects">Projects</a>
+    <a href="#" onclick="showSection('team'); return false;" id="topnav-team">Team</a>
+    <a href="#" onclick="showSection('blog'); return false;" id="topnav-blog">Blog</a>
+    <a href="#" onclick="showSection('contact'); return false;" id="topnav-contact">Contact</a>
+    <a href="#" onclick="showSection('settings'); return false;" id="topnav-settings">Settings</a>
+  </nav>
 </header>
 
-<nav id="mainButtons" aria-label="قائمة تنقل الأقسام">
-  <button data-page="home" aria-controls="home" aria-selected="true">الرئيسية</button>
-  <button data-page="create" aria-controls="create">إنشاء مشروع</button>
-  <button data-page="edit" aria-controls="edit">تعديل مشروع</button>
-  <button data-page="online" aria-controls="online">مشروع Onlin</button>
-  <button data-page="share" aria-controls="share">مشاركة مشروع</button>
-</nav>
-
-<main>
-  <!-- الصفحة الرئيسية -->
-  <section id="home" class="page active" aria-label="الصفحة الرئيسية">
-    <h1 class="neon-text">مرحبًا بك في منصة المشاريع</h1>
-    <p>سجل الدخول أو أنشئ حسابًا لبدء إنشاء وتعديل ومشاركة مشاريعك بسهولة وأمان.</p>
+<!-- MAIN CONTENT -->
+<main class="container" role="main" tabindex="-1">
+  <!-- HOME -->
+  <section id="hero" class="active" tabindex="0" aria-label="Home section">
+    <h2>Welcome to PixelBuilder2</h2>
+    <p class="lead">
+      Your one-stop destination for cutting-edge software solutions, digital innovation, and creative programming excellence.
+    </p>
+    <button class="primary-btn" onclick="alert('Explore our services and projects to see our best work!')">Explore Now</button>
   </section>
 
-  <!-- إنشاء مشروع -->
-  <section id="create" class="page" aria-label="إنشاء مشروع">
-    <h2 class="neon-text">إنشاء مشروع جديد</h2>
-    <form id="createProjectForm">
-      <input type="text" id="projectTitle" placeholder="عنوان المشروع" aria-label="عنوان المشروع" required minlength="3" />
-      <textarea id="projectDesc" placeholder="وصف المشروع" aria-label="وصف المشروع" required minlength="5"></textarea>
-      <button type="submit" class="primary">إنشاء المشروع</button>
-      <p id="createProjectMsg" class="msg" aria-live="polite"></p>
+  <!-- SERVICES -->
+  <section id="services" tabindex="0" aria-label="Services section">
+    <h2>Our Services</h2>
+    <p class="lead">Tailored solutions to boost your business performance.</p>
+    <div class="cards-grid">
+      <div class="card" tabindex="0" role="article" aria-label="Web Development Service">
+        <h3>Web Development</h3>
+        <p>Creating stunning responsive websites with modern technologies and best practices.</p>
+      </div>
+      <div class="card" tabindex="0" role="article" aria-label="Mobile Apps Development Service">
+        <h3>Mobile Apps Development</h3>
+        <p>Developing fast, smooth, and secure apps for iOS and Android platforms.</p>
+      </div>
+      <div class="card" tabindex="0" role="article" aria-label="Cybersecurity Service">
+        <h3>Cybersecurity</h3>
+        <p>Protect your data and infrastructure with ethical hacking and advanced security audits.</p>
+      </div>
+      <div class="card" tabindex="0" role="article" aria-label="Cloud Solutions Service">
+        <h3>Cloud Solutions</h3>
+        <p>Implement scalable and reliable cloud infrastructure for your business growth.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" tabindex="0" aria-label="Projects section">
+    <h2>Our Projects</h2>
+    <p class="lead">Innovative projects that demonstrate our expertise and creativity.</p>
+    <table role="table" aria-label="Projects table">
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Launch Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr tabindex="0">
+          <td>PixelBuilder CMS</td>
+          <td>Web</td>
+          <td>Live</td>
+          <td>March 2025</td>
+        </tr>
+        <tr tabindex="0">
+          <td>SecureChat App</td>
+          <td>Mobile</td>
+          <td>Beta</td>
+          <td>June 2025</td>
+        </tr>
+        <tr tabindex="0">
+          <td>CyberShield Security</td>
+          <td>Cybersecurity</td>
+          <td>In Development</td>
+          <td>December 2025</td>
+        </tr>
+        <tr tabindex="0">
+          <td>Cloudify Platform</td>
+          <td>Cloud</td>
+          <td>Planning</td>
+          <td>August 2025</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" tabindex="0" aria-label="Team section">
+    <h2>Meet Our Team</h2>
+    <p class="lead">Professionals dedicated to delivering excellence.</p>
+    <div class="cards-grid">
+      <div class="card" tabindex="0" role="article" aria-label="Team member John Doe">
+        <h3>John Doe</h3>
+        <p>Lead Developer - Expert in JavaScript & Cloud Architecture.</p>
+      </div>
+      <div class="card" tabindex="0" role="article" aria-label="Team member Jane Smith">
+        <h3>Jane Smith</h3>
+        <p>Cybersecurity Analyst - Ethical Hacking Specialist.</p>
+      </div>
+      <div class="card" tabindex="0" role="article" aria-label="Team member Mike Brown">
+        <h3>Mike Brown</h3>
+        <p>Project Manager - Agile & Scrum Certified.</p>
+      </div>
+      <div class="card" tabindex="0" role="article" aria-label="Team member Lucy Green">
+        <h3>Lucy Green</h3>
+        <p>UI/UX Designer - Creating immersive digital experiences.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" tabindex="0" aria-label="Blog section">
+    <h2>From Our Blog</h2>
+    <p class="lead">Insights, tips, and news from the tech world.</p>
+    <article class="card" tabindex="0" aria-label="Blog post 1">
+      <h3>Top 10 Programming Trends in 2025</h3>
+      <p>Discover the hottest technologies shaping the future of software development.</p>
+      <a href="#" onclick="alert('Read full article coming soon!'); return false;">Read More</a>
+    </article>
+    <article class="card" tabindex="0" aria-label="Blog post 2">
+      <h3>Why Ethical Hacking is Crucial</h3>
+      <p>Understanding how ethical hacking can protect businesses and users.</p>
+      <a href="#" onclick="alert('Read full article coming soon!'); return false;">Read More</a>
+    </article>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" tabindex="0" aria-label="Contact section">
+    <h2>Contact Us</h2>
+    <p class="lead">We'd love to hear from you! Send us a message below.</p>
+    <form onsubmit="event.preventDefault(); alert('Thank you for contacting PixelBuilder2! We will get back to you soon.'); this.reset();" aria-label="Contact form">
+      <input type="text" placeholder="Your Name" aria-label="Your Name" required />
+      <input type="email" placeholder="Your Email" aria-label="Your Email" required />
+      <textarea placeholder="Your Message" aria-label="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
     </form>
   </section>
 
-  <!-- تعديل مشروع -->
-  <section id="edit" class="page" aria-label="تعديل مشروع">
-    <h2 class="neon-text">تعديل مشاريعك</h2>
-    <div id="editProjectsList" class="projects-list" tabindex="0" aria-live="polite" aria-label="قائمة المشاريع المعدلة"></div>
-  </section>
-
-  <!-- مشروع Onlin -->
-  <section id="online" class="page" aria-label="مشاريع مفعلة">
-    <h2 class="neon-text">مشاريع Onlin مفعلة</h2>
-    <ul id="onlineProjectsList" class="projects-list" tabindex="0" aria-live="polite"></ul>
-  </section>
-
-  <!-- مشاركة مشروع -->
-  <section id="share" class="page" aria-label="مشاركة مشروع">
-    <h2 class="neon-text">مشاركة مشاريعك</h2>
-    <div id="shareProjectsList" class="projects-list" tabindex="0" aria-live="polite"></div>
-  </section>
-
-  <!-- تسجيل دخول -->
-  <section id="login" class="page" aria-label="تسجيل دخول">
-    <form id="loginForm" aria-live="assertive" aria-describedby="loginMsg">
-      <h2 class="neon-text">تسجيل الدخول</h2>
-      <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" aria-label="البريد الإلكتروني" required />
-      <input type="password" id="loginPassword" placeholder="كلمة المرور" aria-label="كلمة المرور" required minlength="6" />
-      <button type="submit" class="primary">دخول</button>
-      <p id="loginMsg" class="msg" role="alert"></p>
-    </form>
-  </section>
-
-  <!-- إنشاء حساب -->
-  <section id="register" class="page" aria-label="إنشاء حساب">
-    <form id="registerForm" aria-live="assertive" aria-describedby="registerMsg">
-      <h2 class="neon-text">إنشاء حساب جديد</h2>
-      <input type="email" id="registerEmail" placeholder="البريد الإلكتروني" aria-label="البريد الإلكتروني" required />
-      <input type="password" id="registerPassword" placeholder="كلمة المرور" aria-label="كلمة المرور" required minlength="6" />
-      <input type="password" id="registerPasswordConfirm" placeholder="تأكيد كلمة المرور" aria-label="تأكيد كلمة المرور" required minlength="6" />
-      <button type="submit" class="primary">تسجيل</button>
-      <p id="registerMsg" class="msg" role="alert"></p>
-    </form>
-  </section>
-
-  <!-- إرسال طلب -->
-  <section id="request" class="page" aria-label="إرسال طلب">
-    <form id="requestForm" aria-live="assertive" aria-describedby="requestMsg">
-      <h2 class="neon-text">إرسال مشكلة أو اقتراح</h2>
-      <textarea id="requestText" placeholder="اكتب مشكلتك أو اقتراحك هنا" aria-label="اكتب مشكلتك أو اقتراحك هنا" required minlength="10"></textarea>
-      <button type="submit" class="primary">إرسال</button>
-      <p id="requestMsg" class="msg" role="alert"></p>
-    </form>
+  <!-- SETTINGS -->
+  <section id="settings" tabindex="0" aria-label="Settings section">
+    <h2>Settings</h2>
+    <p class="lead">Configure your preferences and manage your account.</p>
+    <div id="settingsSubmenu">
+      <button onclick="alert('Login feature coming soon!')">🔐 Login</button>
+      <button onclick="alert('Language options coming soon!')">🌐 Language</button>
+      <button onclick="alert('Create Account feature coming soon!')">➕ Create Account</button>
+      <button onclick="alert('Admin creation feature coming soon!')">👤 Create Admin</button>
+    </div>
   </section>
 </main>
 
-<!-- شريط الأسفل: عدد الزوار + إرسال طلب -->
-<div id="footerBar" role="contentinfo" aria-live="polite">
-  <div id="visitorCount" aria-label="عدد الزوار">الزوار: 0</div>
-  <div>
-    <button id="btnSendRequest" aria-label="إرسال طلب">إرسال طلب</button>
-  </div>
-</div>
+<footer>
+  &copy; 2025 PixelBuilder2. All rights reserved.
+</footer>
 
-<!-- بوت الذكاء الاصطناعي -->
-<div id="aiChat" role="region" aria-label="بوت الدعم الذكي" style="display:none;">
-  <div id="aiChatHeader">
-    بوت الدعم الذكي
-    <button id="btnToggleBot" aria-label="إغلاق البوت">×</button>
-  </div>
-  <div id="aiMessages" aria-live="polite" aria-relevant="additions"></div>
-  <div id="aiInputContainer">
-    <input id="aiInput" type="text" placeholder="اكتب رسالتك واضغط إنتر..." aria-label="اكتب رسالتك واضغط إنتر" autocomplete="off" />
-  </div>
-</div>
+<!-- SCROLL TO TOP -->
+<button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
 
 <script>
-  // التنقل بين الصفحات
-  const buttons = document.querySelectorAll('nav#mainButtons button');
-  const pages = document.querySelectorAll('section.page');
-
-  function showPage(id) {
-    pages.forEach(p => {
-      p.classList.toggle('active', p.id === id);
-    });
-    buttons.forEach(btn => {
-      btn.setAttribute('aria-selected', btn.dataset.page === id ? 'true' : 'false');
-    });
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      showPage(btn.dataset.page);
-    });
-  });
-
-  // عرض صفحة تسجيل الدخول والتسجيل
-  const btnLoginNav = document.getElementById('btnLoginNav');
-  const btnRegisterNav = document.getElementById('btnRegisterNav');
-  const btnLogoutNav = document.getElementById('btnLogoutNav');
-  const btnSettings = document.getElementById('btnSettings');
-
-  btnLoginNav.onclick = () => showPage('login');
-  btnRegisterNav.onclick = () => showPage('register');
-  btnLogoutNav.onclick = () => {
-    localStorage.removeItem('loggedInUser');
-    alert('تم تسجيل الخروج!');
-    updateNavButtons();
-    showPage('home');
-  };
-  btnSettings.onclick = () => showPage('request');
-
-  function updateNavButtons() {
-    const loggedIn = localStorage.getItem('loggedInUser');
-    if(loggedIn) {
-      btnLoginNav.style.display = 'none';
-      btnRegisterNav.style.display = 'none';
-      btnLogoutNav.style.display = 'inline-block';
-    } else {
-      btnLoginNav.style.display = 'inline-block';
-      btnRegisterNav.style.display = 'inline-block';
-      btnLogoutNav.style.display = 'none';
-    }
-  }
-
-  updateNavButtons();
-
-  // ========================================
-  // إدارة المستخدمين (ببساطة مع localStorage)
-  function getUsers() {
-    return JSON.parse(localStorage.getItem('users') || '[]');
-  }
-  function saveUsers(users) {
-    localStorage.setItem('users', JSON.stringify(users));
-  }
-  function findUser(email) {
-    const users = getUsers();
-    return users.find(u => u.email === email);
-  }
-
-  // تسجيل حساب جديد
-  document.getElementById('registerForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const email = document.getElementById('registerEmail').value.trim().toLowerCase();
-    const pw = document.getElementById('registerPassword').value;
-    const pw2 = document.getElementById('registerPasswordConfirm').value;
-    const msg = document.getElementById('registerMsg');
-    msg.textContent = '';
-    if(pw !== pw2){
-      msg.textContent = 'كلمات المرور غير متطابقة.';
-      msg.className = 'msg error';
-      return;
-    }
-    if(findUser(email)){
-      msg.textContent = 'هذا البريد مسجل مسبقًا.';
-      msg.className = 'msg error';
-      return;
-    }
-    if(pw.length < 6){
-      msg.textContent = 'يجب أن تكون كلمة المرور 6 أحرف على الأقل.';
-      msg.className = 'msg error';
-      return;
-    }
-    const users = getUsers();
-    users.push({email, password: pw});
-    saveUsers(users);
-    msg.textContent = 'تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.';
-    msg.className = 'msg success';
-    e.target.reset();
-  });
-
-  // تسجيل دخول
-  document.getElementById('loginForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-    const pw = document.getElementById('loginPassword').value;
-    const msg = document.getElementById('loginMsg');
-    msg.textContent = '';
-    const user = findUser(email);
-    if(!user || user.password !== pw) {
-      msg.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
-      msg.className = 'msg error';
-      return;
-    }
-    localStorage.setItem('loggedInUser', email);
-    msg.textContent = 'تم تسجيل الدخول بنجاح!';
-    msg.className = 'msg success';
-    updateNavButtons();
-    showPage('home');
-    e.target.reset();
-  });
-
-  // ========================================
-  // إدارة المشاريع
-  function getProjects() {
-    return JSON.parse(localStorage.getItem('projects') || '[]');
-  }
-  function saveProjects(projects) {
-    localStorage.setItem('projects', JSON.stringify(projects));
-  }
-
-  // إنشاء مشروع
-  document.getElementById('createProjectForm').addEventListener('submit', e => {
-    e.preventDefault();
-    if(!localStorage.getItem('loggedInUser')) {
-      alert('يجب تسجيل الدخول لإنشاء مشروع.');
-      return;
-    }
-    const title = document.getElementById('projectTitle').value.trim();
-    const desc = document.getElementById('projectDesc').value.trim();
-    if(title.length < 3 || desc.length < 5) {
-      alert('يرجى كتابة عنوان ووصف صالحين.');
-      return;
-    }
-    const projects = getProjects();
-    projects.push({
-      id: Date.now(),
-      title,
-      desc,
-      owner: localStorage.getItem('loggedInUser'),
-      online: false
-    });
-    saveProjects(projects);
-    const msg = document.getElementById('createProjectMsg');
-    msg.textContent = 'تم إنشاء المشروع بنجاح!';
-    msg.className = 'msg success';
-    e.target.reset();
-    loadProjectsForEdit();
-    loadProjectsForShare();
-    loadOnlineProjects();
-  });
-
-  // تحميل مشاريع التعديل
-  function loadProjectsForEdit() {
-    const list = document.getElementById('editProjectsList');
-    list.innerHTML = '';
-    if(!localStorage.getItem('loggedInUser')){
-      list.innerHTML = '<p>يجب تسجيل الدخول لعرض مشاريعك.</p>';
-      return;
-    }
-    const user = localStorage.getItem('loggedInUser');
-    const projects = getProjects().filter(p => p.owner === user);
-    if(projects.length === 0) {
-      list.innerHTML = '<p>لا توجد مشاريع حتى الآن.</p>';
-      return;
-    }
-    projects.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'project-item';
-      div.setAttribute('tabindex', '0');
-      div.innerHTML = `
-        <h3>${p.title}</h3>
-        <p>${p.desc}</p>
-        <button data-id="${p.id}" class="btnEdit">تعديل</button>
-        <button data-id="${p.id}" class="btnDelete">حذف</button>
-      `;
-      list.appendChild(div);
-    });
-    // أزرار التعديل والحذف
-    list.querySelectorAll('.btnEdit').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const id = Number(e.target.dataset.id);
-        editProject(id);
-      });
-    });
-    list.querySelectorAll('.btnDelete').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const id = Number(e.target.dataset.id);
-        deleteProject(id);
-      });
-    });
-  }
-  function editProject(id) {
-    const projects = getProjects();
-    const project = projects.find(p => p.id === id);
-    if(!project){
-      alert('المشروع غير موجود.');
-      return;
-    }
-    const newTitle = prompt('عدل عنوان المشروع:', project.title);
-    if(newTitle === null) return;
-    const newDesc = prompt('عدل وصف المشروع:', project.desc);
-    if(newDesc === null) return;
-    project.title = newTitle.trim() || project.title;
-    project.desc = newDesc.trim() || project.desc;
-    saveProjects(projects);
-    alert('تم التعديل!');
-    loadProjectsForEdit();
-  }
-  function deleteProject(id) {
-    if(!confirm('هل أنت متأكد من حذف هذا المشروع؟')) return;
-    let projects = getProjects();
-    projects = projects.filter(p => p.id !== id);
-    saveProjects(projects);
-    loadProjectsForEdit();
-  }
-
-  // مشاريع أونلاين
-  function loadOnlineProjects() {
-    const ul = document.getElementById('onlineProjectsList');
-    ul.innerHTML = '';
-    const projects = getProjects().filter(p => p.online);
-    if(projects.length === 0) {
-      ul.innerHTML = '<p>لا توجد مشاريع مفعلة حتى الآن.</p>';
-      return;
-    }
-    projects.forEach(p => {
-      const li = document.createElement('li');
-      li.className = 'project-item';
-      li.setAttribute('tabindex', '0');
-      li.innerHTML = `<h3>${p.title}</h3><p>${p.desc}</p>`;
-      ul.appendChild(li);
-    });
-  }
-
-  // مشاريع للمشاركة
-  function loadProjectsForShare() {
-    const list = document.getElementById('shareProjectsList');
-    list.innerHTML = '';
-    if(!localStorage.getItem('loggedInUser')){
-      list.innerHTML = '<p>يجب تسجيل الدخول لعرض المشاريع.</p>';
-      return;
-    }
-    const user = localStorage.getItem('loggedInUser');
-    const projects = getProjects().filter(p => p.owner === user);
-    if(projects.length === 0) {
-      list.innerHTML = '<p>لا توجد مشاريع للمشاركة.</p>';
-      return;
-    }
-    projects.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'project-item';
-      div.setAttribute('tabindex', '0');
-      div.innerHTML = `
-        <h3>${p.title}</h3>
-        <p>${p.desc}</p>
-        <button data-id="${p.id}" class="btnToggleOnline">${p.online ? 'إلغاء التفعيل' : 'تفعيل المشروع'}</button>
-      `;
-      list.appendChild(div);
-    });
-    // أزرار التفعيل/الإلغاء
-    list.querySelectorAll('.btnToggleOnline').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const id = Number(e.target.dataset.id);
-        toggleProjectOnline(id);
-      });
-    });
-  }
-  function toggleProjectOnline(id) {
-    const projects = getProjects();
-    const project = projects.find(p => p.id === id);
-    if(!project) return;
-    project.online = !project.online;
-    saveProjects(projects);
-    loadProjectsForShare();
-    loadOnlineProjects();
-  }
-
-  // إرسال طلب (مشكلة أو اقتراح)
-  const btnSendRequest = document.getElementById('btnSendRequest');
-  btnSendRequest.addEventListener('click', () => {
-    showPage('request');
-  });
-  document.getElementById('requestForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const text = document.getElementById('requestText').value.trim();
-    const msg = document.getElementById('requestMsg');
-    msg.textContent = '';
-    if(text.length < 10){
-      msg.textContent = 'يرجى كتابة طلب أو مشكلة مفصلة (10 أحرف على الأقل).';
-      msg.className = 'msg error';
-      return;
-    }
-    let requests = JSON.parse(localStorage.getItem('requests') || '[]');
-    requests.push({id: Date.now(), text});
-    localStorage.setItem('requests', JSON.stringify(requests));
-    msg.textContent = 'تم إرسال طلبك بنجاح! شكرًا لك.';
-    msg.className = 'msg success';
-    e.target.reset();
-  });
-
-  // عداد الزوار
-  function updateVisitorCount() {
-    let count = Number(localStorage.getItem('visitorCount') || '0');
-    count++;
-    localStorage.setItem('visitorCount', count.toString());
-    document.getElementById('visitorCount').textContent = 'الزوار: ' + count.toLocaleString();
-  }
-  updateVisitorCount();
-
-  // بوت ذكي متطور (ردود تلقائية مع تحسين النصوص)
-  const aiChat = document.getElementById('aiChat');
-  const btnToggleBot = document.getElementById('btnToggleBot');
-  const aiMessages = document.getElementById('aiMessages');
-  const aiInput = document.getElementById('aiInput');
-
-  btnToggleBot.addEventListener('click', () => {
-    aiChat.style.display = 'none';
-  });
-
-  function appendAIMessage(text, sender = 'bot') {
-    const p = document.createElement('p');
-    p.textContent = text;
-    p.className = sender;
-    aiMessages.appendChild(p);
-    aiMessages.scrollTop = aiMessages.scrollHeight;
-  }
-
-  function botReply(userText) {
-    userText = userText.toLowerCase();
-    appendAIMessage(userText, 'user');
-
-    // ردود ذكية محسنة
-    if(userText.includes('مرحبا') || userText.includes('السلام')) {
-      appendAIMessage('مرحبًا بك! كيف يمكنني مساعدتك في إدارة مشاريعك؟');
-    } else if(userText.includes('كيف') || userText.includes('مساعدة')) {
-      appendAIMessage('يمكنك استخدام الأزرار أعلاه لإنشاء وتعديل ومشاركة مشاريعك بكل سهولة.');
-    } else if(userText.includes('مشروع جديد') || userText.includes('إنشاء مشروع')) {
-      appendAIMessage('اذهب إلى صفحة "إنشاء مشروع" لبدء مشروع جديد.');
-    } else if(userText.includes('تسجيل دخول') || userText.includes('دخول')) {
-      appendAIMessage('يمكنك تسجيل الدخول من خلال زر "تسجيل دخول" في الأعلى.');
-    } else if(userText.includes('مشاكل') || userText.includes('اقتراح')) {
-      appendAIMessage('إذا واجهتك مشكلة، يمكنك إرسال طلب عبر صفحة "إرسال طلب".');
-    } else {
-      appendAIMessage('عذرًا، لم أفهم طلبك. حاول صياغة سؤالك بشكل مختلف أو استخدم كلمات مثل "إنشاء مشروع" أو "تسجيل دخول".');
-    }
-  }
-
-  aiInput.addEventListener('keypress', e => {
-    if(e.key === 'Enter'){
-      const val = aiInput.value.trim();
-      if(val){
-        botReply(val);
-        aiInput.value = '';
+  // Show section and hide others
+  function showSection(id) {
+    const sections = ['hero','services','projects','team','blog','contact','settings'];
+    sections.forEach(sec => {
+      const el = document.getElementById(sec);
+      if(el) {
+        el.classList.toggle('active', sec === id);
       }
+    });
+    updateActiveLink(id);
+    document.querySelector('main.container').focus();
+  }
+
+  // Update active link in sidebar and topnav
+  function updateActiveLink(id) {
+    document.querySelectorAll('#sidebar button').forEach(btn => {
+      btn.classList.toggle('active', btn.id === 'nav-' + id);
+    });
+    document.querySelectorAll('nav.topnav a').forEach(link => {
+      link.classList.toggle('active', link.id === 'topnav-' + id);
+    });
+  }
+
+  // Scroll to top button
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 400) {
+      scrollTopBtn.style.display = 'block';
+    } else {
+      scrollTopBtn.style.display = 'none';
     }
   });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
-  // إظهار الصفحة الرئيسية عند بداية التشغيل
-  showPage('home');
-  updateNavButtons();
-
-  // إظهار البوت تلقائياً بعد 3 ثوانٍ
-  setTimeout(() => {
-    aiChat.style.display = 'flex';
-    appendAIMessage('مرحبًا! أنا بوت الدعم الذكي. اكتب سؤالك أو طلبك هنا.');
-  }, 3000);
-
-  // تحديث قائمة المشاريع عند التغيير
-  loadProjectsForEdit();
-  loadProjectsForShare();
-  loadOnlineProjects();
-
+  // Initialize default section
+  showSection('hero');
 </script>
 
 </body>
