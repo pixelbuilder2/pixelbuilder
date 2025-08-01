@@ -780,6 +780,43 @@
   box-shadow: 0 0 20px #00ffff44; /* ظل ناعم */
   background-color: #121a26;      /* خلفية داكنة تناسب الإطار */
 }
+ /* Full screen overlay */
+body, html {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* prevent scrolling */
+}
+.maintenance-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #0D1117 0%, #161B22 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #C9D1D9;
+  text-align: center;
+  padding: 20px;
+  z-index: 9999;
+}
+.maintenance-overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #58A6FF;
+  text-shadow: 0 0 10px #58A6FF;
+  animation: pulse 2.5s infinite ease-in-out;
+}
+.maintenance-overlay p {
+  font-size: 1.5rem;
+  max-width: 500px;
+  line-height: 1.4;
+  color: #8B949E;
+}
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -810,18 +847,31 @@
 <header role="banner" aria-label="Page Header">
   <h1>PixelBuilder2 Enterprise Hub</h1>
   <nav class="topnav" role="navigation" aria-label="Top Navigation">
-   <button id="btnHome" class="active" aria-label="Home Section">Home</button>
+    <button id="btnHome" class="active" aria-label="Home Section">Home</button>
     <button id="btnAbout" aria-label="About Section"> About</button>
     <button id="navContact" aria-label="Contact Section">Contact</button>
     <button id="btnDefinition" aria-label="Definition Section"> Définition</button>
-  <button id="btnCustomerService" aria-label="Customer Service Section"> Customer Service</button>
-  
-
+    <button id="btnCustomerService" aria-label="Customer Service Section"> Customer Service</button>
   </nav>
 </header>
 
 
 <!-- MAIN CONTENT -->
+ <div class="maintenance-overlay" role="alert" aria-live="assertive" aria-label="Maintenance Message">
+  <h1>🔧🔧🔧Under Maintenance🔧🔧🔧</h1>
+  <p>The website is currently unavailable. We are working hard to improve it. Thank you for your patience and understanding.
+UNDER MAINTENANCE
+Our website is currently undergoing scheduled maintenance.
+We are working hard to improve your experience.
+The site will be back online shortly.
+
+Maintenance Window:
+From [Start Date & Time] to [End Date & Time]
+
+Thank you for your patience and understanding.
+
+</p>
+</div>
 <main class="container" role="main">
 
   <section id="sectionHome" class="active" tabindex="0" aria-label="Home Section">
@@ -829,11 +879,11 @@
     <p>Your ultimate hub for enterprise solutions and innovation.</p>
      <!-- ✅ أزرار تسجيل الدخول -->
   <div style="display: flex; justify-content: flex-end; padding: 10px;">
-    <button id="loginBtn" style="padding: 8px 16px; margin-left: 10px; background-color: #4285F4; color: white; border: none; border-radius: 5px; cursor: pointer;">
-      🔐 تسجيل الدخول
+    <button id="loginBtn" style="padding: 8px 16px; margin-left: 10px; background-color: #000000; color: rgb(0, 0, 0); border: none; border-radius: 5px; cursor: pointer;">
+      🔐log in
     </button>
     <button id="logoutBtn" style="padding: 8px 16px; background-color: #DB4437; color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">
-      🚪 تسجيل الخروج
+      🚪 logout
     </button>
   </div>
       <!-- مكان مبيان -->
@@ -985,7 +1035,7 @@ A well-designed website plays a crucial role in driving business growth by incre
 
   </section>
   <section id="workHours" class="section">
-  <h1>⏰ Work Hours (Programme)</h1>
+  <h1>🕒 Work Hours (Programme)</h1>
   <p>Here are the working hours for employees and are renewed every month.</p>
   <!-- يمكنك إضافة تفاصيل وجداول هنا -->
      <table id="scheduleTable">
@@ -1013,7 +1063,7 @@ A well-designed website plays a crucial role in driving business growth by incre
         <td class="editable">Off</td>
       </tr>
       <tr>
-        <td>Imane</td>
+        <td>There is no one to work</td>
         <td class="editable">08:30 - 16:30</td>
         <td class="editable">08:30 - 16:30</td>
         <td class="editable">08:30 - 16:30</td>
@@ -1023,7 +1073,7 @@ A well-designed website plays a crucial role in driving business growth by incre
         <td class="editable">Off</td>
       </tr>
       <tr>
-        <td>Amine</td>
+        <td>There is no one to work</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
@@ -1033,7 +1083,7 @@ A well-designed website plays a crucial role in driving business growth by incre
         <td class="editable">Off</td>
       </tr>
         <tr>
-        <td>mr.toto</td>
+        <td>There is no one to work</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
@@ -1043,7 +1093,7 @@ A well-designed website plays a crucial role in driving business growth by incre
         <td class="editable">Off</td>
       </tr>
         <tr>
-        <td>fatima</td>
+        <td>There is no one to work</td>
         <td class="editable">08:00 - 02:00</td>
         <td class="editable">09:00 - 04:00</td>
         <td class="editable">08:00 - 18:00</td>
@@ -1053,7 +1103,7 @@ A well-designed website plays a crucial role in driving business growth by incre
         <td class="editable">Off</td>
       </tr>
         <tr>
-        <td>rachida</td>
+        <td>There is no one to work</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
@@ -1063,7 +1113,7 @@ A well-designed website plays a crucial role in driving business growth by incre
         <td class="editable">Off</td>
       </tr>
         <tr>
-        <td>karima</td>
+        <td>There is no one to work</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
         <td class="editable">10:00 - 18:00</td>
@@ -1175,7 +1225,7 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
       <tr>
         <td>2</td>
-        <td>Omar Haddadi</td>
+        <td>There is no one to work</td>
         <td>Customer Support</td>
         <td>2025-07-31</td>
         <td>09:00</td>
@@ -1186,7 +1236,7 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
       <tr>
         <td>3</td>
-        <td>Leila Mansouri</td>
+        <td>There is no one to work</td>
         <td>Project Report</td>
         <td>2025-07-31</td>
         <td>10:00</td>
@@ -1197,7 +1247,7 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
       <tr>
         <td>4</td>
-        <td>Yassine El Fadili</td>
+        <td>There is no one to work</td>
         <td>System Maintenance</td>
         <td>2025-07-31</td>
         <td>07:30</td>
@@ -1208,7 +1258,7 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
       <tr>
         <td>5</td>
-        <td>Khadija Benali</td>
+        <td>There is no one to work</td>
         <td>Invoice Generation</td>
         <td>2025-07-31</td>
         <td>08:45</td>
@@ -1219,7 +1269,7 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
       <tr>
         <td>6</td>
-        <td>Rachid Amrani</td>
+        <td>There is no one to work</td>
         <td>Client Meeting</td>
         <td>2025-07-31</td>
         <td>11:00</td>
@@ -1230,7 +1280,7 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
       <tr>
         <td>7</td>
-        <td>Nadia Toumi</td>
+        <td>There is no one to work</td>
         <td>Website Update</td>
         <td>2025-07-31</td>
         <td>09:30</td>
@@ -1241,7 +1291,7 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
       <tr>
         <td>8</td>
-        <td>Mohamed Zaki</td>
+        <td>There is no one to work</td>
         <td>Inventory Check</td>
         <td>2025-07-31</td>
         <td>07:00</td>
