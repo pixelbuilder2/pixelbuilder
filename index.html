@@ -1,48 +1,44 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
+  <!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
+<!-- Firebase Authentication -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PixelBuilder2 Enterprise Hub</title>
 <style>
-  
+  /* RESET */
+  *, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
   html, body {
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #020e20, #000011);
     color: #e0f7fa;
-    scroll-behavior: smooth;
     overflow-x: hidden;
   }
-  a {
-    color: #00ffff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  a:hover {
-    color: #00bcd4;
-  }
-
-  /* ==== SIDEBAR ==== */
+  /* SIDEBAR */
   #sidebar {
     position: fixed;
     top: 0; left: 0;
-    width: 270px;
-    height: 100vh;
+    width: 270px; height: 100vh;
     background: linear-gradient(180deg, #003544, #001d22);
-    box-shadow: 3px 0 25px #00fff7cc;
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    padding: 2.5rem 1.5rem;
-    gap: 1.8rem;
-    z-index: 2000;
+    gap: 1.5rem;
+    box-shadow: 3px 0 25px #00fff7cc;
   }
   #sidebar h2 {
     color: #00fff7;
     font-weight: 900;
-    font-size: 2.6rem;
-    letter-spacing: 4px;
-    margin-bottom: 1.8rem;
+    font-size: 2rem;
+    letter-spacing: 3px;
     user-select: none;
     text-align: center;
     text-shadow: 0 0 10px #00fff7bb;
@@ -51,91 +47,70 @@
     background: transparent;
     border: none;
     color: #00fff7cc;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     padding: 0.8rem 1.2rem;
-    border-radius: 18px;
-    box-shadow: 0 0 18px #00fff7bb;
+    border-radius: 15px;
     cursor: pointer;
-    transition: all 0.3s ease;
     text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-  #sidebar button svg {
-    width: 22px;
-    height: 22px;
-    stroke: #00fff7cc;
-    transition: stroke 0.3s ease;
-  }
-  #sidebar button:hover {
+  #sidebar button.active, #sidebar button:hover {
     background: #00fff7;
     color: #001d22;
-    box-shadow: 0 0 30px #00fff7;
-  }
-  #sidebar button:hover svg {
-    stroke: #001d22;
-  }
-  #sidebar button.active {
-    background: #00c4aa;
-    color: #001d22;
-    box-shadow: 0 0 35px #00c4aa;
-  }
-  #sidebar button.active svg {
-    stroke: #001d22;
+    box-shadow: 0 0 20px #00fff7;
   }
 
-  /* ==== HEADER ==== */
+  /* HEADER */
   header {
     position: fixed;
-    top: 0; left: 270px;
-    right: 0;
-    height: 70px;
-    background: rgba(0, 255, 247, 0.07);
+    top: 0; left: 270px; right: 0;
+    height: 60px;
+    background: rgba(0,255,247,0.07);
     backdrop-filter: blur(8px);
     box-shadow: inset 0 -1px 8px #00fff7bb;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-    z-index: 1500;
+    padding: 0 1.5rem;
+    z-index: 1000;
+    user-select: none;
   }
   header h1 {
-    font-size: 1.9rem;
-    font-weight: 900;
     color: #00fff7;
+    font-weight: 900;
+    font-size: 1.8rem;
     letter-spacing: 2px;
-    user-select: none;
-    text-shadow: 0 0 12px #00fff7cc;
+    text-shadow: 0 0 10px #00fff7bb;
   }
-  nav.topnav a {
+  nav.topnav {
+    margin-left: auto;
+    display: flex;
+    gap: 1rem;
+  }
+  nav.topnav button {
+    background: transparent;
+    border: none;
     color: #00eee4cc;
     font-weight: 700;
-    margin-left: 1.8rem;
-    font-size: 1.05rem;
+    font-size: 1rem;
+    cursor: pointer;
     padding: 0.3rem 0.7rem;
     border-radius: 10px;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
-  nav.topnav a:hover,
-  nav.topnav a.active {
+  nav.topnav button.active, nav.topnav button:hover {
     background: #00fff7;
     color: #001d22;
     box-shadow: 0 0 30px #00fff7;
   }
 
-  /* ==== MAIN CONTAINER ==== */
+  /* MAIN */
   main.container {
     margin-left: 270px;
-    margin-top: 70px;
-    padding: 2rem 3rem;
-    min-height: calc(100vh - 70px);
-    background: linear-gradient(180deg, #001d22, #000911);
-    overflow-y: auto;
+    margin-top: 60px;
+    padding: 2rem 2rem;
+    min-height: calc(100vh - 60px);
   }
-
-  /* ==== SECTIONS ==== */
   section {
     display: none;
     animation: fadeIn 0.6s ease forwards;
@@ -143,223 +118,34 @@
   section.active {
     display: block;
   }
-
   @keyframes fadeIn {
     from {opacity: 0; transform: translateY(20px);}
     to {opacity: 1; transform: translateY(0);}
   }
-
   section h2 {
-    font-size: 3rem;
-    font-weight: 900;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
     color: #00fff7;
-    text-shadow: 0 0 20px #00fff7cc;
+    margin-bottom: 1rem;
+    font-weight: 900;
+    text-shadow: 0 0 15px #00fff7bb;
   }
-  section p.lead {
-    font-size: 1.3rem;
-    max-width: 900px;
-    margin-bottom: 2rem;
-    line-height: 1.6;
+  section p {
+    font-size: 1.2rem;
     color: #a2fffccc;
+    line-height: 1.6;
   }
 
-  /* ==== BUTTONS ==== */
-  button.primary-btn {
-    background: #00fff7;
-    color: #001d22;
-    font-weight: 900;
-    border: none;
-    padding: 1rem 3rem;
-    border-radius: 40px;
-    font-size: 1.3rem;
-    box-shadow: 0 0 40px #00fff7bb;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    user-select: none;
-  }
-  button.primary-btn:hover {
-    background: #00c4aa;
-    box-shadow: 0 0 60px #00c4aa;
-  }
-
-  /* ==== CARDS GRID ==== */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-    gap: 2.6rem;
-    margin-top: 1.2rem;
-  }
-  .card {
-    background: rgba(0, 255, 247, 0.12);
-    padding: 2rem;
-    border-radius: 22px;
-    box-shadow: 0 0 40px #00fff7aa;
-    color: #001d22;
-    font-weight: 700;
-    cursor: default;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    user-select: none;
-  }
-  .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 70px #00fff7ff;
-  }
-  .card h3 {
-    font-size: 1.7rem;
-    margin-bottom: 1rem;
-    color: #001d22;
-    text-shadow: 0 0 10px #00fff7bb;
-  }
-  .card p {
-    font-weight: 500;
-    color: #004d57cc;
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-
-  /* ==== FORMS ==== */
-  form {
-    max-width: 600px;
-    margin: 2rem auto 0 auto;
-    background: #003844cc;
-    padding: 2.3rem 2.5rem;
-    border-radius: 26px;
-    box-shadow: 0 0 60px #00fff7aa;
-    color: #e0f7fa;
-  }
-  form input, form select, form textarea {
-    width: 100%;
-    padding: 0.9rem 1.3rem;
-    margin-bottom: 1.3rem;
-    border-radius: 15px;
-    border: none;
-    background: #00575a;
-    color: #b4ffffcc;
-    font-size: 1rem;
-    box-shadow: inset 0 0 15px #00fff7aa;
-    font-weight: 700;
-  }
-  form input::placeholder, form textarea::placeholder {
-    color: #8eeef9aa;
-  }
-  form textarea {
-    resize: vertical;
-    min-height: 120px;
-  }
-  form button {
-    background: #00fff7;
-    color: #001d22;
-    font-weight: 900;
-    padding: 1rem 0;
-    border: none;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 0 40px #00fff7cc;
-    user-select: none;
-    transition: background-color 0.3s ease;
-    width: 100%;
-  }
-  form button:hover {
-    background: #00c4aa;
-  }
-
-  /* ==== TABLE ==== */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 2rem;
-    box-shadow: 0 0 30px #00fff7bb;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  table th, table td {
-    padding: 1rem 1.5rem;
-    text-align: left;
-    font-weight: 700;
-    color: #001d22;
-  }
-  table th {
-    background: #00fff7cc;
-    color: #001d22;
-  }
-  table tr:nth-child(even) {
-    background: #00fff733;
-  }
-  table tr:hover {
-    background: #00c4aaaa;
-    color: #001d22;
-  }
-
-  /* ==== SETTINGS SUBMENU ==== */
-  #settingsSubmenu {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  #settingsSubmenu button {
-    background: #00fff7cc;
-    color: #001d22;
-    font-weight: 900;
-    border: none;
-    padding: 0.9rem 0;
-    border-radius: 40px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 0 30px #00fff7cc;
-    transition: background-color 0.3s ease;
-    user-select: none;
-  }
-  #settingsSubmenu button:hover {
-    background: #00c4aa;
-  }
-
-  /* ==== FOOTER ==== */
-  footer {
-    margin-top: 3rem;
-    padding: 2rem 1rem;
-    background: #001d22;
-    text-align: center;
-    font-weight: 700;
-    color: #00fff7;
-    user-select: none;
-    box-shadow: inset 0 0 30px #00fff7bb;
-  }
-
-  /* ==== SCROLL TO TOP BUTTON ==== */
-  #scrollTopBtn {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    background: #00fff7;
-    color: #001d22;
-    border: none;
-    padding: 1rem 1.3rem;
-    border-radius: 50px;
-    font-weight: 900;
-    font-size: 1.3rem;
-    cursor: pointer;
-    box-shadow: 0 0 30px #00fff7cc;
-    display: none;
-    z-index: 3000;
-    transition: background-color 0.3s ease;
-    user-select: none;
-  }
-  #scrollTopBtn:hover {
-    background: #00c4aa;
-  }
-
-  /* ==== RESPONSIVE ==== */
+  /* RESPONSIVE */
   @media (max-width: 1024px) {
-    main.container {
-      margin-left: 220px;
-      padding: 2rem 2rem;
-    }
     #sidebar {
       width: 220px;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
+    }
+    main.container {
+      margin-left: 220px;
+    }
+    header {
+      left: 220px;
     }
   }
   @media (max-width: 768px) {
@@ -372,11 +158,8 @@
     }
     #sidebar button {
       font-size: 0;
-      padding: 1rem 0.4rem;
+      padding: 1rem 0.3rem;
       justify-content: center;
-    }
-    #sidebar button svg {
-      margin: 0 auto;
     }
     main.container {
       margin-left: 60px;
@@ -386,251 +169,1634 @@
       left: 60px;
       padding: 0 1rem;
     }
-    nav.topnav a {
-      margin-left: 1rem;
-      font-size: 0.9rem;
+    nav.topnav button {
+      font-size: 0.85rem;
+      padding: 0.2rem 0.5rem;
     }
   }
+  
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  body {
+    background-color: #0f0f0f;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .card {
+    background: #131313;
+    border: 2px solid #0ff;
+    box-shadow: 0 0 20px #0ff;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .card h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+  }
+
+  .card p {
+    font-size: 15px;
+    color: #ccc;
+    margin-bottom: 25px;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    background: #1f1f1f;
+    color: white;
+    font-size: 14px;
+    outline: none;
+  }
+
+  button {
+    background: linear-gradient(45deg, #00ffff, #00aaff);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00ffff;
+    transition: 0.3s ease;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00ffff, 0 0 30px #00aaff;
+  }
+
+  .socials {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .socials a {
+    font-size: 30px;
+    color: #00ffff;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+
+  .socials a:hover {
+    color: #00aaff;
+    transform: scale(1.3);
+  }
+  .btn-neon {
+  background: transparent;
+  border: 2px solid #00f0ff;
+  padding: 10px 20px;
+  margin: 5px;
+  color: #00f0ff;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff;
+}
+.btn-neon:hover {
+  background-color: #00f0ff;
+  color: #000;
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+}
+/* نفس التنسيق السابق لكن مع حذف الأعمدة اللي مش موجودة */
+/* جدول المشاريع */
+.projects-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #00fff7;
+  box-shadow: 0 0 30px #00fff7bb;
+  background: #001d22;
+  border-radius: 15px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+/* رؤوس الأعمدة */
+.projects-table thead tr {
+  background: linear-gradient(90deg, #00f0ff, #00aaff);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  box-shadow: 0 0 15px #00fff7;
+  user-select: none;
+}
+
+/* خلايا الجدول */
+.projects-table th, 
+.projects-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #00fff733;
+  text-align: left;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.projects-table tbody tr:hover {
+  background: rgba(0, 255, 255, 0.3);
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: inset 0 0 20px #00ffff;
+}
+
+/* حالة المشروع */
+.status {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #001d22;
+  text-align: center;
+  display: inline-block;
+  min-width: 95px;
+  box-shadow: 0 0 10px inset;
+  user-select: none;
+}
+
+.status.in-progress {
+  background-color: #00ffff;
+  box-shadow: 0 0 15px #00ffff inset, 0 0 10px #00ffff;
+}
+
+.status.completed {
+  background-color: #32cd32;
+  box-shadow: 0 0 15px #32cd32 inset, 0 0 12px #32cd32;
+  color: #fff;
+}
+
+.status.planned {
+  background-color: #ffcc00;
+  box-shadow: 0 0 15px #ffcc00 inset, 0 0 12px #ffcc00;
+  color: #000;
+}
+
+/* شريط التقدم */
+.progress-bar {
+  width: 100%;
+  background: #00444d;
+  border-radius: 10px;
+  height: 18px;
+  box-shadow: inset 0 0 8px #000;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00ffff, #0099cc);
+  box-shadow: 0 0 15px #00ffff;
+  transition: width 0.6s ease-in-out;
+}
+
+/* أدوات التحكم */
+.table-controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.table-controls input[type="text"],
+.table-controls select {
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 2px solid #00f0ff;
+  background: #002c35;
+  color: #00fff7;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 0 12px #00fff7aa;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.table-controls input[type="text"]:focus,
+.table-controls select:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 20px #00ffff;
+}
+
+/* تجاوب وتمرير أفقي */
+@media (max-width: 900px) {
+  .projects-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .table-controls {
+    flex-direction: column;
+  }
+}
+
+/* for screen readers only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* أيقونات الفرز */
+.projects-table th {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.projects-table th::after {
+  content: "⇅";
+  position: absolute;
+  right: 8px;
+  color: #00fff7cc;
+  font-size: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.3s ease;
+}
+
+.projects-table th.sorted-asc::after {
+  content: "▲";
+  color: #00fff7;
+}
+
+.projects-table th.sorted-desc::after {
+  content: "▼";
+  color: #00fff7;
+}
+#sectionDefinition {
+  border: 3px solid #00fff7;
+  border-radius: 15px;
+  padding: 25px 30px;
+  box-shadow: 0 0 15px #00fff7cc;
+  background: rgba(0, 255, 247, 0.05);
+  max-width: 850px;
+  margin: auto;
+}
+#sectionDefinition ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #a2fffccc;
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+#sectionDefinition h2 {
+  text-shadow: 0 0 20px #00fff7bb;
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+#sectionAbout {
+  border: 3px solid #00fff7;         /* إطار بلون نيون */
+  border-radius: 20px;               /* حواف دائرية */
+  padding: 30px;                    /* مساحة داخلية */
+  box-shadow: 0 0 25px #00fff7bb;  /* ظل خفيف للنص */
+  background: #121212dd;            /* خلفية شبه شفافة */
+  max-width: 900px;                 /* عرض مناسب للحواسيب */
+  margin: 40px auto;                /* توسيط مع هامش */
+  color: #a2fffccc;                 /* لون نص مناسب */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      border: 1px solid #00ffff;
+      border-radius: 15px;
+      padding: 25px;
+      width: 350px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+      color: white;
+      text-align: center;
+      transition: 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+    }
+
+    .card h2 {
+      color: #00ffff;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .card p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .card a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 400px) {
+      .card {
+        width: 90%;
+        padding: 20px;
+      }
+    }
+    .report-button {
+  margin-top: 10px;
+  border: 2px solid #00ffff;
+  background-color: transparent;
+  color: #00ffff;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+  width: 100%;
+}
+.report-button:hover {
+  background-color: #00ffff;
+  color: #000;
+}
+ body {
+      display: flex;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      margin: 0;
+    }
+
+    #sidebar {
+      width: 220px;
+      background-color: #1a1a1a;
+      padding: 20px;
+      height: 100vh;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #sidebar h2 {
+      margin-bottom: 20px;
+      color: #00ffff;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #222;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    #settings-container {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #main-buttons button {
+      display: block;
+    }
+
+    .section {
+      display: none;
+      padding: 40px;
+      flex: 1;
+    }
+
+    .section h1 {
+      color: #00ffff;
+    }
+    .report-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 3px solid #2196f3;
+  border-radius: 12px;
+  background: #f9f9f9;
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+}
+
+.report-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #0d47a1;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.report-table thead {
+  background: #2196f3;
+  color: white;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.report-table tbody tr:hover {
+  background-color: #e3f2fd;
+  transition: background 0.3s;
+}
+
+.report-table td:nth-child(7) {
+  font-weight: bold;
+  color: green;
+}
+#buttons-container {
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc; /* اختيارية فقط لتوضيح */
+  padding: 5px;
+}
+  body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #fff;
+      padding: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1e293b;
+      box-shadow: 0 0 10px rgba(0,255,255,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid #334155;
+    }
+
+    th {
+      background-color: #0ea5e9;
+      color: #fff;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    tr:hover {
+      background-color: #334155;
+      transition: 0.3s;
+    }
+
+    td.editable {
+      cursor: pointer;
+      background-color: #1e40af33;
+    }
+
+    caption {
+      caption-side: bottom;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+    #company-data {
+  padding: 40px;
+  background: #0e0f1a;
+  color: white;
+  border-radius: 12px;
+  margin: 30px auto;
+  max-width: 1200px;
+}
+
+#company-data h2 {
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #00ffea;
+}
+
+#company-data h3 {
+  color: #ffd700;
+  margin-top: 30px;
+  border-bottom: 2px solid #444;
+  padding-bottom: 10px;
+}
+
+.company-info ul,
+.client-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.company-info li,
+.client-list li {
+  margin-bottom: 8px;
+  font-size: 1.1em;
+}
+
+.employees-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.employees-table th,
+.employees-table td {
+  padding: 12px;
+  border: 1px solid #333;
+  text-align: left;
+}
+
+.employees-table th {
+  background: #1c1d2b;
+  color: #00ffea;
+}
+
+.upload-docs input[type="file"] {
+  margin-top: 10px;
+  background: #222;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  border: 1px solid #555;
+}
+#companyData {
+  border: 3px solid #00ffff;      /* إطار سماوي */
+  border-radius: 12px;            /* حواف دائرية ناعمة */
+  padding: 25px;                  /* مسافة داخلية */
+  margin: 20px auto;              /* تباعد خارجي مركزي */
+  max-width: 900px;               /* عرض محدود */
+  box-shadow: 0 0 20px #00ffff44; /* ظل ناعم */
+  background-color: #121a26;      /* خلفية داكنة تناسب الإطار */
+}
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
 <!-- SIDEBAR -->
-<div id="sidebar" aria-label="Sidebar navigation">
-  <h2>PIXELBUILDER2</h2>
-  <button id="nav-hero" aria-label="Go to Home" class="active" onclick="showSection('hero')">
-    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9L12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-    Home
-  </button>
-  <button id="nav-services" aria-label="Go to Services" onclick="showSection('services')">
-    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
-    Services
-  </button>
-  <button id="nav-projects" aria-label="Go to Projects" onclick="showSection('projects')">
-    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    Projects
-  </button>
-  <button id="nav-team" aria-label="Go to Team" onclick="showSection('team')">
-    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7 7 0 0 1 13 0"/></svg>
-    Team
-  </button>
-  <button id="nav-blog" aria-label="Go to Blog" onclick="showSection('blog')">
-    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    Blog
-  </button>
-  <button id="nav-contact" aria-label="Go to Contact" onclick="showSection('contact')">
-    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 8V7a2 2 0 0 0-2-2h-4l-3-3-3 3H5a2 2 0 0 0-2 2v1"/></svg>
-    Contact
-  </button>
-  <button id="nav-settings" aria-label="Go to Settings" onclick="showSection('settings')">
-    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    Settings
-  </button>
+<div id="sidebar" role="navigation" aria-label="Sidebar Navigation">
+  <h2>pixel2</h2>
+   <!-- زر الإعدادات فوق -->
+  <div id="settings-container">
+    <button id="btnSettings" aria-label="Settings Section">⚙️ Settings</button>
+  </div>
+ 
+  <button id="btnProjects" aria-label="Projects Section">📁 Projects</button>
+  <button id="btnReports" aria-label="Reports Section">📊 Reports</button>
+ 
+
+    <!-- الأزرار الجديدة -->
+  <button id="btnWorkHours" aria-label="Work Hours Section">🕒 Work Hours</button>
+  <button id="btnCompanyData" aria-label="Company Data Section">💾 Company Data</button>
+  <button id="btnTasks" aria-label="Tasks Section">✅ Tasks</button>
+
+
 </div>
 
 <!-- HEADER -->
-<header>
+<header role="banner" aria-label="Page Header">
   <h1>PixelBuilder2 Enterprise Hub</h1>
-  <nav class="topnav" aria-label="Top navigation">
-    <a href="#" onclick="showSection('hero'); return false;" class="active" id="topnav-home">Home</a>
-    <a href="#" onclick="showSection('services'); return false;" id="topnav-services">Services</a>
-    <a href="#" onclick="showSection('projects'); return false;" id="topnav-projects">Projects</a>
-    <a href="#" onclick="showSection('team'); return false;" id="topnav-team">Team</a>
-    <a href="#" onclick="showSection('blog'); return false;" id="topnav-blog">Blog</a>
-    <a href="#" onclick="showSection('contact'); return false;" id="topnav-contact">Contact</a>
-    <a href="#" onclick="showSection('settings'); return false;" id="topnav-settings">Settings</a>
+  <nav class="topnav" role="navigation" aria-label="Top Navigation">
+   <button id="btnHome" class="active" aria-label="Home Section">Home</button>
+    <button id="btnAbout" aria-label="About Section"> About</button>
+    <button id="navContact" aria-label="Contact Section">Contact</button>
+    <button id="btnDefinition" aria-label="Definition Section"> Définition</button>
+  <button id="btnCustomerService" aria-label="Customer Service Section"> Customer Service</button>
+  
+
   </nav>
 </header>
 
+
 <!-- MAIN CONTENT -->
-<main class="container" role="main" tabindex="-1">
-  <!-- HOME -->
-  <section id="hero" class="active" tabindex="0" aria-label="Home section">
+<main class="container" role="main">
+
+  <section id="sectionHome" class="active" tabindex="0" aria-label="Home Section">
     <h2>Welcome to PixelBuilder2</h2>
-    <p class="lead">
-      Your one-stop destination for cutting-edge software solutions, digital innovation, and creative programming excellence.
-    </p>
-    <button class="primary-btn" onclick="alert('Explore our services and projects to see our best work!')">Explore Now</button>
-  </section>
+    <p>Your ultimate hub for enterprise solutions and innovation.</p>
+     <!-- ✅ أزرار تسجيل الدخول -->
+  <div style="display: flex; justify-content: flex-end; padding: 10px;">
+    <button id="loginBtn" style="padding: 8px 16px; margin-left: 10px; background-color: #4285F4; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      🔐 تسجيل الدخول
+    </button>
+    <button id="logoutBtn" style="padding: 8px 16px; background-color: #DB4437; color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">
+      🚪 تسجيل الخروج
+    </button>
+  </div>
+      <!-- مكان مبيان -->
+ <div style="margin-top: 40px; max-width: 850px; width: 100%; height: 450px;">
+  <canvas id="myChart" style="width: 100%; height: 100%;"></canvas>
+</div>
 
-  <!-- SERVICES -->
-  <section id="services" tabindex="0" aria-label="Services section">
-    <h2>Our Services</h2>
-    <p class="lead">Tailored solutions to boost your business performance.</p>
-    <div class="cards-grid">
-      <div class="card" tabindex="0" role="article" aria-label="Web Development Service">
-        <h3>Web Development</h3>
-        <p>Creating stunning responsive websites with modern technologies and best practices.</p>
-      </div>
-      <div class="card" tabindex="0" role="article" aria-label="Mobile Apps Development Service">
-        <h3>Mobile Apps Development</h3>
-        <p>Developing fast, smooth, and secure apps for iOS and Android platforms.</p>
-      </div>
-      <div class="card" tabindex="0" role="article" aria-label="Cybersecurity Service">
-        <h3>Cybersecurity</h3>
-        <p>Protect your data and infrastructure with ethical hacking and advanced security audits.</p>
-      </div>
-      <div class="card" tabindex="0" role="article" aria-label="Cloud Solutions Service">
-        <h3>Cloud Solutions</h3>
-        <p>Implement scalable and reliable cloud infrastructure for your business growth.</p>
-      </div>
-    </div>
   </section>
+  <section id="sectionAbout" tabindex="0" aria-label="About Section">
+    <h2>About Us</h2>
+    <p>We deliver futuristic web solutions with neon aesthetics.
+Welcome to PixelBuilder2 Enterprise Hub — your all-in-one smart solution for modern business management.
 
-  <!-- PROJECTS -->
-  <section id="projects" tabindex="0" aria-label="Projects section">
-    <h2>Our Projects</h2>
-    <p class="lead">Innovative projects that demonstrate our expertise and creativity.</p>
-    <table role="table" aria-label="Projects table">
+We provide a powerful platform designed to help companies manage their entire operations from one place. Whether it's secure data storage, employee coordination, customer service, internal communication, invoice generation, or business reports — we bring everything together in one efficient, intelligent system.
+
+At PixelBuilder2, our mission is to make business easier, smarter, and faster. We blend cutting-edge technology with user-friendly design to give every organization — big or small — the tools they need to succeed.</p>
+  </section>
+<section id="sectionProjects" tabindex="0" aria-label="Projects Section">
+  <h2>My Projects</h2>
+  <p>Your projects are here, Mr. President.</p>
+  
+  <div class="table-controls">
+    <input type="text" id="searchInput" placeholder="Search projects..." aria-label="Search projects" />
+    <select id="statusFilter" aria-label="Filter by status">
+      <option value="">All Statuses</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+      <option value="Planned">Planned</option>
+    </select>
+  </div>
+
+  <table class="projects-table" aria-describedby="tableDescription" role="grid" aria-live="polite">
+    <caption id="tableDescription" class="sr-only">List of company projects with status and progress</caption>
+    <thead>
+      <tr>
+        <th scope="col" data-sort="string">Project Name &#x25B2;&#x25BC;</th>
+        <th scope="col" data-sort="string">Description &#x25B2;&#x25BC;</th>
+        <th scope="col" data-sort="string">Status &#x25B2;&#x25BC;</th>
+        <th scope="col" data-sort="date">Deadline &#x25B2;&#x25BC;</th>
+        <th scope="col">Progress</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Project Alpha</td>
+        <td>Next-gen platform development with AI integration.</td>
+        <td><span class="status in-progress">In Progress</span></td>
+        <td>2025-08-30</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 65%;"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Project Beta</td>
+        <td>Mobile app redesign and UX improvements.</td>
+        <td><span class="status completed">Completed</span></td>
+        <td>2025-05-15</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 100%;"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Project Gamma</td>
+        <td>Cloud migration and infrastructure upgrade.</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>2026-02-20</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 0%;"></div>
+          </div>
+        </td>
+      </tr>
+       <tr>
+        <td>Project extra</td>
+        <td>Not yet established.</td>
+        <td><span class="status completed">Completed</span></td>
+        <td>2030-09-31</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width:95%;"></div>
+          </div>
+        </td>
+      </tr>
+        <tr>
+        <td>Project 58-21-66</td>
+        <td>Not yet established.</td>
+        <td><span class="status in-progress">In Progress</span></td>
+        <td>2026-09-31</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width:60%;"></div>
+          </div>
+        </td>
+      </tr>
+        <tr>
+        <td>Project terain</td>
+        <td>Not yet established.</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>2029-02-28</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width:0%;"></div>
+          </div>
+        </td>
+      </tr>
+        <tr>
+        <td>Project site</td>
+        <td>Not yet established.</td>
+        <td><span class="status in-progress">In Progress</span></td>
+        <td>2029-08-30</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 65%;"></div>
+          </div>
+        </td>
+      </tr>
+          <tr>
+        <td>project karima</td>
+        <td>Not yet established.</td>
+        <td><span class="status in-progress">In Progress</span></td>
+        <td>2029-08-30</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 80%;"></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+  <section id="sectionDefinition" tabindex="0" aria-label="Definition Section">
+    <h2>Définition de site</h2>
+    <p>A website is a set of web pages accessible via the internet.</p>
+    <p>
+What is a Website?
+A website is a dynamic and interactive platform that consists of multiple interconnected web pages accessible via the internet. It serves as a digital gateway for businesses, organizations, and individuals to present information, offer services, and communicate with a global audience. In today's digital age, a website is no longer just a collection of static pages; it is a comprehensive ecosystem designed to enhance user experience, streamline business operations, and foster engagement.
+
+Modern websites are equipped with advanced functionalities such as secure data management, real-time communication tools, e-commerce capabilities, customer relationship management, and analytics to track performance. They act as a central hub where companies can showcase their brand identity, provide valuable content, facilitate transactions, and maintain meaningful connections with customers and stakeholders.
+
+A well-designed website plays a crucial role in driving business growth by increasing visibility, building trust, and enabling efficient management of resources. It integrates seamlessly with other digital platforms and technologies, adapting constantly to meet evolving market demands and user expectations.
+
+</p>
+
+
+  </section>
+  <section id="workHours" class="section">
+  <h1>⏰ Work Hours (Programme)</h1>
+  <p>Here are the working hours for employees and are renewed every month.</p>
+  <!-- يمكنك إضافة تفاصيل وجداول هنا -->
+     <table id="scheduleTable">
+    <thead>
+      <tr>
+        <th>Employee</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Soulayman</td>
+        <td class="editable">09:00 - 17:00</td>
+        <td class="editable">09:00 - 17:00</td>
+        <td class="editable">09:00 - 17:00</td>
+        <td class="editable">09:00 - 17:00</td>
+        <td class="editable">09:00 - 17:00</td>
+        <td class="editable">Off</td>
+        <td class="editable">Off</td>
+      </tr>
+      <tr>
+        <td>Imane</td>
+        <td class="editable">08:30 - 16:30</td>
+        <td class="editable">08:30 - 16:30</td>
+        <td class="editable">08:30 - 16:30</td>
+        <td class="editable">08:30 - 16:30</td>
+        <td class="editable">08:30 - 16:30</td>
+        <td class="editable">Off</td>
+        <td class="editable">Off</td>
+      </tr>
+      <tr>
+        <td>Amine</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 14:00</td>
+        <td class="editable">Off</td>
+      </tr>
+        <tr>
+        <td>mr.toto</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 14:00</td>
+        <td class="editable">Off</td>
+      </tr>
+        <tr>
+        <td>fatima</td>
+        <td class="editable">08:00 - 02:00</td>
+        <td class="editable">09:00 - 04:00</td>
+        <td class="editable">08:00 - 18:00</td>
+        <td class="editable">00:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 14:00</td>
+        <td class="editable">Off</td>
+      </tr>
+        <tr>
+        <td>rachida</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 14:00</td>
+        <td class="editable">Off</td>
+      </tr>
+        <tr>
+        <td>karima</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 18:00</td>
+        <td class="editable">10:00 - 14:00</td>
+        <td class="editable">Off</td>
+      </tr>
+    </tbody>
+    <caption>* Click on any cell to edit the work time</caption>
+  </table>
+</section>
+
+
+
+<section id="companyData" class="section">
+  <h1>💾 Company Data</h1>
+  <p>This section is for storing and displaying company data.</p>
+  <!-- يمكنك إضافة تفاصيل وجداول هنا -->
+     <div class="company-info">
+    <h3>Company Information</h3>
+    <ul>
+      <li><strong>Company Name:</strong> PixelBuilder2</li>
+      <li><strong>Business ID:</strong> PB2-38493</li>
+      <li><strong>Activity:</strong> Web Development</li>
+      <li><strong>Address:</strong> rachidia, maroc</li>
+      <li><strong>Founded:</strong> 2025-07-31</li>
+    </ul>
+  </div>
+
+  <div class="employees-table">
+    <h3>Employees Database</h3>
+    <table>
       <thead>
         <tr>
-          <th>Project Name</th>
-          <th>Category</th>
-          <th>Status</th>
-          <th>Launch Date</th>
+          <th>Name</th>
+          <th>ID</th>
+          <th>Department</th>
+          <th>Hire Date</th>
+          <th>Email</th>
+          <th>Phone</th>
         </tr>
       </thead>
       <tbody>
-        <tr tabindex="0">
-          <td>PixelBuilder CMS</td>
-          <td>Web</td>
-          <td>Live</td>
-          <td>March 2025</td>
+        <tr>
+          <td>Soulayman B.</td>
+          <td>EMP-001</td>
+          <td>Programming</td>
+          <td>2022-05-10</td>
+          <td>soulayman@pixel2.com</td>
+          <td>+212 600 123 456</td>
         </tr>
-        <tr tabindex="0">
-          <td>SecureChat App</td>
-          <td>Mobile</td>
-          <td>Beta</td>
-          <td>June 2025</td>
-        </tr>
-        <tr tabindex="0">
-          <td>CyberShield Security</td>
-          <td>Cybersecurity</td>
-          <td>In Development</td>
-          <td>December 2025</td>
-        </tr>
-        <tr tabindex="0">
-          <td>Cloudify Platform</td>
-          <td>Cloud</td>
-          <td>Planning</td>
-          <td>August 2025</td>
+        <tr>
+          <td>Amine T.</td>
+          <td>EMP-002</td>
+          <td>Support</td>
+          <td>2023-01-12</td>
+          <td>amine@pixel2.com</td>
+          <td>+212 700 456 789</td>
         </tr>
       </tbody>
     </table>
-  </section>
+  </div>
 
-  <!-- TEAM -->
-  <section id="team" tabindex="0" aria-label="Team section">
-    <h2>Meet Our Team</h2>
-    <p class="lead">Professionals dedicated to delivering excellence.</p>
-    <div class="cards-grid">
-      <div class="card" tabindex="0" role="article" aria-label="Team member John Doe">
-        <h3>John Doe</h3>
-        <p>Lead Developer - Expert in JavaScript & Cloud Architecture.</p>
-      </div>
-      <div class="card" tabindex="0" role="article" aria-label="Team member Jane Smith">
-        <h3>Jane Smith</h3>
-        <p>Cybersecurity Analyst - Ethical Hacking Specialist.</p>
-      </div>
-      <div class="card" tabindex="0" role="article" aria-label="Team member Mike Brown">
-        <h3>Mike Brown</h3>
-        <p>Project Manager - Agile & Scrum Certified.</p>
-      </div>
-      <div class="card" tabindex="0" role="article" aria-label="Team member Lucy Green">
-        <h3>Lucy Green</h3>
-        <p>UI/UX Designer - Creating immersive digital experiences.</p>
-      </div>
-    </div>
-  </section>
+  <div class="client-list">
+    <h3>Clients Info</h3>
+    <ul>
+      <li><strong>Client:</strong> ProTech Inc – <em>Web Services</em> – +212 678 987 654</li>
+      <li><strong>Client:</strong> SoftWorld – <em>Mobile Apps</em> – +212 612 345 678</li>
+    </ul>
+  </div>
 
-  <!-- BLOG -->
-  <section id="blog" tabindex="0" aria-label="Blog section">
-    <h2>From Our Blog</h2>
-    <p class="lead">Insights, tips, and news from the tech world.</p>
-    <article class="card" tabindex="0" aria-label="Blog post 1">
-      <h3>Top 10 Programming Trends in 2025</h3>
-      <p>Discover the hottest technologies shaping the future of software development.</p>
-      <a href="#" onclick="alert('Read full article coming soon!'); return false;">Read More</a>
-    </article>
-    <article class="card" tabindex="0" aria-label="Blog post 2">
-      <h3>Why Ethical Hacking is Crucial</h3>
-      <p>Understanding how ethical hacking can protect businesses and users.</p>
-      <a href="#" onclick="alert('Read full article coming soon!'); return false;">Read More</a>
-    </article>
-  </section>
+  <div class="upload-docs">
+    <h3>Documents Storage</h3>
+    <p>Upload important documents securely:</p>
+    <input type="file" />
+    <p><em>Last updated: July 30, 2025 by Admin</em></p>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact" tabindex="0" aria-label="Contact section">
+  <section id="reports" class="section">
+    <h1>📊 Reports</h1>
+    <p>This is where you can generate and view your reports.</p>
+      <table class="report-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Employee Name</th>
+        <th>Task</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Notes</th>
+        <th>Signature</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Soulayman Bagueri</td>
+        <td>Database Backup</td>
+        <td>2025-07-31</td>
+        <td>08:00</td>
+        <td>10:30</td>
+        <td>Completed</td>
+        <td>Backup saved successfully.</td>
+        <td>✔️</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Omar Haddadi</td>
+        <td>Customer Support</td>
+        <td>2025-07-31</td>
+        <td>09:00</td>
+        <td>12:00</td>
+        <td>Completed</td>
+        <td>Handled 12 tickets.</td>
+        <td>✔️</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Leila Mansouri</td>
+        <td>Project Report</td>
+        <td>2025-07-31</td>
+        <td>10:00</td>
+        <td>13:30</td>
+        <td>In Review</td>
+        <td>Report submitted to manager.</td>
+        <td>🕒</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Yassine El Fadili</td>
+        <td>System Maintenance</td>
+        <td>2025-07-31</td>
+        <td>07:30</td>
+        <td>11:00</td>
+        <td>Completed</td>
+        <td>No issues found.</td>
+        <td>✔️</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Khadija Benali</td>
+        <td>Invoice Generation</td>
+        <td>2025-07-31</td>
+        <td>08:45</td>
+        <td>11:30</td>
+        <td>Completed</td>
+        <td>Generated 25 invoices.</td>
+        <td>✔️</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Rachid Amrani</td>
+        <td>Client Meeting</td>
+        <td>2025-07-31</td>
+        <td>11:00</td>
+        <td>13:00</td>
+        <td>Completed</td>
+        <td>Meeting with ABC Corp.</td>
+        <td>✔️</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Nadia Toumi</td>
+        <td>Website Update</td>
+        <td>2025-07-31</td>
+        <td>09:30</td>
+        <td>12:15</td>
+        <td>Pending</td>
+        <td>Waiting for approval.</td>
+        <td>🕒</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Mohamed Zaki</td>
+        <td>Inventory Check</td>
+        <td>2025-07-31</td>
+        <td>07:00</td>
+        <td>10:00</td>
+        <td>Completed</td>
+        <td>Stock levels updated.</td>
+        <td>✔️</td>
+      </tr>
+    </tbody>
+  </table>
+
+  </section>
+<section id="sectionSettings" tabindex="0" aria-label="Settings Section" style="
+  border: 3px solid #00fff7;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 900px;      /* زيادة العرض ليتناسب مع الشاشات الكبيرة */
+  width: 90%;            /* عرض مرن مع هامش من الجانبين */
+  margin: 40px auto;
+  box-shadow: 0 0 30px #00fff7aa;
+  background: #121212dd;
+  color: #a2fffccc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+">
+  <h2 style="color: #00fff7; text-shadow: 0 0 15px #00fff7bb; font-weight: 900; font-size: 2.8rem; margin-bottom: 25px;">Settings</h2>
+  <p style="font-size: 1.2rem; margin-bottom: 25px;">
+    Customize your preferences below:
+  </p>
+
+  <!-- Zoom Control -->
+  <label for="zoom-range" style="font-weight: 700; color: #00fff7; display: block; margin-bottom: 8px;">Zoom (Font Size): <span id="zoomValue">16</span>px</label>
+  <input type="range" id="zoom-range" min="12" max="32" value="16" style="width: 100%; margin-bottom: 20px;">
+
+  <!-- Theme Selector -->
+  <label for="theme-select" style="font-weight: 700; color: #00fff7; display: block; margin-bottom: 8px;">Theme:</label>
+  <select id="theme-select" style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 12px; border: none; background: #1f1f1f; color: #00fff7; font-size: 1rem;">
+    <option value="dark" selected>Dark</option>
+    <option value="light">Light</option>
+    <option value="neon">Neon</option>
+    <option value="solarized">Solarized</option>
+    <option value="highcontrast">High Contrast</option>
+  </select>
+
+  <!-- Language Selector -->
+  <label for="language-select" style="font-weight: 700; color: #00fff7; display: block; margin-bottom: 8px;">Language:</label>
+  <select id="language-select" style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 12px; border: none; background: #1f1f1f; color: #00fff7; font-size: 1rem;">
+    <option value="en" selected>English</option>
+    <option value="fr">French</option>
+    <option value="ar">Arabic</option>
+    <option value="es">Spanish</option>
+    <option value="de">German</option>
+  </select>
+
+  <!-- Account Privacy Toggle -->
+  <label style="font-weight: 700; color: #00fff7; display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+    <input type="checkbox" id="accountPrivacy" style="accent-color: #00fff7; width: 20px; height: 20px;">
+    Make Account Private
+  </label>
+
+  <!-- Delete Account Button -->
+  <button id="deleteAccountBtn" style="
+    width: 100%;
+    background: #ff0044;
+    color: white;
+    font-weight: 900;
+    border-radius: 20px;
+    padding: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff0044;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    Delete Account
+  </button>
+
+  <!-- Account Info Display -->
+  <button id="showAccountInfoBtn" style="
+    width: 100%;
+    background: #00fff7;
+    color: #001d22;
+    font-weight: 900;
+    border-radius: 20px;
+    padding: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 0 30px #00fff7;
+    transition: transform 0.3s ease;
+  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    Show Account Info
+  </button>
+
+  <div id="accountInfo" style="margin-top: 20px; background: #222; padding: 20px; border-radius: 15px; display: none; color: #00fff7; font-size: 1rem;">
+    <!-- Info will appear here -->
+  </div>
+</section>
+
+  <section id="sectionContact" tabindex="0" aria-label="Contact Section" style="display:none;">
     <h2>Contact Us</h2>
-    <p class="lead">We'd love to hear from you! Send us a message below.</p>
-    <form onsubmit="event.preventDefault(); alert('Thank you for contacting PixelBuilder2! We will get back to you soon.'); this.reset();" aria-label="Contact form">
-      <input type="text" placeholder="Your Name" aria-label="Your Name" required />
-      <input type="email" placeholder="Your Email" aria-label="Your Email" required />
-      <textarea placeholder="Your Message" aria-label="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    <p>Contact form will be added here.</p>
+     <div class="card">
+    <h2>Contact Me</h2>
+    <p><strong>Email:</strong>solaymanbag999@gmail.comp>
+    <p><strong>Phone:</strong> +212 6 51149570</p>
+    <p><strong>Location:</strong> rachidia, Morocco</p>
+    <p><strong>Website:</strong> <a href="#">PixelBuilder2 Enterprise Hub</a></p>
+  </div>
+    
+  
+    
+  </div>
   </section>
+<section id="sectionCustomerService" tabindex="0" aria-label="Customer Service Section" style="display:none;">
+  <h2>💬 Customer Service</h2>
+ 
+<div class="card">
+  <h2>🛠 Customer Service</h2>
+  <p>Send us your issue or request and we’ll get back to you as soon as possible.</p>
 
-  <!-- SETTINGS -->
-  <section id="settings" tabindex="0" aria-label="Settings section">
-    <h2>Settings</h2>
-    <p class="lead">Configure your preferences and manage your account.</p>
-    <div id="settingsSubmenu">
-      <button onclick="alert('Login feature coming soon!')">🔐 Login</button>
-      <button onclick="alert('Language options coming soon!')">🌐 Language</button>
-      <button onclick="alert('Create Account feature coming soon!')">➕ Create Account</button>
-      <button onclick="alert('Admin creation feature coming soon!')">👤 Create Admin</button>
-    </div>
-  </section>
+  <input type="text" placeholder="Your Name" />
+  <input type="email" placeholder="Your Email" />
+  <textarea rows="4" placeholder="Describe your problem or request..."></textarea>
+  <button onclick="alert('Message sent successfully ✅')">Send Message</button>
+</section>
+
+ <section id="tasks" style="display:none;">
+  <h2>Tasks Section</h2>
+  <p>This is the content for tasks.</p>
+   <table>
+    <caption>📋 Task Management</caption>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Assigned To</th>
+        <th>Status</th>
+        <th>Deadline</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Design UI</td>
+        <td>Create landing page design</td>
+        <td>Soulayman</td>
+        <td>In Progress</td>
+        <td>2025-08-10</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Write Content</td>
+        <td>Homepage text writing</td>
+        <td>Amina</td>
+        <td>Completed</td>
+        <td>2025-07-29</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Build Backend</td>
+        <td>Connect database and server</td>
+        <td>Ali</td>
+        <td>Pending</td>
+        <td>2025-08-15</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Test Website</td>
+        <td>Ensure bug-free performance</td>
+        <td>Soulayman</td>
+        <td>Pending</td>
+        <td>2025-08-20</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Launch Project</td>
+        <td>Deploy to server</td>
+        <td>Team</td>
+        <td>Not Started</td>
+        <td>2025-08-25</td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
+
 </main>
 
-<footer>
-  &copy; 2025 PixelBuilder2. All rights reserved.
-</footer>
-
-<!-- SCROLL TO TOP -->
-<button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
-
 <script>
-  // Show section and hide others
-  function showSection(id) {
-    const sections = ['hero','services','projects','team','blog','contact','settings'];
-    sections.forEach(sec => {
-      const el = document.getElementById(sec);
-      if(el) {
-        el.classList.toggle('active', sec === id);
+      document.querySelectorAll('td.editable').forEach(cell => {
+      cell.addEventListener('click', () => {
+        const newValue = prompt('Enter new time (e.g., 09:00 - 17:00):', cell.innerText);
+        if (newValue !== null) {
+          cell.innerText = newValue;
+        }
+      });
+    });
+
+  function showSection(sectionName) {
+  // إخفاء جميع الأقسام أولاً
+  const sections = document.querySelectorAll("section");
+  sections.forEach(sec => sec.style.display = "none");
+
+  // إظهار القسم المطلوب فقط
+  const activeSection = document.getElementById(sectionName);
+  if (activeSection) activeSection.style.display = "block";
+}
+
+
+    // ربط الأزرار بالأقسام
+    document.getElementById("btnHome").onclick = () => showSection("home");
+    document.getElementById("btnAbout").onclick = () => showSection("about");
+    document.getElementById("btnProjects").onclick = () => showSection("projects");
+    document.getElementById("btnDefinition").onclick = () => showSection("definition");
+    document.getElementById("btnCustomerService").onclick = () => showSection("customerService");
+    document.getElementById("btnReports").onclick = () => showSection("reports");
+    document.getElementById("btnSettings").onclick = () => showSection("settings");
+    document.getElementById("btnWorkHours").onclick = () => showSection("workHours");
+    document.getElementById("btnCompanyData").onclick = () => showSection("companyData");
+    document.getElementById("btnTasks").onclick = () => showSection("tasks");
+    function featureAction(name) {
+  alert("You clicked on: " + name);
+}
+
+  const sidebarButtons = document.querySelectorAll('#sidebar button');
+  const topnavButtons = document.querySelectorAll('nav.topnav button');
+
+  const sections = {
+    btnHome: document.getElementById('sectionHome'),
+    btnAbout: document.getElementById('sectionAbout'),
+    btnProjects: document.getElementById('sectionProjects'),
+    btnDefinition: document.getElementById('sectionDefinition'),
+    btnSettings: document.getElementById('sectionSettings'),
+    navHome: document.getElementById('sectionHome'),
+    navAbout: document.getElementById('sectionAbout'),
+    navContact: document.getElementById('sectionContact'),
+    navDefinition: document.getElementById('sectionDefinition'),
+     navCustomerService: document.getElementById('sectionCustomerService'),
+     btnCustomerService: document.getElementById('sectionCustomerService'),
+navCustomerService: document.getElementById('sectionCustomerService'),
+
+  };
+
+  function activateSection(id) {
+    // إزالة الكلاس active من جميع الأزرار
+    sidebarButtons.forEach(btn => btn.classList.remove('active'));
+    topnavButtons.forEach(btn => btn.classList.remove('active'));
+
+    // إخفاء كل الأقسام
+    Object.values(sections).forEach(sec => {
+      if(sec) sec.style.display = 'none';
+      sec?.classList.remove('active');
+    });
+
+    // إظهار القسم المناسب
+    if(sections[id]){
+      sections[id].style.display = 'block';
+      sections[id].classList.add('active');
+      sections[id].focus();
+    }
+
+    // تفعيل الزر المناسب في الشريط الجانبي أو العلوي
+    if(id.startsWith('btn')) {
+      document.getElementById(id).classList.add('active');
+    } else if(id.startsWith('nav')) {
+      document.getElementById(id).classList.add('active');
+    }
+  }
+
+  sidebarButtons.forEach(btn => {
+    btn.addEventListener('click', () => activateSection(btn.id));
+  });
+
+  topnavButtons.forEach(btn => {
+    btn.addEventListener('click', () => activateSection(btn.id));
+  });
+
+  // منع أي روابط فارغة تسبب إعادة تحميل الصفحة (إن وجدت)
+  document.querySelectorAll('a[href="#"]').forEach(a => {
+    a.addEventListener('click', e => e.preventDefault());
+  });
+  
+</script>
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  const myChart = new Chart(ctx, {
+    type: 'bar',  // يمكنك تغييره إلى 'line' أو 'pie' حسب ما تريد
+    data: {
+      labels: ['project alpha', 'project beta', 'project gamma', 'project extra', 'project 58-21-66', 'project site ', 'project moo'],
+      datasets: [{
+        label: 'User Signups',
+        data: [10, 14, 8, 20, 15, 18, 22],
+        backgroundColor: 'rgba(0, 255, 255, 0.6)',
+        borderColor: 'rgba(0, 255, 255, 1)',
+        borderWidth: 2,
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: '#00ffff33' },
+          ticks: {
+            color: '#00ffff',
+            font: { weight: 'bold' }
+          }
+        },
+        x: {
+          grid: { color: '#00ffff22' },
+          ticks: {
+            color: '#00ffff',
+            font: { weight: 'bold' }
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#00ffff',
+            font: { size: 16, weight: 'bold' }
+          }
+        }
       }
-    });
-    updateActiveLink(id);
-    document.querySelector('main.container').focus();
-  }
-
-  // Update active link in sidebar and topnav
-  function updateActiveLink(id) {
-    document.querySelectorAll('#sidebar button').forEach(btn => {
-      btn.classList.toggle('active', btn.id === 'nav-' + id);
-    });
-    document.querySelectorAll('nav.topnav a').forEach(link => {
-      link.classList.toggle('active', link.id === 'topnav-' + id);
-    });
-  }
-
-  // Scroll to top button
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-  window.addEventListener('scroll', () => {
-    if(window.scrollY > 400) {
-      scrollTopBtn.style.display = 'block';
-    } else {
-      scrollTopBtn.style.display = 'none';
     }
   });
-  scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+</script>
+
+<script>
+  const table = document.querySelector('.projects-table');
+  const tbody = table.querySelector('tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+
+  const searchInput = document.getElementById('searchInput');
+  const statusFilter = document.getElementById('statusFilter');
+  const headers = table.querySelectorAll('thead th[data-sort]');
+
+  // بحث في الجدول
+  searchInput.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase();
+    filterRows(term, statusFilter.value);
   });
 
-  // Initialize default section
-  showSection('hero');
+  // تصفية حسب الحالة
+  statusFilter.addEventListener('change', () => {
+    const term = searchInput.value.toLowerCase();
+    filterRows(term, statusFilter.value);
+  });
+
+  function filterRows(searchTerm, statusTerm) {
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      const text = Array.from(cells).map(td => td.textContent.toLowerCase()).join(' ');
+      const statusText = row.querySelector('.status').textContent;
+      const matchesSearch = text.includes(searchTerm);
+      const matchesStatus = statusTerm === '' || statusText === statusTerm;
+
+      if(matchesSearch && matchesStatus) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // فرز الأعمدة
+  headers.forEach(header => {
+    header.addEventListener('click', () => {
+      const type = header.dataset.sort;
+      const index = Array.from(headers).indexOf(header);
+      const currentOrder = header.classList.contains('sorted-asc') ? 'asc' :
+                           header.classList.contains('sorted-desc') ? 'desc' : null;
+
+      // إعادة تعيين الفرز لجميع الأعمدة
+      headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+
+      let newOrder;
+      if(!currentOrder || currentOrder === 'desc') {
+        newOrder = 'asc';
+        header.classList.add('sorted-asc');
+      } else {
+        newOrder = 'desc';
+        header.classList.add('sorted-desc');
+      }
+
+      rows.sort((a, b) => {
+        const cellA = a.children[index].textContent.trim();
+        const cellB = b.children[index].textContent.trim();
+
+        if(type === 'date') {
+          return newOrder === 'asc' ? 
+            new Date(cellA) - new Date(cellB) :
+            new Date(cellB) - new Date(cellA);
+        } else {
+          // مقارنة نصية
+          return newOrder === 'asc' ?
+            cellA.localeCompare(cellB) :
+            cellB.localeCompare(cellA);
+        }
+      });
+
+      // إعادة ترتيب الصفوف في tbody
+      rows.forEach(row => tbody.appendChild(row));
+    });
+  });
+   // Zoom (font size) control
+  const zoomRange = document.getElementById('zoom-range');
+  const zoomValue = document.getElementById('zoomValue');
+
+  zoomRange.addEventListener('input', () => {
+    const size = zoomRange.value;
+    zoomValue.textContent = size;
+    document.body.style.fontSize = size + 'px';
+  });
+
+  // Theme control
+  const themeSelect = document.getElementById('theme-select');
+  themeSelect.addEventListener('change', () => {
+    const theme = themeSelect.value;
+    // Simple theme switch (background + text color)
+    switch(theme) {
+      case 'dark':
+        document.body.style.background = '#121212';
+        document.body.style.color = '#a2fffccc';
+        break;
+      case 'light':
+        document.body.style.background = '#f0f0f0';
+        document.body.style.color = '#222';
+        break;
+      case 'neon':
+        document.body.style.background = '#000';
+        document.body.style.color = '#00fff7';
+        break;
+      case 'solarized':
+        document.body.style.background = '#fdf6e3';
+        document.body.style.color = '#657b83';
+        break;
+      case 'highcontrast':
+        document.body.style.background = '#000';
+        document.body.style.color = '#fff';
+        break;
+      default:
+        document.body.style.background = '#121212';
+        document.body.style.color = '#a2fffccc';
+    }
+  });
+
+  // Language select - just alert for demo
+  const languageSelect = document.getElementById('language-select');
+  languageSelect.addEventListener('change', () => {
+    alert('Language changed to: ' + languageSelect.options[languageSelect.selectedIndex].text);
+    // هنا يمكنك وضع كود لتغيير اللغة فعليًا حسب احتياجك
+  });
+
+  // Account Privacy toggle
+  const accountPrivacyCheckbox = document.getElementById('accountPrivacy');
+  accountPrivacyCheckbox.addEventListener('change', () => {
+    if(accountPrivacyCheckbox.checked) {
+      alert('Account is now Private');
+    } else {
+      alert('Account is now Public');
+    }
+  });
+
+  // Delete Account button
+  const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+  deleteAccountBtn.addEventListener('click', () => {
+    const confirmed = confirm('Are you sure you want to DELETE your account? This action cannot be undone!');
+    if(confirmed) {
+      alert('Account deleted.');
+      // ضع هنا كود الحذف الفعلي لو عندك backend
+    }
+  });
+
+  // Show Account Info button
+  const showAccountInfoBtn = document.getElementById('showAccountInfoBtn');
+  const accountInfoDiv = document.getElementById('accountInfo');
+
+  showAccountInfoBtn.addEventListener('click', () => {
+    // مثال بيانات حساب
+    const info = `
+      <p><strong>Username:</strong> solayman</p>
+      <p><strong>Email:</strong> solayman@example.com</p>
+      <p><strong>Member since:</strong> January 2023</p>
+      <p><strong>Status:</strong> Active</p>
+    `;
+    accountInfoDiv.innerHTML = info;
+    accountInfoDiv.style.display = 'block';
+  });
+</script>
+<script>
+  // إعداد Firebase الخاص بك (احصل على القيم من Firebase Console > Project settings)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAGq9x3zOZXfqEZ3tMFRuUUTHnuHKNTRgI",
+    authDomain: "pixelbuilder2-auth.firebaseapp.com",
+    // باقي الإعدادات
+  };
+
+  // تهيئة Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // العناصر
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // تسجيل الدخول عبر Google
+  loginBtn.addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        console.log('User signed in:', result.user.displayName);
+        updateUI(true, result.user.displayName);
+      })
+      .catch((error) => {
+        console.error('Error signing in:', error);
+      });
+  });
+
+  // تسجيل الخروج
+  logoutBtn.addEventListener('click', () => {
+    auth.signOut()
+      .then(() => {
+        console.log('User signed out');
+        updateUI(false);
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+  });
+
+  // تحديث الواجهة حسب حالة تسجيل الدخول
+  function updateUI(isLoggedIn, userName = '') {
+    if (isLoggedIn) {
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
+      logoutBtn.textContent = `🚪 Logout (${userName})`;
+    } else {
+      loginBtn.style.display = 'inline-block';
+      logoutBtn.style.display = 'none';
+      logoutBtn.textContent = '🚪 Logout';
+    }
+  }
+
+  // تحقق من حالة تسجيل الدخول عند تحميل الصفحة
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      updateUI(true, user.displayName);
+    } else {
+      updateUI(false);
+    }
+  });
 </script>
 
 </body>
