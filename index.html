@@ -1,6 +1,7 @@
 <!DOCTYPE html> 
 <html lang="en">
 <head>
+  
   <!-- Firebase App (the core Firebase SDK) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 
@@ -780,42 +781,166 @@
   box-shadow: 0 0 20px #00ffff44; /* ظل ناعم */
   background-color: #121a26;      /* خلفية داكنة تناسب الإطار */
 }
- /* Full screen overlay */
-body, html {
-  margin: 0; padding: 0; height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden; /* prevent scrolling */
+  .support-table-container {
+    padding: 30px;
+    background: #0d0d0d;
+    border-radius: 18px;
+    box-shadow: 0 0 50px #00f0ff55;
+    overflow-x: auto;
+    margin: 50px auto;
+    max-width: 98%;
+  }
+
+  .support-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffff;
+    background: #111;
+    table-layout: fixed;
+  }
+
+  .support-table thead {
+    background: linear-gradient(to right, #00f0ff, #0077ff);
+  }
+
+  .support-table th,
+  .support-table td {
+    padding: 10px 24px; /* أقل ارتفاع، عرض ممدود */
+    text-align: center;
+    border-bottom: 1px solid #222;
+    font-size: 15px;
+  }
+
+  .support-table th {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .support-table tbody tr:hover {
+    background-color: #1b1b1b;
+    transition: 0.3s;
+  }
+
+  .support-status {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+  }
+
+  .status-open { background-color: #00ffcc33; color: #00ffc3; }
+  .status-closed { background-color: #ff003344; color: #ff0033; }
+  .status-waiting { background-color: #ffaa0033; color: #ffaa00; }
+
+  .support-btn {
+    background: #00f0ff;
+    color: #000;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .support-btn:hover {
+    background: #00aaff;
+  }
+
+  @media (max-width: 600px) {
+    .support-table th, .support-table td {
+      padding: 10px 8px;
+      font-size: 12.5px;
+    }
+
+    .support-btn {
+      padding: 5px 12px;
+      font-size: 12px;
+    }
+  }
+ /* --- ستايل الجرس --- */
+#notifBell {
+  font-size: 28px;
+  cursor: pointer;
+  position: relative;
+  color: #f39c12;
+  transition: color 0.3s ease;
 }
-.maintenance-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, #0D1117 0%, #161B22 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #C9D1D9;
+#notifBell:hover {
+  color: #e67e22;
+}
+#notifCount {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   text-align: center;
-  padding: 20px;
+  line-height: 18px;
+  font-weight: bold;
+  user-select: none;
+}
+
+/* --- القائمة الجانبية المنبثقة --- */
+#notifPanel {
+  position: fixed;
+  top: 60px; 
+  right: -380px; 
+  width: 360px;
+  height: 700px !important; /* هنا غيرنا max-height إلى height وأضفنا !important */
+  background-color: #222;
+  color: white;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.7);
+  padding: 25px 25px 20px 25px;
+  border-radius: 8px 0 0 8px;
+  overflow-y: auto;
+  transition: right 0.4s ease;
+  font-family: Arial, sans-serif;
   z-index: 9999;
 }
-.maintenance-overlay h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  color: #58A6FF;
-  text-shadow: 0 0 10px #58A6FF;
-  animation: pulse 2.5s infinite ease-in-out;
+
+#notifPanel.active {
+  right: 0;
 }
-.maintenance-overlay p {
-  font-size: 1.5rem;
-  max-width: 500px;
-  line-height: 1.4;
-  color: #8B949E;
+#notifPanel h3 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 22px;
+  border-bottom: 2.5px solid #f39c12;
+  padding-bottom: 6px;
 }
-/* Pulse animation */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+#notifPanel ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+#notifPanel ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid #444;
+  font-size: 16px;
+}
+#notifPanel ul li:last-child {
+  border-bottom: none;
+}
+
+/* زر إغلاق */
+#notifClose {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: transparent;
+  border: none;
+  color: #f39c12;
+  font-size: 28px;
+  cursor: pointer;
 }
 
 </style>
@@ -828,24 +953,32 @@ body, html {
   <h2>pixel2</h2>
    <!-- زر الإعدادات فوق -->
   <div id="settings-container">
-    <button id="btnSettings" aria-label="Settings Section">⚙️ Settings</button>
+    <button id="btnSettings" aria-label="Settings Section"> Settings</button>
   </div>
  
-  <button id="btnProjects" aria-label="Projects Section">📁 Projects</button>
-  <button id="btnReports" aria-label="Reports Section">📊 Reports</button>
+  <button id="btnProjects" aria-label="Projects Section"> Projects</button>
+  <button id="btnReports" aria-label="Reports Section"> Reports</button>
  
 
     <!-- الأزرار الجديدة -->
-  <button id="btnWorkHours" aria-label="Work Hours Section">🕒 Work Hours</button>
-  <button id="btnCompanyData" aria-label="Company Data Section">💾 Company Data</button>
-  <button id="btnTasks" aria-label="Tasks Section">✅ Tasks</button>
-
+  <button id="btnWorkHours" aria-label="Work Hours Section"> Work Hours</button>
+  <button id="btnCompanyData" aria-label="Company Data Section"> Company Data</button>
+  <button id="btnTasks" aria-label="Tasks Section"> Tasks</button>
+  <button id="btnSupport" class="support-button"> Support</button>
+  
 
 </div>
 
 <!-- HEADER -->
 <header role="banner" aria-label="Page Header">
+  <!-- أيقونة الجرس -->
+
   <h1>PixelBuilder2 Enterprise Hub</h1>
+  <!-- أيقونة الجرس -->
+<div id="bell" aria-label="Notifications" role="button" tabindex="0" style="width: 30px; height: 40px; cursor: pointer; user-select: none;">
+  <div class="bell-body"></div>
+  <div class="clapper"></div>
+</div>
   <nav class="topnav" role="navigation" aria-label="Top Navigation">
     <button id="btnHome" class="active" aria-label="Home Section">Home</button>
     <button id="btnAbout" aria-label="About Section"> About</button>
@@ -853,25 +986,16 @@ body, html {
     <button id="btnDefinition" aria-label="Definition Section"> Définition</button>
     <button id="btnCustomerService" aria-label="Customer Service Section"> Customer Service</button>
   </nav>
+    <!-- جرس الإشعارات مع عدد التنبيهات -->
+  <div style="position: relative; margin-left: 20px;">
+    <div id="notifBell" aria-label="Notifications" role="button" tabindex="0">🔔
+      
+    </div>
 </header>
 
 
 <!-- MAIN CONTENT -->
- <div class="maintenance-overlay" role="alert" aria-live="assertive" aria-label="Maintenance Message">
-  <h1>🔧🔧🔧Under Maintenance-جار الصيانة🔧🔧🔧</h1>
-  <p>The website is currently unavailable. We are working hard to improve it. Thank you for your patience and understanding.
-UNDER MAINTENANCE
-Our website is currently undergoing scheduled maintenance.
-We are working hard to improve your experience.
-The site will be back online shortly.
-
-Maintenance Window:
-From [Start Date & Time] to [End Date & Time]
-
-Thank you for your patience and understanding.
-
-</p>
-</div>
+ 
 <main class="container" role="main">
 
   <section id="sectionHome" class="active" tabindex="0" aria-label="Home Section">
@@ -902,7 +1026,7 @@ We provide a powerful platform designed to help companies manage their entire op
 At PixelBuilder2, our mission is to make business easier, smarter, and faster. We blend cutting-edge technology with user-friendly design to give every organization — big or small — the tools they need to succeed.</p>
   </section>
 <section id="sectionProjects" tabindex="0" aria-label="Projects Section">
-  <h2>My Projects</h2>
+
   <p>Your projects are here, Mr. President.</p>
   
   <div class="table-controls">
@@ -928,32 +1052,32 @@ At PixelBuilder2, our mission is to make business easier, smarter, and faster. W
     </thead>
     <tbody>
       <tr>
-        <td>Project Alpha</td>
-        <td>Next-gen platform development with AI integration.</td>
-        <td><span class="status in-progress">In Progress</span></td>
-        <td>2025-08-30</td>
-        <td>
-          <div class="progress-bar">
-            <div class="progress" style="width: 65%;"></div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Project Beta</td>
-        <td>Mobile app redesign and UX improvements.</td>
-        <td><span class="status completed">Completed</span></td>
-        <td>2025-05-15</td>
-        <td>
-          <div class="progress-bar">
-            <div class="progress" style="width: 100%;"></div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Project Gamma</td>
-        <td>Cloud migration and infrastructure upgrade.</td>
+        <td>There is no project</td>
+        <td>- - - - -</td>
         <td><span class="status planned">Planned</span></td>
-        <td>2026-02-20</td>
+        <td>0000-00-00</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 0%;"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>There is no project</td>
+        <td>- - - - -</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>0000-00-00</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 0%;"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>There is no project</td>
+        <td>- - - - -</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>0000-00-00</td>
         <td>
           <div class="progress-bar">
             <div class="progress" style="width: 0%;"></div>
@@ -961,32 +1085,10 @@ At PixelBuilder2, our mission is to make business easier, smarter, and faster. W
         </td>
       </tr>
        <tr>
-        <td>Project extra</td>
-        <td>Not yet established.</td>
-        <td><span class="status completed">Completed</span></td>
-        <td>2030-09-31</td>
-        <td>
-          <div class="progress-bar">
-            <div class="progress" style="width:95%;"></div>
-          </div>
-        </td>
-      </tr>
-        <tr>
-        <td>Project 58-21-66</td>
-        <td>Not yet established.</td>
-        <td><span class="status in-progress">In Progress</span></td>
-        <td>2026-09-31</td>
-        <td>
-          <div class="progress-bar">
-            <div class="progress" style="width:60%;"></div>
-          </div>
-        </td>
-      </tr>
-        <tr>
-        <td>Project terain</td>
-        <td>Not yet established.</td>
+        <td>There is no project</td>
+        <td>- - - - -</td>
         <td><span class="status planned">Planned</span></td>
-        <td>2029-02-28</td>
+        <td>0000-00-00</td>
         <td>
           <div class="progress-bar">
             <div class="progress" style="width:0%;"></div>
@@ -994,31 +1096,58 @@ At PixelBuilder2, our mission is to make business easier, smarter, and faster. W
         </td>
       </tr>
         <tr>
-        <td>Project site</td>
-        <td>Not yet established.</td>
-        <td><span class="status in-progress">In Progress</span></td>
-        <td>2029-08-30</td>
+        <td>There is no project</td>
+        <td>- - - - -</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>0000-00-00</td>
         <td>
           <div class="progress-bar">
-            <div class="progress" style="width: 65%;"></div>
+            <div class="progress" style="width:0%;"></div>
+          </div>
+        </td>
+      </tr>
+        <tr>
+        <td>There is no project</td>
+        <td>- - - - -</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>0000-00-00</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width:0%;"></div>
+          </div>
+        </td>
+      </tr>
+        <tr>
+        <td>There is no project</td>
+        <td>- - - - -</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>0000-00-00</td>
+        <td>
+          <div class="progress-bar">
+            <div class="progress" style="width: 0%;"></div>
           </div>
         </td>
       </tr>
           <tr>
-        <td>project karima</td>
-        <td>Not yet established.</td>
-        <td><span class="status in-progress">In Progress</span></td>
-        <td>2029-08-30</td>
+        <td>There is no project</td>
+        <td>- - - - -</td>
+        <td><span class="status planned">Planned</span></td>
+        <td>0000-00-00</td>
         <td>
           <div class="progress-bar">
-            <div class="progress" style="width: 80%;"></div>
+            <div class="progress" style="width: 0%;"></div>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
 </section>
-
+<!-- قائمة الإشعارات الجانبية -->
+<div id="notifPanel" aria-live="polite" aria-hidden="true" role="region">
+  <button id="notifClose" aria-label="Close Notifications">&times;</button>
+  <h3>Notifications</h3>
+  <ul> </ul>
+</div>
   <section id="sectionDefinition" tabindex="0" aria-label="Definition Section">
     <h2>Définition de site</h2>
     <p>A website is a set of web pages accessible via the internet.</p>
@@ -1127,6 +1256,36 @@ A well-designed website plays a crucial role in driving business growth by incre
   </table>
 </section>
 
+<section id="support" class="section">
+ 
+  <p>This section is dedicated to customer or employee support services.</p>
+  <div class="support-table-container">
+  <table class="support-table">
+    <thead>
+      <tr>
+        <th>👤 User</th>
+        <th>📄 Request Type</th>
+        <th>📅 Date</th>
+        <th>⚙️ Status</th>
+        <th>🔍 Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Soulayman</td><td>Technical Issue</td><td>2025-08-01</td><td><span class="support-status status-open">Open</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>Refund Request</td><td>2025-07-30</td><td><span class="support-status status-closed">Closed</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>General Inquiry</td><td>2025-07-29</td><td><span class="support-status status-waiting">Waiting</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>Feature Suggestion</td><td>2025-07-28</td><td><span class="support-status status-open">Open</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>Login Issue</td><td>2025-07-27</td><td><span class="support-status status-closed">Closed</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>Technical Support</td><td>2025-07-26</td><td><span class="support-status status-waiting">Waiting</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>Account Deletion</td><td>2025-07-25</td><td><span class="support-status status-open">Open</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>Payment Error</td><td>2025-07-24</td><td><span class="support-status status-closed">Closed</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>UI Feedback</td><td>2025-07-23</td><td><span class="support-status status-open">Open</span></td><td><button class="support-btn">Details</button></td></tr>
+      <tr><td>There is no one</td><td>Urgent Support</td><td>2025-07-22</td><td><span class="support-status status-waiting">Waiting</span></td><td><button class="support-btn">Details</button></td></tr>
+    </tbody>
+  </table>
+</div>
+ <p>If you have any questions or requests, please go to the Contact Us section.</p>
+</section>
 
 
 <section id="companyData" class="section">
@@ -1220,85 +1379,85 @@ A well-designed website plays a crucial role in driving business growth by incre
         <td>08:00</td>
         <td>10:30</td>
         <td>Completed</td>
-        <td>Backup saved successfully.</td>
+        <td>There are no stickers yet.</td>
         <td>✔️</td>
       </tr>
       <tr>
         <td>2</td>
         <td>There is no one to work</td>
-        <td>Customer Support</td>
+        <td>Not found yet</td>
         <td>2025-07-31</td>
         <td>09:00</td>
         <td>12:00</td>
         <td>Completed</td>
-        <td>Handled 12 tickets.</td>
-        <td>✔️</td>
+        <td>There are no stickers yet.</td>
+        <td>🕒</td>
       </tr>
       <tr>
         <td>3</td>
         <td>There is no one to work</td>
-        <td>Project Report</td>
+        <td>Not found yet</td>
         <td>2025-07-31</td>
         <td>10:00</td>
         <td>13:30</td>
         <td>In Review</td>
-        <td>Report submitted to manager.</td>
+        <td>There are no stickers yet.</td>
         <td>🕒</td>
       </tr>
       <tr>
         <td>4</td>
         <td>There is no one to work</td>
-        <td>System Maintenance</td>
+        <td>Not found yet</td>
         <td>2025-07-31</td>
         <td>07:30</td>
         <td>11:00</td>
         <td>Completed</td>
-        <td>No issues found.</td>
-        <td>✔️</td>
+        <td>There are no stickers yet.</td>
+        <td>🕒</td>
       </tr>
       <tr>
         <td>5</td>
         <td>There is no one to work</td>
-        <td>Invoice Generation</td>
+        <td>Not found yet</td>
         <td>2025-07-31</td>
         <td>08:45</td>
         <td>11:30</td>
         <td>Completed</td>
-        <td>Generated 25 invoices.</td>
-        <td>✔️</td>
+        <td>There are no stickers yet.</td>
+        <td>🕒</td>
       </tr>
       <tr>
         <td>6</td>
         <td>There is no one to work</td>
-        <td>Client Meeting</td>
+        <td>Not found yet</td>
         <td>2025-07-31</td>
         <td>11:00</td>
         <td>13:00</td>
         <td>Completed</td>
-        <td>Meeting with ABC Corp.</td>
-        <td>✔️</td>
+        <td>There are no stickers yet.</td>
+        <td>🕒</td>
       </tr>
       <tr>
         <td>7</td>
         <td>There is no one to work</td>
-        <td>Website Update</td>
+        <td>Not found yet</td>
         <td>2025-07-31</td>
         <td>09:30</td>
         <td>12:15</td>
         <td>Pending</td>
-        <td>Waiting for approval.</td>
+        <td>There are no stickers yet.</td>
         <td>🕒</td>
       </tr>
       <tr>
         <td>8</td>
         <td>There is no one to work</td>
-        <td>Inventory Check</td>
+        <td>Not found yet</td>
         <td>2025-07-31</td>
         <td>07:00</td>
         <td>10:00</td>
         <td>Completed</td>
-        <td>Stock levels updated.</td>
-        <td>✔️</td>
+        <td>There are no stickers yet.</td>
+        <td>🕒</td>
       </tr>
     </tbody>
   </table>
@@ -1476,12 +1635,39 @@ A well-designed website plays a crucial role in driving business growth by incre
       </tr>
     </tbody>
   </table>
-
 </section>
 
 </main>
 
 <script>
+
+
+
+
+
+  const notifBell = document.getElementById('notifBell');
+  const notifPanel = document.getElementById('notifPanel');
+  const notifClose = document.getElementById('notifClose');
+
+  // فتح وإغلاق القائمة عند الضغط على الجرس
+  notifBell.addEventListener('click', () => {
+    const isActive = notifPanel.classList.toggle('active');
+    notifPanel.setAttribute('aria-hidden', !isActive);
+  });
+
+  // إغلاق القائمة عند الضغط على زر الإغلاق
+  notifClose.addEventListener('click', () => {
+    notifPanel.classList.remove('active');
+    notifPanel.setAttribute('aria-hidden', 'true');
+  });
+
+  // إغلاق القائمة عند الضغط خارجه (اختياري)
+  document.addEventListener('click', (e) => {
+    if (!notifPanel.contains(e.target) && !notifBell.contains(e.target)) {
+      notifPanel.classList.remove('active');
+      notifPanel.setAttribute('aria-hidden', 'true');
+    }
+  });
       document.querySelectorAll('td.editable').forEach(cell => {
       cell.addEventListener('click', () => {
         const newValue = prompt('Enter new time (e.g., 09:00 - 17:00):', cell.innerText);
@@ -1513,6 +1699,7 @@ A well-designed website plays a crucial role in driving business growth by incre
     document.getElementById("btnWorkHours").onclick = () => showSection("workHours");
     document.getElementById("btnCompanyData").onclick = () => showSection("companyData");
     document.getElementById("btnTasks").onclick = () => showSection("tasks");
+   document.getElementById("btnSupport").onclick = () => showSection("support");
     function featureAction(name) {
   alert("You clicked on: " + name);
 }
@@ -1847,6 +2034,30 @@ navCustomerService: document.getElementById('sectionCustomerService'),
     } else {
       updateUI(false);
     }
+  });
+    // Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  function updateNotificationsUI(data) {
+    const panel = document.querySelector('#notifPanel ul');
+    panel.innerHTML = ''; // امسح الإشعارات القديمة
+
+    Object.entries(data || {}).reverse().forEach(([key, val]) => {
+      const li = document.createElement('li');
+      li.textContent = val.message;
+      panel.appendChild(li);
+    });
+
+    // تحديث العداد
+    const count = Object.keys(data || {}).length;
+    document.getElementById('notifCount').textContent = count;
+  }
+
+  // راقب التغييرات من قاعدة البيانات
+  db.ref("notifications").on("value", (snapshot) => {
+    const notifications = snapshot.val();
+    updateNotificationsUI(notifications);
   });
 </script>
 
