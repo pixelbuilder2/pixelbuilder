@@ -942,7 +942,60 @@
   font-size: 28px;
   cursor: pointer;
 }
+  html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #111;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
+    .maintenance-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #111, #1a1a1a);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .countdown {
+      position: absolute;
+      top: 30px;
+      font-size: 48px;
+      font-weight: bold;
+      color: #00f0ff;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    .message-box {
+      border: 3px solid #ff4444;
+      padding: 40px;
+      background-color: #1c1c1c;
+      border-radius: 15px;
+      box-shadow: 0 0 30px #ff4444;
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .message-box h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #ff4444;
+    }
+
+    .message-box p {
+      font-size: 20px;
+      color: #ccc;
+    }
+    
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -1016,6 +1069,19 @@
 </div>
 
   </section>
+   <div class="maintenance-overlay">
+    <div class="countdown" id="countdown">Loading...</div>
+
+    <div class="message-box">
+      <h1>🚧 Website Under Maintenance</h1>
+      <p>
+        Maintenance underway<br />
+    Hello and welcome, we would like to announce that maintenance will take place between months. Please note the countdown at the top of the page every day. We also announce a major update that will take place in the coming month, which is usually in September. This update is in the same month every year.
+      </p>
+      <p>Thank you for your understanding</p>
+    </div>
+  </div>
+  
   <section id="sectionAbout" tabindex="0" aria-label="About Section">
     <h2>About Us</h2>
     <p>We deliver futuristic web solutions with neon aesthetics.
@@ -1318,20 +1384,20 @@ A well-designed website plays a crucial role in driving business growth by incre
       </thead>
       <tbody>
         <tr>
-          <td>Soulayman B.</td>
+          <td>Soulayman.B</td>
           <td>EMP-001</td>
           <td>Programming</td>
           <td>2022-05-10</td>
-          <td>soulayman@pixel2.com</td>
+          <td>soulaymanbag999@gmail.com</td>
           <td>+212 600 123 456</td>
         </tr>
         <tr>
-          <td>Amine T.</td>
-          <td>EMP-002</td>
-          <td>Support</td>
-          <td>2023-01-12</td>
-          <td>amine@pixel2.com</td>
-          <td>+212 700 456 789</td>
+          <td>- - -</td>
+          <td>- - -</td>
+          <td>- - -</td>
+          <td>- - -</td>
+          <td>- - - -</td>
+          <td>- - - - -</td>
         </tr>
       </tbody>
     </table>
@@ -1642,7 +1708,25 @@ A well-designed website plays a crucial role in driving business growth by incre
 <script>
 
 
+  const countdown = document.getElementById("countdown");
+    const targetDate = new Date("2025-08-31T23:59:59").getTime();
 
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        countdown.innerHTML = "✅ Maintenance Complete";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
 
 
   const notifBell = document.getElementById('notifBell');
@@ -1769,7 +1853,7 @@ navCustomerService: document.getElementById('sectionCustomerService'),
   const myChart = new Chart(ctx, {
     type: 'bar',  // يمكنك تغييره إلى 'line' أو 'pie' حسب ما تريد
     data: {
-      labels: ['project alpha', 'project beta', 'project gamma', 'project extra', 'project 58-21-66', 'project site ', 'project moo'],
+      labels: ['There is no project', 'There is no project', 'There is no project', 'There is no project', 'There is no project', 'There is no project ', 'There is no project'],
       datasets: [{
         label: 'User Signups',
         data: [10, 14, 8, 20, 15, 18, 22],
